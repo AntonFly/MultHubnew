@@ -8,13 +8,8 @@ public class main {
     public static void main(String[] args) {
         EntityManager em = Persistence.createEntityManagerFactory("MULTHUB").createEntityManager();
         em.getTransaction().begin();
-        List<Users> users = em.createNamedQuery("Users.getAll").getResultList();
-        for (Users user:
-             users) {
-            if(user.getLogin().equals("aad")){
-                System.out.println( user.getCondata().geteMail());
-            }
-        }
+                Users user=em.find(Users.class,"5d");
+                System.out.println( user.getFollowers());
 
 
     }
