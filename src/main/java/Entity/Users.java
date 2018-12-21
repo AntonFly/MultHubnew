@@ -1,0 +1,85 @@
+package Entity;
+
+import javax.persistence.*;
+
+@Entity
+@Table(name="users")
+@NamedQuery(name = "Users.getAll", query = "SELECT u from Users u")
+public class Users {
+    public Users() {
+    }
+
+    @Id
+    private String login;
+    @Column
+    private String name;
+
+    @Column
+    private String surname;
+
+    @Column
+    private String password;
+    @Column
+    private String imgpath;
+    @Column
+    private String status;
+    @OneToOne(optional = false,cascade = CascadeType.ALL)
+    @JoinColumn(name ="login")
+    private ConnectionData condata;
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getImgpath() {
+        return imgpath;
+    }
+
+    public void setImgpath(String imgpath) {
+        this.imgpath = imgpath;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public ConnectionData getCondata() {
+        return condata;
+    }
+
+    public void setCondata(ConnectionData condata) {
+        this.condata = condata;
+    }
+}
