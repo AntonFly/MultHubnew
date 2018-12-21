@@ -10,8 +10,8 @@ public class main {
         em.getTransaction().begin();
                 Users user=em.find(Users.class,"5d");
                 System.out.println( user.getFollowers());
-
-
+                System.exit(0);
+        em.getTransaction().commit();
     }
 
 }

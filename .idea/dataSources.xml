@@ -7,5 +7,15 @@
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://fly.sytes.net:5432/multhub</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="MULTHUB/Hibernate" uuid="aa0691c5-b74b-4d39-9667-2e85526b12df">
+      <driver-ref>postgresql</driver-ref>
+      <synchronize>true</synchronize>
+      <imported>true</imported>
+      <remarks>Hibernate
+
+C:/Users/anton/IdeaProjects/MultHubnew/src/main/resources/META-INF/persistence.xml</remarks>
+      <jdbc-driver>org.postgresql.Driver</jdbc-driver>
+      <jdbc-url>jdbc:postgresql://fly.sytes.net:5432/multhub</jdbc-url>
+    </data-source>
   </component>
 </project>

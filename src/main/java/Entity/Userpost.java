@@ -8,14 +8,19 @@ import java.sql.Timestamp;
 public class Userpost {
     @Id
     private String id;
+
     @Column(name = "user_id")
     private String userId;
+
     @Column
     private String text;
+
     @Column
     private String filepath;
+
     @Column
     private Timestamp time;
+
     @ManyToOne( fetch = FetchType.EAGER)
     @JoinColumn(
             name = "user_id",

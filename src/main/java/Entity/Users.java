@@ -32,8 +32,20 @@ public class Users {
     @JoinColumn(name = "user_id")
     private List<Userpost> posts;
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "follow")
+    @JoinColumn(name = "login",referencedColumnName = "login")//!!!!!!!!!ХУйня
     private List<Users> followers;
+
+    public List<Dialog> getDialogs() {
+        return dialogs;
+    }
+
+    public void setDialogs(List<Dialog> dialogs) {
+        this.dialogs = dialogs;
+    }
+
+    @OneToMany( cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumns({@JoinColumn(name="one_user_id")})
+    private List<Dialog> dialogs;
 
     public String getLogin() {
         return login;

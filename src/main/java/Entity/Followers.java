@@ -1,5 +1,7 @@
 package Entity;
 
+import org.hibernate.annotations.ForeignKey;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -8,9 +10,6 @@ import java.util.List;
 @IdClass(FollowersPK.class)
 public class Followers {
     @Id
-    private String login;
-    @Id
-    private String follower;
     @ManyToOne( fetch = FetchType.LAZY)
     @JoinColumn(
             name = "login",
@@ -18,46 +17,30 @@ public class Followers {
             insertable = false,
             updatable = false
     )
-    private Users owner;
-
-    @ManyToOne( fetch = FetchType.EAGER)
+    private Users login;
+    @Id()
+    @ManyToOne( fetch = FetchType.LAZY)
     @JoinColumn(
             name = "follower",
             referencedColumnName = "login",
             insertable = false,
             updatable = false
     )
-    private Users follow;
+    private Users follower;
 
-    public String getLogin() {
+    public Users getLogin() {
         return login;
     }
 
-    public void setLogin(String login) {
+    public void setLogin(Users login) {
         this.login = login;
     }
 
-    public String getFollower() {
+    public Users getFollower() {
         return follower;
     }
 
-    public void setFollower(String follower) {
+    public void setFollower(Users follower) {
         this.follower = follower;
-    }
-
-    public Users getOwner() {
-        return owner;
-    }
-
-    public void setOwner(Users owner) {
-        this.owner = owner;
-    }
-
-    public Users getFollow() {
-        return follow;
-    }
-
-    public void setFollow(Users follow) {
-        this.follow = follow;
     }
 }
