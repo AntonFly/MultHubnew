@@ -20,8 +20,25 @@ public class Requests {
     @Enumerated(EnumType.STRING)
     private Projpos projpos;
     @Column
-
     private Boolean isrequest;
+
+    @Transient
+    public  Users getLogin(){
+        return  getId().getLogin();
+    }
+
+    public  void setLogin(Users user){
+        getId().setLogin(user);
+    }
+
+    @Transient
+    public  Projects getProjectid(){
+        return  getId().getProjectid();
+    }
+
+    public  void setLogin(Projects projects){
+        getId().setProjectid(projects);
+    }
 
     public RequestsEntityPK getId() {
         return id;

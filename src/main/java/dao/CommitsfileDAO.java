@@ -1,7 +1,7 @@
 package dao;
 
 
-import entity.Commitsfile;
+import entity.*;
 import util.DBService;
 import javax.persistence.EntityManager;
 import java.util.List;
@@ -18,6 +18,13 @@ public class CommitsfileDAO extends AbstractDao<Commitsfile,String> {
         em.getTransaction().commit();
         return list;
     }
+    public void delete(CommitsfileEntityPK commitsfileEntityPK) {
+        EntityManager em= DBService.getEntytiManager();
+        em.getTransaction().begin();
+        Commitsfile entity = em.find(param,commitsfileEntityPK);
+        em.remove(entity);
+        em.getTransaction().commit();
 
+    }
 }
 

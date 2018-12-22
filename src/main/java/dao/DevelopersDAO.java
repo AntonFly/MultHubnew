@@ -1,6 +1,6 @@
 package dao;
 
-import entity.Developers;
+import entity.*;
 import util.DBService;
 
 import javax.persistence.EntityManager;
@@ -18,4 +18,21 @@ public class DevelopersDAO extends AbstractDao<Developers,String> {
         return list;
     }
 
+    public Developers getEntityById(Users user, Projects project) {
+        EntityManager em= DBService.getEntytiManager();
+        em.getTransaction().begin();
+        Developers entity = em.find(param,new DevelopersEntityPK(user,project));
+        em.getTransaction().commit();
+        return entity;
+    }
+
+
+    public void delete(DevelopersEntityPK developersEntityPK) {
+        EntityManager em= DBService.getEntytiManager();
+        em.getTransaction().begin();
+        Developers entity = em.find(param,developersEntityPK);
+        em.remove(entity);
+        em.getTransaction().commit();
+
+    }
 }

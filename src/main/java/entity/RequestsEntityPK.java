@@ -7,6 +7,8 @@ import javax.persistence.ManyToOne;
 import java.io.Serializable;
 @Embeddable
 public class RequestsEntityPK implements Serializable {
+    public RequestsEntityPK(){}
+    public RequestsEntityPK(Users user,Projects project){this.login=user;this.projectid=project;}
     @ManyToOne
     private Users login;
 
