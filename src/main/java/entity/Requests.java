@@ -22,6 +22,13 @@ public class Requests {
     @Column
 
     private Boolean isrequest;
+    @Transient
+    public Projects getProjectid(){return getId().getProjectid();}
+    public void setProjectid(Projects pr){getId().setProjectid(pr);}
+
+    @Transient
+    public Users getLogin(){return getId().getLogin();}
+    public void setLogin(Users us){getId().setLogin(us); }
 
     public RequestsEntityPK getId() {
         return id;

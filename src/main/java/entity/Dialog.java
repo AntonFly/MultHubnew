@@ -1,6 +1,7 @@
 package entity;
 
 import javax.persistence.*;
+import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
@@ -8,10 +9,12 @@ import java.util.List;
 @NamedQuery(name = "Dialog.getAll", query = "SELECT u from Dialog u")
 public class Dialog {
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
 
     @Column(name = "creationtime")
-    private String creationtime;
+    @Temporal(TemporalType.TIMESTAMP)
+    private Timestamp creationtime;
 
     @ManyToMany(mappedBy = "dialogs")
     private List<Users> interlocutors;
@@ -19,6 +22,7 @@ public class Dialog {
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "dialog_id")
     private List<Message> messages;
+
 
     public String getId() {
         return id;
@@ -28,11 +32,11 @@ public class Dialog {
         this.id = id;
     }
 
-    public String getCreationtime() {
+    public Timestamp getCreationtime() {
         return creationtime;
     }
 
-    public void setCreationtime(String creationtime) {
+    public void setCreationtime(Timestamp creationtime) {
         this.creationtime = creationtime;
     }
 

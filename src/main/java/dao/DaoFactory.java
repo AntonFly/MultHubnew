@@ -17,6 +17,8 @@ public class DaoFactory {
     private static volatile CommitsfileDAO commitsfileDAO;
     private static volatile DonatersDAO donatersDAO;
     private static volatile ProjectspostsDAO projectspostsDAO;
+    private static volatile DialogUsersDAO dialogUsersDAO;
+
 
 
 
@@ -189,5 +191,16 @@ public class DaoFactory {
             }
         }
         return projectspostsDAO;
+    }
+
+    public static DialogUsersDAO getDialogUsersDAO(){
+        if(dialogUsersDAO == null) {
+            synchronized(DaoFactory.class) {
+                if(dialogUsersDAO == null) {
+                    dialogUsersDAO = new DialogUsersDAO();
+                }
+            }
+        }
+        return dialogUsersDAO;
     }
 }

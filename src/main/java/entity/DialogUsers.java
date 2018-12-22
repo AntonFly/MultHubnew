@@ -4,33 +4,16 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "dialog_users", schema = "public", catalog = "multhub")
-@IdClass(DialogUsersPK.class)
 public class DialogUsers {
-    @Id
-    @Column(name = "dialog_id", nullable = false, length = -1)
-    private String dialogId;
-
-    @Id
-    @Column(name = "user_id", nullable = false, length = -1)
-    private String userId;
+    @EmbeddedId
+    private DialogUsersPK id;
 
 
-
-    public String getDialogId() {
-        return dialogId;
+    public DialogUsersPK getId() {
+        return id;
     }
 
-    public void setDialogId(String dialogId) {
-        this.dialogId = dialogId;
+    public void setId(DialogUsersPK id) {
+        this.id = id;
     }
-
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
 }
