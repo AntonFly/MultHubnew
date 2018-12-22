@@ -29,19 +29,9 @@ public class Requests {
     public Users getLogin(){return getId().getLogin();}
     public void setLogin(Users us){getId().setLogin(us); }
 
-    @Transient
-    public  Users getLogin(){
-        return  getId().getLogin();
-    }
 
-    public  void setLogin(Users user){
-        getId().setLogin(user);
-    }
 
-    @Transient
-    public  Projects getProjectid(){
-        return  getId().getProjectid();
-    }
+
 
     public  void setLogin(Projects projects){
         getId().setProjectid(projects);

@@ -1,6 +1,7 @@
 package service;
 
 import dao.*;
+import entity.*;
 import exception.DBException;
 import org.hibernate.HibernateException;
 import org.hibernate.Transaction;
@@ -17,8 +18,7 @@ public class ViewService  {
      * @throws DBException Hiber exceptions replaced with
      */
     public Map<String,Object> UserPageInformation(String login) throws DBException {
-        Transaction transaction= DBService.getTransaction();
-        Map<String,Object> map =new HashMap<>();
+        Map<String,Object> map =new HashMap();
 
         UsersDAO usersDAO= DaoFactory.getUsersDAO();
         ConnectiondataDao conDao= DaoFactory.getConnectiondataDao();
@@ -27,22 +27,19 @@ public class ViewService  {
         ProjectsDAO projDao= DaoFactory.getProjectsDAO();
         FollowersDAO followDao= DaoFactory.getFollowersDao();
 
-        UsersEntity user= usersDAO.getEntityById(login);
-        ConnectiondataEntity connectiondata=conDao.getEntityById(login);
-        List<UserpostEntity> posts= postsDao.getUserPosts(user.getLogin());
-        List<DevelopersEntity> devEnt=devDao.getUserProject(login);
-        List<ProjectsEntity> proj = new ArrayList<>();
-        List<FollowersEntity> followers= followDao.getUserFollowers(login);
+        Users user= usersDAO.getEntityById(login);
+        ConnectionData connectiondata=conDao.getEntityById(login);
+        List<Userpost> posts= user.getPosts();
+        List<Developers> devEnt=user.getDevelopers();
+        List<Projects> proj = new ArrayList();
+        List<Users> followers= user.getFollowers();
 
-        transaction.commit();
-        transaction= DBService.getTransaction();
 
-        for (DevelopersEntity dev:
+        for (Developers dev:
                 devEnt) {
-            proj.add(projDao.getEntityById(dev.getProjectid()));
+            proj.add(dev.getProjectid());
 
         }
-        transaction.commit();
         map.put("login",user.getLogin());
         map.put("name",user.getName());
         map.put("surname",user.getSurname());

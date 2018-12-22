@@ -13,7 +13,7 @@ public class Dialog {
     private String id;
 
     @Column(name = "creationtime")
-    @Temporal(TemporalType.TIMESTAMP)
+//    @Temporal(TemporalType.TIMESTAMP)
     private Timestamp creationtime;
 
     @ManyToMany(mappedBy = "dialogs")
