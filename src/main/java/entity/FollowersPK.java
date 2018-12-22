@@ -1,8 +1,7 @@
-package Entity;
+package entity;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import java.io.Serializable;
 @Embeddable

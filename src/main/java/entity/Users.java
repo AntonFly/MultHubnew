@@ -1,6 +1,5 @@
-package Entity;
+package entity;
 
-import javax.jws.soap.SOAPBinding;
 import javax.persistence.*;
 import java.util.List;
 
@@ -13,6 +12,7 @@ public class Users {
 
     @Id
     private String login;
+
     @Column
     private String name;
 
@@ -21,30 +21,31 @@ public class Users {
 
     @Column
     private String password;
+
     @Column
     private String imgpath;
+
     @Column
     private String status;
+
     @OneToOne(optional = false,cascade = CascadeType.ALL)
     @JoinColumn(name ="login")
     private ConnectionData condata;
+
     @OneToMany( cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "user_id")
     private List<Userpost> posts;
+
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "login",referencedColumnName = "login")//!!!!!!!!!ХУйня
     private List<Users> followers;
 
-    public List<Dialog> getDialogs() {
-        return dialogs;
-    }
 
-    public void setDialogs(List<Dialog> dialogs) {
-        this.dialogs = dialogs;
-    }
-
-    @OneToMany( cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumns({@JoinColumn(name="one_user_id")})
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "dialog_users",
+            joinColumns = @JoinColumn(name = "user_id"),
+            inverseJoinColumns = @JoinColumn(name = "dialog_id")
+    )
     private List<Dialog> dialogs;
 
     public String getLogin() {
@@ -118,5 +119,13 @@ public class Users {
 
     public void setFollowers(List<Users> followers) {
         this.followers = followers;
+    }
+
+    public List<Dialog> getDialogs() {
+        return dialogs;
+    }
+
+    public void setDialogs(List<Dialog> dialogs) {
+        this.dialogs = dialogs;
     }
 }

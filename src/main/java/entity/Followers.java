@@ -1,9 +1,6 @@
-package Entity;
-
-import org.hibernate.annotations.ForeignKey;
+package entity;
 
 import javax.persistence.*;
-import java.util.List;
 
 @Entity
 @Table(name = "followers", schema = "public", catalog = "multhub")

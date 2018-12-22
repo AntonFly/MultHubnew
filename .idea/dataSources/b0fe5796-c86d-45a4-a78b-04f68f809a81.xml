@@ -75,8 +75,8 @@
       <ObjectId>2200</ObjectId>
       <Comment>standard public schema</Comment>
       <Owner>postgres</Owner>
-      <IntrospectionTimestamp>2018-12-21.19:08:46.092</IntrospectionTimestamp>
-      <IntrospectionStateNumber>5329</IntrospectionStateNumber>
+      <IntrospectionTimestamp>2018-12-22.16:29:38.110</IntrospectionTimestamp>
+      <IntrospectionStateNumber>5366</IntrospectionStateNumber>
       <Current>1</Current>
       <Visible>1</Visible>
     </schema>
@@ -102,7 +102,6 @@
     </access-method>
     <sequence id="20" parent="14" name="comments_id_seq">
       <ObjectId>17098</ObjectId>
-      <Owner>anton_fly</Owner>
       <StateNumber>1012</StateNumber>
       <SequenceIdentity>1</SequenceIdentity>
       <BelongsToColumn>1</BelongsToColumn>
@@ -110,7 +109,6 @@
     </sequence>
     <sequence id="21" parent="14" name="message_id_seq">
       <ObjectId>17557</ObjectId>
-      <Owner>anton_fly</Owner>
       <StateNumber>2783</StateNumber>
       <SequenceIdentity>1</SequenceIdentity>
       <BelongsToColumn>1</BelongsToColumn>
@@ -118,7 +116,6 @@
     </sequence>
     <sequence id="22" parent="14" name="projects_projectid_seq">
       <ObjectId>17059</ObjectId>
-      <Owner>anton_fly</Owner>
       <StateNumber>1005</StateNumber>
       <SequenceIdentity>1</SequenceIdentity>
       <BelongsToColumn>1</BelongsToColumn>
@@ -126,7 +123,6 @@
     </sequence>
     <object-type id="23" parent="14" name="approved">
       <ObjectId>17072</ObjectId>
-      <Owner>anton_fly</Owner>
       <StateNumber>1009</StateNumber>
       <SubKind>enum</SubKind>
       <SubCategory>enum</SubCategory>
@@ -136,7 +132,6 @@ awaits</Labels>
     </object-type>
     <object-type id="24" parent="14" name="projpos">
       <ObjectId>17080</ObjectId>
-      <Owner>anton_fly</Owner>
       <StateNumber>3301</StateNumber>
       <SubKind>enum</SubKind>
       <SubCategory>enum</SubCategory>
@@ -145,100 +140,95 @@ Manager</Labels>
     </object-type>
     <table id="25" parent="14" name="comments">
       <ObjectId>17100</ObjectId>
-      <Owner>anton_fly</Owner>
       <StateNumber>2541</StateNumber>
     </table>
     <table id="26" parent="14" name="commits">
       <ObjectId>17119</ObjectId>
       <Owner>anton_fly</Owner>
-      <StateNumber>3769</StateNumber>
+      <StateNumber>5346</StateNumber>
     </table>
     <table id="27" parent="14" name="commitsfile">
       <ObjectId>17523</ObjectId>
       <Owner>anton_fly</Owner>
-      <StateNumber>3769</StateNumber>
+      <StateNumber>5346</StateNumber>
     </table>
     <table id="28" parent="14" name="connectiondata">
       <ObjectId>17085</ObjectId>
-      <Owner>anton_fly</Owner>
       <StateNumber>5289</StateNumber>
     </table>
     <table id="29" parent="14" name="creditinfo">
       <ObjectId>17165</ObjectId>
-      <Owner>anton_fly</Owner>
       <StateNumber>4548</StateNumber>
     </table>
     <table id="30" parent="14" name="developers">
       <ObjectId>17132</ObjectId>
-      <Owner>anton_fly</Owner>
       <StateNumber>4542</StateNumber>
     </table>
     <table id="31" parent="14" name="dialog">
       <ObjectId>17424</ObjectId>
       <Owner>anton_fly</Owner>
-      <StateNumber>2611</StateNumber>
+      <StateNumber>5366</StateNumber>
     </table>
-    <table id="32" parent="14" name="donaters">
-      <ObjectId>17492</ObjectId>
+    <table id="32" parent="14" name="dialog_users">
+      <ObjectId>17839</ObjectId>
       <Owner>anton_fly</Owner>
+      <StateNumber>5363</StateNumber>
+    </table>
+    <table id="33" parent="14" name="donaters">
+      <ObjectId>17492</ObjectId>
       <StateNumber>3701</StateNumber>
     </table>
-    <table id="33" parent="14" name="followers">
+    <table id="34" parent="14" name="followers">
       <ObjectId>17406</ObjectId>
       <Owner>anton_fly</Owner>
       <StateNumber>5302</StateNumber>
     </table>
-    <table id="34" parent="14" name="message">
+    <table id="35" parent="14" name="message">
       <ObjectId>17442</ObjectId>
       <Owner>anton_fly</Owner>
-      <StateNumber>2783</StateNumber>
+      <StateNumber>5366</StateNumber>
     </table>
-    <table id="35" parent="14" name="projectposts">
+    <table id="36" parent="14" name="projectposts">
       <ObjectId>17510</ObjectId>
       <Owner>anton_fly</Owner>
-      <StateNumber>5329</StateNumber>
+      <StateNumber>5333</StateNumber>
     </table>
-    <table id="36" parent="14" name="projects">
+    <table id="37" parent="14" name="projects">
       <ObjectId>17061</ObjectId>
       <Owner>anton_fly</Owner>
-      <StateNumber>5306</StateNumber>
+      <StateNumber>5333</StateNumber>
     </table>
-    <table id="37" parent="14" name="requests">
+    <table id="38" parent="14" name="requests">
       <ObjectId>17177</ObjectId>
-      <Owner>anton_fly</Owner>
       <StateNumber>3685</StateNumber>
     </table>
-    <table id="38" parent="14" name="results">
+    <table id="39" parent="14" name="results">
       <ObjectId>17694</ObjectId>
-      <Owner>anton_fly</Owner>
       <StateNumber>5261</StateNumber>
     </table>
-    <table id="39" parent="14" name="results_old">
+    <table id="40" parent="14" name="results_old">
       <ObjectId>17199</ObjectId>
-      <Owner>anton_fly</Owner>
       <StateNumber>5192</StateNumber>
     </table>
-    <table id="40" parent="14" name="results_old1">
+    <table id="41" parent="14" name="results_old1">
       <ObjectId>17676</ObjectId>
-      <Owner>anton_fly</Owner>
       <StateNumber>5204</StateNumber>
     </table>
-    <table id="41" parent="14" name="subs">
+    <table id="42" parent="14" name="subs">
       <ObjectId>17150</ObjectId>
-      <Owner>anton_fly</Owner>
       <StateNumber>2533</StateNumber>
     </table>
-    <table id="42" parent="14" name="userpost">
+    <table id="43" parent="14" name="userpost">
       <ObjectId>17465</ObjectId>
       <Owner>anton_fly</Owner>
       <StateNumber>5312</StateNumber>
     </table>
-    <table id="43" parent="14" name="users">
+    <table id="44" parent="14" name="users">
       <ObjectId>17051</ObjectId>
       <Owner>anton_fly</Owner>
-      <StateNumber>5312</StateNumber>
+      <StateNumber>5363</StateNumber>
     </table>
-    <column id="44" parent="25" name="id">
+    <column id="45" parent="25" name="id">
       <Position>1</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
@@ -247,42 +237,42 @@ Manager</Labels>
       <TypeId>25</TypeId>
       <SequenceName>comments_id_seq</SequenceName>
     </column>
-    <column id="45" parent="25" name="projectid">
+    <column id="46" parent="25" name="projectid">
       <Position>2</Position>
       <DataType>text|0s</DataType>
       <StateNumber>2510</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="46" parent="25" name="login">
+    <column id="47" parent="25" name="login">
       <Position>3</Position>
       <DataType>varchar(30)|0s</DataType>
       <StateNumber>1012</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="47" parent="25" name="comment">
+    <column id="48" parent="25" name="comment">
       <Position>4</Position>
       <DataType>text|0s</DataType>
       <StateNumber>2377</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="48" parent="25" name="time">
+    <column id="49" parent="25" name="time">
       <Position>5</Position>
       <DataType>timestamp|0s</DataType>
       <StateNumber>1012</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <index id="49" parent="25" name="comments_pkey">
+    <index id="50" parent="25" name="comments_pkey">
       <ObjectId>17244</ObjectId>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="50" parent="25" name="comments_pkey">
+    <key id="51" parent="25" name="comments_pkey">
       <ObjectId>17245</ObjectId>
       <ColNames>id</ColNames>
       <UnderlyingIndexName>comments_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="51" parent="25" name="comments___projectid">
+    <foreign-key id="52" parent="25" name="comments___projectid">
       <ObjectId>17376</ObjectId>
       <ColNames>projectid</ColNames>
       <RefTableId>17061</RefTableId>
@@ -292,7 +282,7 @@ Manager</Labels>
       <RefColNames>projectid</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="52" parent="25" name="comments_login_fkey">
+    <foreign-key id="53" parent="25" name="comments_login_fkey">
       <ObjectId>17238</ObjectId>
       <ColNames>login</ColNames>
       <RefTableId>17051</RefTableId>
@@ -302,52 +292,92 @@ Manager</Labels>
       <RefColNames>login</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="53" parent="26" name="projectid">
+    <column id="54" parent="26" name="projectid">
       <Position>1</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>2515</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="54" parent="26" name="developer">
+    <column id="55" parent="26" name="developer">
       <Position>2</Position>
       <DataType>varchar(30)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>1013</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="55" parent="26" name="time">
+    <column id="56" parent="26" name="time">
       <Position>4</Position>
       <DataType>timestamp|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>1013</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="56" parent="26" name="approved">
+    <column id="57" parent="26" name="approved">
       <Position>5</Position>
       <DataType>varchar(30)|0s</DataType>
       <StateNumber>3533</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="57" parent="26" name="id">
+    <column id="58" parent="26" name="id">
       <Position>6</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>2708</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <index id="58" parent="26" name="commits_pk">
+    <index id="59" parent="26" name="commits_pk">
       <ObjectId>17531</ObjectId>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="59" parent="26" name="commits_pk">
+    <index id="60" parent="26" name="uk_4cb759669f61421eb485828c703">
+      <ObjectId>17801</ObjectId>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="61" parent="26" name="uk_57ea4d331b61423f81ea6c7f1ae">
+      <ObjectId>17815</ObjectId>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="62" parent="26" name="uk_af5f0cce5368477b82c7dbdeb1c">
+      <ObjectId>17808</ObjectId>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="63" parent="26" name="uk_ca486ac4d0e7459daab9a122e58">
+      <ObjectId>17794</ObjectId>
+      <ColNames>id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="64" parent="26" name="commits_pk">
       <ObjectId>17532</ObjectId>
       <ColNames>id</ColNames>
       <UnderlyingIndexName>commits_pk</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="60" parent="26" name="commits___projectid">
+    <key id="65" parent="26" name="uk_4cb759669f61421eb485828c703">
+      <ObjectId>17802</ObjectId>
+      <ColNames>id</ColNames>
+      <UnderlyingIndexName>uk_4cb759669f61421eb485828c703</UnderlyingIndexName>
+    </key>
+    <key id="66" parent="26" name="uk_57ea4d331b61423f81ea6c7f1ae">
+      <ObjectId>17816</ObjectId>
+      <ColNames>id</ColNames>
+      <UnderlyingIndexName>uk_57ea4d331b61423f81ea6c7f1ae</UnderlyingIndexName>
+    </key>
+    <key id="67" parent="26" name="uk_af5f0cce5368477b82c7dbdeb1c">
+      <ObjectId>17809</ObjectId>
+      <ColNames>id</ColNames>
+      <UnderlyingIndexName>uk_af5f0cce5368477b82c7dbdeb1c</UnderlyingIndexName>
+    </key>
+    <key id="68" parent="26" name="uk_ca486ac4d0e7459daab9a122e58">
+      <ObjectId>17795</ObjectId>
+      <ColNames>id</ColNames>
+      <UnderlyingIndexName>uk_ca486ac4d0e7459daab9a122e58</UnderlyingIndexName>
+    </key>
+    <foreign-key id="69" parent="26" name="commits___projectid">
       <ObjectId>17371</ObjectId>
       <ColNames>projectid</ColNames>
       <RefTableId>17061</RefTableId>
@@ -357,41 +387,41 @@ Manager</Labels>
       <RefColNames>projectid</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="61" parent="27" name="filename">
+    <column id="70" parent="27" name="filename">
       <Position>1</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>2705</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="62" parent="27" name="filepath">
+    <column id="71" parent="27" name="filepath">
       <Position>2</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>3693</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="63" parent="27" name="commitid">
+    <column id="72" parent="27" name="commitid">
       <Position>3</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>2705</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <index id="64" parent="27" name="commitsfile_pk">
+    <index id="73" parent="27" name="commitsfile_pk">
       <ObjectId>17529</ObjectId>
       <ColNames>filename
 commitid</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="65" parent="27" name="commitsfile_pk">
+    <key id="74" parent="27" name="commitsfile_pk">
       <ObjectId>17530</ObjectId>
       <ColNames>filename
 commitid</ColNames>
       <UnderlyingIndexName>commitsfile_pk</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="66" parent="27" name="commitsfile_commits_id_fk">
+    <foreign-key id="75" parent="27" name="commitsfile_commits_id_fk">
       <ObjectId>17643</ObjectId>
       <ColNames>commitid</ColNames>
       <RefTableId>17119</RefTableId>
@@ -401,38 +431,74 @@ commitid</ColNames>
       <RefColNames>id</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="67" parent="28" name="login">
+    <foreign-key id="76" parent="27" name="fk_717c8673f17a4beda4052b6c213">
+      <ObjectId>17817</ObjectId>
+      <ColNames>commitid</ColNames>
+      <RefTableId>17119</RefTableId>
+      <RefColPositions>6</RefColPositions>
+      <RefTableName>commits</RefTableName>
+      <RefKeyName>commits_pk</RefKeyName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="77" parent="27" name="fk_71fd64d1fa6547acad65ddf7ce3">
+      <ObjectId>17796</ObjectId>
+      <ColNames>commitid</ColNames>
+      <RefTableId>17119</RefTableId>
+      <RefColPositions>6</RefColPositions>
+      <RefTableName>commits</RefTableName>
+      <RefKeyName>commits_pk</RefKeyName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="78" parent="27" name="fk_c3c6e87392364ddeaf18f38db73">
+      <ObjectId>17803</ObjectId>
+      <ColNames>commitid</ColNames>
+      <RefTableId>17119</RefTableId>
+      <RefColPositions>6</RefColPositions>
+      <RefTableName>commits</RefTableName>
+      <RefKeyName>commits_pk</RefKeyName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="79" parent="27" name="fk_d8d873a93a704ebb9ca31d610a8">
+      <ObjectId>17810</ObjectId>
+      <ColNames>commitid</ColNames>
+      <RefTableId>17119</RefTableId>
+      <RefColPositions>6</RefColPositions>
+      <RefTableName>commits</RefTableName>
+      <RefKeyName>commits_pk</RefKeyName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <column id="80" parent="28" name="login">
       <Position>1</Position>
       <DataType>varchar(30)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>1011</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="68" parent="28" name="email">
+    <column id="81" parent="28" name="email">
       <Position>2</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>2078</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="69" parent="28" name="mobilenumb">
+    <column id="82" parent="28" name="mobilenumb">
       <Position>3</Position>
       <DataType>bigint|0s</DataType>
       <StateNumber>4699</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <index id="70" parent="28" name="connectiondata_pkey">
+    <index id="83" parent="28" name="connectiondata_pkey">
       <ObjectId>17091</ObjectId>
       <ColNames>login</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="71" parent="28" name="connectiondata_pkey">
+    <key id="84" parent="28" name="connectiondata_pkey">
       <ObjectId>17092</ObjectId>
       <ColNames>login</ColNames>
       <UnderlyingIndexName>connectiondata_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="72" parent="28" name="connectiondata_login_fkey">
+    <foreign-key id="85" parent="28" name="connectiondata_login_fkey">
       <ObjectId>17227</ObjectId>
       <ColNames>login</ColNames>
       <RefTableId>17051</RefTableId>
@@ -442,43 +508,43 @@ commitid</ColNames>
       <RefColNames>login</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="73" parent="29" name="progectid">
+    <column id="86" parent="29" name="progectid">
       <Position>1</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>4548</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="74" parent="29" name="cardnumber">
+    <column id="87" parent="29" name="cardnumber">
       <Position>2</Position>
       <DataType>integer|0s</DataType>
       <StateNumber>1016</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <column id="75" parent="29" name="qiwimobilephone">
+    <column id="88" parent="29" name="qiwimobilephone">
       <Position>3</Position>
       <DataType>integer|0s</DataType>
       <StateNumber>1016</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <column id="76" parent="29" name="yamoney">
+    <column id="89" parent="29" name="yamoney">
       <Position>4</Position>
       <DataType>bigint|0s</DataType>
       <StateNumber>1016</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <index id="77" parent="29" name="creditinfo_pkey">
+    <index id="90" parent="29" name="creditinfo_pkey">
       <ObjectId>17658</ObjectId>
       <ColNames>progectid</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="78" parent="29" name="creditinfo_pkey">
+    <key id="91" parent="29" name="creditinfo_pkey">
       <ObjectId>17659</ObjectId>
       <ColNames>progectid</ColNames>
       <UnderlyingIndexName>creditinfo_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="79" parent="29" name="creditinfo_login_fkey">
+    <foreign-key id="92" parent="29" name="creditinfo_login_fkey">
       <ObjectId>17660</ObjectId>
       <ColNames>progectid</ColNames>
       <RefTableId>17061</RefTableId>
@@ -487,56 +553,56 @@ commitid</ColNames>
       <RefKeyName>project_pkey</RefKeyName>
       <RefColNames>projectid</RefColNames>
     </foreign-key>
-    <check id="80" parent="29" name="creditinfo_qiwimobilephone_check">
+    <check id="93" parent="29" name="creditinfo_qiwimobilephone_check">
       <ObjectId>17168</ObjectId>
       <ColNames>qiwimobilephone</ColNames>
       <Predicate>qiwimobilephone &lt;= 999999999999::bigint</Predicate>
     </check>
-    <check id="81" parent="29" name="creditinfo_yamoney_check">
+    <check id="94" parent="29" name="creditinfo_yamoney_check">
       <ObjectId>17169</ObjectId>
       <ColNames>yamoney</ColNames>
       <Predicate>yamoney &lt;= 999999999999999::bigint</Predicate>
     </check>
-    <column id="82" parent="30" name="login">
+    <column id="95" parent="30" name="login">
       <Position>1</Position>
       <DataType>varchar(30)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>1014</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="83" parent="30" name="projectid">
+    <column id="96" parent="30" name="projectid">
       <Position>2</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>2522</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="84" parent="30" name="projpos">
+    <column id="97" parent="30" name="projpos">
       <Position>3</Position>
       <DataType>varchar(30)|0s</DataType>
       <StateNumber>3492</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="85" parent="30" name="description">
+    <column id="98" parent="30" name="description">
       <Position>4</Position>
       <DataType>text|0s</DataType>
       <StateNumber>1014</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <index id="86" parent="30" name="devalopers_pkey">
+    <index id="99" parent="30" name="devalopers_pkey">
       <ObjectId>17306</ObjectId>
       <ColNames>login
 projectid</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="87" parent="30" name="devalopers_pkey">
+    <key id="100" parent="30" name="devalopers_pkey">
       <ObjectId>17307</ObjectId>
       <ColNames>login
 projectid</ColNames>
       <UnderlyingIndexName>devalopers_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="88" parent="30" name="devalopers_login_fkey">
+    <foreign-key id="101" parent="30" name="devalopers_login_fkey">
       <ObjectId>17653</ObjectId>
       <ColNames>login</ColNames>
       <RefTableId>17051</RefTableId>
@@ -546,7 +612,7 @@ projectid</ColNames>
       <RefColNames>login</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="89" parent="30" name="developers___prjectid">
+    <foreign-key id="102" parent="30" name="developers___prjectid">
       <ObjectId>17366</ObjectId>
       <ColNames>projectid</ColNames>
       <RefTableId>17061</RefTableId>
@@ -556,39 +622,34 @@ projectid</ColNames>
       <RefColNames>projectid</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="90" parent="31" name="id">
+    <column id="103" parent="31" name="id">
       <Position>1</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>2610</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="91" parent="31" name="one_user_id">
+    <column id="104" parent="31" name="creationtime">
       <Position>2</Position>
       <DataType>text|0s</DataType>
-      <StateNumber>2610</StateNumber>
+      <NotNull>1</NotNull>
+      <StateNumber>5358</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="92" parent="31" name="two_user_id">
-      <Position>3</Position>
-      <DataType>text|0s</DataType>
-      <StateNumber>2610</StateNumber>
-      <TypeId>25</TypeId>
-    </column>
-    <index id="93" parent="31" name="dialog_pkey">
-      <ObjectId>17430</ObjectId>
+    <index id="105" parent="31" name="dialog_pk">
+      <ObjectId>17826</ObjectId>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="94" parent="31" name="dialog_pkey">
-      <ObjectId>17431</ObjectId>
+    <key id="106" parent="31" name="dialog_pk">
+      <ObjectId>17827</ObjectId>
       <ColNames>id</ColNames>
-      <UnderlyingIndexName>dialog_pkey</UnderlyingIndexName>
+      <UnderlyingIndexName>dialog_pk</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="95" parent="31" name="dialog_one_user_id_fkey">
+    <foreign-key id="107" parent="31" name="dialog_one_user_id_fkey">
       <ObjectId>17432</ObjectId>
-      <ColNames>one_user_id</ColNames>
+      <ColNames>creationtime</ColNames>
       <RefTableId>17051</RefTableId>
       <RefColPositions>1</RefColPositions>
       <RefTableName>users</RefTableName>
@@ -596,56 +657,91 @@ projectid</ColNames>
       <RefColNames>login</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="96" parent="31" name="dialog_two_user_id_fkey">
-      <ObjectId>17437</ObjectId>
-      <ColNames>two_user_id</ColNames>
+    <column id="108" parent="32" name="dialog_id">
+      <Position>1</Position>
+      <DataType>text|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>5363</StateNumber>
+      <TypeId>25</TypeId>
+    </column>
+    <column id="109" parent="32" name="user_id">
+      <Position>2</Position>
+      <DataType>text|0s</DataType>
+      <NotNull>1</NotNull>
+      <StateNumber>5363</StateNumber>
+      <TypeId>25</TypeId>
+    </column>
+    <index id="110" parent="32" name="dialog_users_pk">
+      <ObjectId>17845</ObjectId>
+      <ColNames>dialog_id
+user_id</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="111" parent="32" name="dialog_users_pk">
+      <ObjectId>17846</ObjectId>
+      <ColNames>dialog_id
+user_id</ColNames>
+      <UnderlyingIndexName>dialog_users_pk</UnderlyingIndexName>
+      <Primary>1</Primary>
+    </key>
+    <foreign-key id="112" parent="32" name="dialog_users__id_fk">
+      <ObjectId>17847</ObjectId>
+      <ColNames>dialog_id</ColNames>
+      <RefTableId>17424</RefTableId>
+      <RefColPositions>1</RefColPositions>
+      <RefTableName>dialog</RefTableName>
+      <RefKeyName>dialog_pk</RefKeyName>
+      <RefColNames>id</RefColNames>
+    </foreign-key>
+    <foreign-key id="113" parent="32" name="dialog_users__login_fk">
+      <ObjectId>17852</ObjectId>
+      <ColNames>user_id</ColNames>
       <RefTableId>17051</RefTableId>
       <RefColPositions>1</RefColPositions>
       <RefTableName>users</RefTableName>
       <RefKeyName>users_pkey</RefKeyName>
       <RefColNames>login</RefColNames>
-      <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="97" parent="32" name="login">
+    <column id="114" parent="33" name="login">
       <Position>1</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>2702</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="98" parent="32" name="projectid">
+    <column id="115" parent="33" name="projectid">
       <Position>2</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>2702</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="99" parent="32" name="value">
+    <column id="116" parent="33" name="value">
       <Position>3</Position>
       <DataType>double precision|0s</DataType>
       <StateNumber>3695</StateNumber>
       <TypeId>701</TypeId>
     </column>
-    <column id="100" parent="32" name="text">
+    <column id="117" parent="33" name="text">
       <Position>4</Position>
       <DataType>text|0s</DataType>
       <StateNumber>2702</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <index id="101" parent="32" name="donaters_pk">
+    <index id="118" parent="33" name="donaters_pk">
       <ObjectId>17498</ObjectId>
       <ColNames>login
 projectid</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="102" parent="32" name="donaters_pk">
+    <key id="119" parent="33" name="donaters_pk">
       <ObjectId>17499</ObjectId>
       <ColNames>login
 projectid</ColNames>
       <UnderlyingIndexName>donaters_pk</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="103" parent="32" name="donaters_login_fkey">
+    <foreign-key id="120" parent="33" name="donaters_login_fkey">
       <ObjectId>17633</ObjectId>
       <ColNames>login</ColNames>
       <RefTableId>17051</RefTableId>
@@ -655,7 +751,7 @@ projectid</ColNames>
       <RefColNames>login</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="104" parent="32" name="donaters_projectid_fkey">
+    <foreign-key id="121" parent="33" name="donaters_projectid_fkey">
       <ObjectId>17638</ObjectId>
       <ColNames>projectid</ColNames>
       <RefTableId>17061</RefTableId>
@@ -665,34 +761,34 @@ projectid</ColNames>
       <RefColNames>projectid</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="105" parent="33" name="login">
+    <column id="122" parent="34" name="login">
       <Position>1</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>2609</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="106" parent="33" name="follower">
+    <column id="123" parent="34" name="follower">
       <Position>2</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>2609</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <index id="107" parent="33" name="followers_pkey">
+    <index id="124" parent="34" name="followers_pkey">
       <ObjectId>17412</ObjectId>
       <ColNames>login
 follower</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="108" parent="33" name="followers_pkey">
+    <key id="125" parent="34" name="followers_pkey">
       <ObjectId>17413</ObjectId>
       <ColNames>login
 follower</ColNames>
       <UnderlyingIndexName>followers_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="109" parent="33" name="followers_login_fkey">
+    <foreign-key id="126" parent="34" name="followers_login_fkey">
       <ObjectId>17568</ObjectId>
       <ColNames>login</ColNames>
       <RefTableId>17051</RefTableId>
@@ -702,7 +798,7 @@ follower</ColNames>
       <RefColNames>login</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="110" parent="33" name="followers_follower_fkey">
+    <foreign-key id="127" parent="34" name="followers_follower_fkey">
       <ObjectId>17573</ObjectId>
       <ColNames>follower</ColNames>
       <RefTableId>17051</RefTableId>
@@ -712,43 +808,37 @@ follower</ColNames>
       <RefColNames>login</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="111" parent="34" name="text">
+    <column id="128" parent="35" name="text">
       <Position>2</Position>
       <DataType>text|0s</DataType>
       <StateNumber>2611</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="112" parent="34" name="dialog_id">
+    <column id="129" parent="35" name="dialog_id">
       <Position>3</Position>
       <DataType>text|0s</DataType>
       <StateNumber>2611</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="113" parent="34" name="user_id">
+    <column id="130" parent="35" name="sender">
       <Position>4</Position>
       <DataType>text|0s</DataType>
-      <StateNumber>2611</StateNumber>
+      <StateNumber>5349</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="114" parent="34" name="to_user_id">
-      <Position>5</Position>
-      <DataType>text|0s</DataType>
-      <StateNumber>2611</StateNumber>
-      <TypeId>25</TypeId>
-    </column>
-    <column id="115" parent="34" name="isread">
+    <column id="131" parent="35" name="isread">
       <Position>6</Position>
       <DataType>boolean|0s</DataType>
       <StateNumber>2611</StateNumber>
       <TypeId>16</TypeId>
     </column>
-    <column id="116" parent="34" name="time">
+    <column id="132" parent="35" name="time">
       <Position>7</Position>
       <DataType>timestamp|0s</DataType>
       <StateNumber>2611</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="117" parent="34" name="id">
+    <column id="133" parent="35" name="id">
       <Position>8</Position>
       <DataType>integer|0s</DataType>
       <NotNull>1</NotNull>
@@ -757,30 +847,29 @@ follower</ColNames>
       <TypeId>23</TypeId>
       <SequenceName>message_id_seq</SequenceName>
     </column>
-    <index id="118" parent="34" name="message_pk">
+    <index id="134" parent="35" name="message_pk">
       <ObjectId>17566</ObjectId>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="119" parent="34" name="message_pk">
+    <key id="135" parent="35" name="message_pk">
       <ObjectId>17567</ObjectId>
       <ColNames>id</ColNames>
       <UnderlyingIndexName>message_pk</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="120" parent="34" name="massage_dialog_id_fkey">
-      <ObjectId>17450</ObjectId>
+    <foreign-key id="136" parent="35" name="messa">
+      <ObjectId>17857</ObjectId>
       <ColNames>dialog_id</ColNames>
       <RefTableId>17424</RefTableId>
       <RefColPositions>1</RefColPositions>
       <RefTableName>dialog</RefTableName>
-      <RefKeyName>dialog_pkey</RefKeyName>
+      <RefKeyName>dialog_pk</RefKeyName>
       <RefColNames>id</RefColNames>
-      <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="121" parent="34" name="massage_user_id_fkey">
+    <foreign-key id="137" parent="35" name="massage_user_id_fkey">
       <ObjectId>17455</ObjectId>
-      <ColNames>user_id</ColNames>
+      <ColNames>sender</ColNames>
       <RefTableId>17051</RefTableId>
       <RefColPositions>1</RefColPositions>
       <RefTableName>users</RefTableName>
@@ -788,65 +877,49 @@ follower</ColNames>
       <RefColNames>login</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="122" parent="34" name="massage_to_user_id_fkey">
-      <ObjectId>17460</ObjectId>
-      <ColNames>to_user_id</ColNames>
-      <RefTableId>17051</RefTableId>
-      <RefColPositions>1</RefColPositions>
-      <RefTableName>users</RefTableName>
-      <RefKeyName>users_pkey</RefKeyName>
-      <RefColNames>login</RefColNames>
-      <OnDelete>cascade</OnDelete>
-    </foreign-key>
-    <column id="123" parent="35" name="id">
+    <column id="138" parent="36" name="id">
       <Position>1</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>2703</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="124" parent="35" name="projectid">
+    <column id="139" parent="36" name="projectid">
       <Position>2</Position>
       <DataType>text|0s</DataType>
       <StateNumber>2703</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="125" parent="35" name="text">
+    <column id="140" parent="36" name="text">
       <Position>3</Position>
       <DataType>text|0s</DataType>
       <StateNumber>2703</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="126" parent="35" name="time">
+    <column id="141" parent="36" name="time">
       <Position>4</Position>
       <DataType>timestamp|0s</DataType>
       <StateNumber>2703</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <column id="127" parent="35" name="filepath">
+    <column id="142" parent="36" name="filepath">
       <Position>5</Position>
       <DataType>text|0s</DataType>
       <StateNumber>2703</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="128" parent="35" name="project_projectid">
-      <Position>6</Position>
-      <DataType>varchar(255)|0s</DataType>
-      <StateNumber>5329</StateNumber>
-      <TypeId>1043</TypeId>
-    </column>
-    <index id="129" parent="35" name="projectposts_pkey">
+    <index id="143" parent="36" name="projectposts_pkey">
       <ObjectId>17516</ObjectId>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="130" parent="35" name="projectposts_pkey">
+    <key id="144" parent="36" name="projectposts_pkey">
       <ObjectId>17517</ObjectId>
       <ColNames>id</ColNames>
       <UnderlyingIndexName>projectposts_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="131" parent="35" name="projectposts_projectid_fkey">
+    <foreign-key id="145" parent="36" name="projectposts_projectid_fkey">
       <ObjectId>17648</ObjectId>
       <ColNames>projectid</ColNames>
       <RefTableId>17061</RefTableId>
@@ -856,7 +929,7 @@ follower</ColNames>
       <RefColNames>projectid</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="132" parent="36" name="projectid">
+    <column id="146" parent="37" name="projectid">
       <Position>1</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
@@ -865,66 +938,66 @@ follower</ColNames>
       <TypeId>25</TypeId>
       <SequenceName>projects_projectid_seq</SequenceName>
     </column>
-    <column id="133" parent="36" name="name">
+    <column id="147" parent="37" name="name">
       <Position>2</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>1005</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="134" parent="36" name="description">
+    <column id="148" parent="37" name="description">
       <Position>3</Position>
       <DataType>text|0s</DataType>
       <StateNumber>1005</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="135" parent="36" name="curbudget">
+    <column id="149" parent="37" name="curbudget">
       <Position>4</Position>
       <DataType>double precision|0s</DataType>
       <StateNumber>2752</StateNumber>
       <TypeId>701</TypeId>
     </column>
-    <column id="136" parent="36" name="goalbudget">
+    <column id="150" parent="37" name="goalbudget">
       <Position>5</Position>
       <DataType>double precision|0s</DataType>
       <StateNumber>2753</StateNumber>
       <TypeId>701</TypeId>
     </column>
-    <column id="137" parent="36" name="cardnumber">
+    <column id="151" parent="37" name="cardnumber">
       <Position>6</Position>
       <DataType>integer|0s</DataType>
       <StateNumber>5303</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <column id="138" parent="36" name="qiwimobilephone">
+    <column id="152" parent="37" name="qiwimobilephone">
       <Position>7</Position>
       <DataType>integer|0s</DataType>
       <StateNumber>5304</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <column id="139" parent="36" name="yamoney">
+    <column id="153" parent="37" name="yamoney">
       <Position>8</Position>
       <DataType>bigint|0s</DataType>
       <StateNumber>5305</StateNumber>
       <TypeId>20</TypeId>
     </column>
-    <index id="140" parent="36" name="project_pkey">
+    <index id="154" parent="37" name="project_pkey">
       <ObjectId>17328</ObjectId>
       <ColNames>projectid</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="141" parent="36" name="project_projectid_uindex">
+    <index id="155" parent="37" name="project_projectid_uindex">
       <ObjectId>17330</ObjectId>
       <ColNames>projectid</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="142" parent="36" name="project_pkey">
+    <key id="156" parent="37" name="project_pkey">
       <ObjectId>17329</ObjectId>
       <ColNames>projectid</ColNames>
       <UnderlyingIndexName>project_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="143" parent="36" name="fk_3695866079404f54af330a00a21">
+    <foreign-key id="157" parent="37" name="fk_3695866079404f54af330a00a21">
       <ObjectId>17725</ObjectId>
       <ColNames>projectid</ColNames>
       <RefTableId>17061</RefTableId>
@@ -933,46 +1006,46 @@ follower</ColNames>
       <RefKeyName>project_pkey</RefKeyName>
       <RefColNames>projectid</RefColNames>
     </foreign-key>
-    <column id="144" parent="37" name="login">
+    <column id="158" parent="38" name="login">
       <Position>1</Position>
       <DataType>varchar(30)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>1017</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="145" parent="37" name="projectid">
+    <column id="159" parent="38" name="projectid">
       <Position>2</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>2519</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="146" parent="37" name="projpos">
+    <column id="160" parent="38" name="projpos">
       <Position>3</Position>
       <DataType>varchar(30)|0s</DataType>
       <StateNumber>3679</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="147" parent="37" name="isrequest">
+    <column id="161" parent="38" name="isrequest">
       <Position>4</Position>
       <DataType>boolean|0s</DataType>
       <StateNumber>1017</StateNumber>
       <TypeId>16</TypeId>
     </column>
-    <index id="148" parent="37" name="requests_pkey">
+    <index id="162" parent="38" name="requests_pkey">
       <ObjectId>17290</ObjectId>
       <ColNames>login
 projectid</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="149" parent="37" name="requests_pkey">
+    <key id="163" parent="38" name="requests_pkey">
       <ObjectId>17291</ObjectId>
       <ColNames>login
 projectid</ColNames>
       <UnderlyingIndexName>requests_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="150" parent="37" name="requests_login_fkey">
+    <foreign-key id="164" parent="38" name="requests_login_fkey">
       <ObjectId>17613</ObjectId>
       <ColNames>login</ColNames>
       <RefTableId>17051</RefTableId>
@@ -982,7 +1055,7 @@ projectid</ColNames>
       <RefColNames>login</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="151" parent="37" name="requests___projectid">
+    <foreign-key id="165" parent="38" name="requests___projectid">
       <ObjectId>17361</ObjectId>
       <ColNames>projectid</ColNames>
       <RefTableId>17061</RefTableId>
@@ -992,124 +1065,124 @@ projectid</ColNames>
       <RefColNames>projectid</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="152" parent="38" name="x">
+    <column id="166" parent="39" name="x">
       <Position>1</Position>
       <DataType>real|0s</DataType>
       <StateNumber>5261</StateNumber>
       <TypeId>700</TypeId>
     </column>
-    <column id="153" parent="38" name="y">
+    <column id="167" parent="39" name="y">
       <Position>2</Position>
       <DataType>real|0s</DataType>
       <StateNumber>5261</StateNumber>
       <TypeId>700</TypeId>
     </column>
-    <column id="154" parent="38" name="r">
+    <column id="168" parent="39" name="r">
       <Position>3</Position>
       <DataType>integer|0s</DataType>
       <StateNumber>5261</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <column id="155" parent="38" name="checking">
+    <column id="169" parent="39" name="checking">
       <Position>4</Position>
       <DataType>text|0s</DataType>
       <StateNumber>5261</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="156" parent="38" name="sessionid">
+    <column id="170" parent="39" name="sessionid">
       <Position>5</Position>
       <DataType>text|0s</DataType>
       <StateNumber>5261</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="157" parent="39" name="x">
+    <column id="171" parent="40" name="x">
       <Position>1</Position>
       <DataType>real|0s</DataType>
       <StateNumber>1157</StateNumber>
       <TypeId>700</TypeId>
     </column>
-    <column id="158" parent="39" name="y">
+    <column id="172" parent="40" name="y">
       <Position>2</Position>
       <DataType>real|0s</DataType>
       <StateNumber>1158</StateNumber>
       <TypeId>700</TypeId>
     </column>
-    <column id="159" parent="39" name="r">
+    <column id="173" parent="40" name="r">
       <Position>3</Position>
       <DataType>integer|0s</DataType>
       <StateNumber>1033</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <column id="160" parent="39" name="checking">
+    <column id="174" parent="40" name="checking">
       <Position>4</Position>
       <DataType>text|0s</DataType>
       <StateNumber>1035</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="161" parent="39" name="sessionid">
+    <column id="175" parent="40" name="sessionid">
       <Position>5</Position>
       <DataType>text|0s</DataType>
       <StateNumber>1039</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="162" parent="40" name="x">
+    <column id="176" parent="41" name="x">
       <Position>1</Position>
       <DataType>real|0s</DataType>
       <StateNumber>5193</StateNumber>
       <TypeId>700</TypeId>
     </column>
-    <column id="163" parent="40" name="y">
+    <column id="177" parent="41" name="y">
       <Position>2</Position>
       <DataType>real|0s</DataType>
       <StateNumber>5193</StateNumber>
       <TypeId>700</TypeId>
     </column>
-    <column id="164" parent="40" name="r">
+    <column id="178" parent="41" name="r">
       <Position>3</Position>
       <DataType>integer|0s</DataType>
       <StateNumber>5193</StateNumber>
       <TypeId>23</TypeId>
     </column>
-    <column id="165" parent="40" name="checking">
+    <column id="179" parent="41" name="checking">
       <Position>4</Position>
       <DataType>text|0s</DataType>
       <StateNumber>5193</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="166" parent="40" name="sessionid">
+    <column id="180" parent="41" name="sessionid">
       <Position>5</Position>
       <DataType>text|0s</DataType>
       <StateNumber>5193</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="167" parent="41" name="login">
+    <column id="181" parent="42" name="login">
       <Position>1</Position>
       <DataType>varchar(30)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>1015</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="168" parent="41" name="projectid">
+    <column id="182" parent="42" name="projectid">
       <Position>2</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>2517</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <index id="169" parent="41" name="subs_pkey">
+    <index id="183" parent="42" name="subs_pkey">
       <ObjectId>17278</ObjectId>
       <ColNames>login
 projectid</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="170" parent="41" name="subs_pkey">
+    <key id="184" parent="42" name="subs_pkey">
       <ObjectId>17279</ObjectId>
       <ColNames>login
 projectid</ColNames>
       <UnderlyingIndexName>subs_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="171" parent="41" name="subs_login_fkey">
+    <foreign-key id="185" parent="42" name="subs_login_fkey">
       <ObjectId>17232</ObjectId>
       <ColNames>login</ColNames>
       <RefTableId>17051</RefTableId>
@@ -1119,7 +1192,7 @@ projectid</ColNames>
       <RefColNames>login</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <foreign-key id="172" parent="41" name="subs___projectid">
+    <foreign-key id="186" parent="42" name="subs___projectid">
       <ObjectId>17356</ObjectId>
       <ColNames>projectid</ColNames>
       <RefTableId>17061</RefTableId>
@@ -1129,49 +1202,49 @@ projectid</ColNames>
       <RefColNames>projectid</RefColNames>
       <OnDelete>cascade</OnDelete>
     </foreign-key>
-    <column id="173" parent="42" name="id">
+    <column id="187" parent="43" name="id">
       <Position>1</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>2615</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="174" parent="42" name="user_id">
+    <column id="188" parent="43" name="user_id">
       <Position>2</Position>
       <DataType>text|0s</DataType>
       <StateNumber>2615</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="175" parent="42" name="text">
+    <column id="189" parent="43" name="text">
       <Position>3</Position>
       <DataType>text|0s</DataType>
       <StateNumber>2615</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="176" parent="42" name="filepath">
+    <column id="190" parent="43" name="filepath">
       <Position>4</Position>
       <DataType>text|0s</DataType>
       <StateNumber>2615</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="177" parent="42" name="time">
+    <column id="191" parent="43" name="time">
       <Position>5</Position>
       <DataType>timestamp|0s</DataType>
       <StateNumber>2615</StateNumber>
       <TypeId>1114</TypeId>
     </column>
-    <index id="178" parent="42" name="userpost_pkey">
+    <index id="192" parent="43" name="userpost_pkey">
       <ObjectId>17471</ObjectId>
       <ColNames>id</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="179" parent="42" name="userpost_pkey">
+    <key id="193" parent="43" name="userpost_pkey">
       <ObjectId>17472</ObjectId>
       <ColNames>id</ColNames>
       <UnderlyingIndexName>userpost_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <foreign-key id="180" parent="42" name="fk_eed0133fbd774ceb921d25b45bf">
+    <foreign-key id="194" parent="43" name="fk_eed0133fbd774ceb921d25b45bf">
       <ObjectId>17742</ObjectId>
       <ColNames>user_id</ColNames>
       <RefTableId>17051</RefTableId>
@@ -1180,126 +1253,126 @@ projectid</ColNames>
       <RefKeyName>users_pkey</RefKeyName>
       <RefColNames>login</RefColNames>
     </foreign-key>
-    <column id="181" parent="43" name="login">
+    <column id="195" parent="44" name="login">
       <Position>1</Position>
       <DataType>varchar(30)|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>1004</StateNumber>
       <TypeId>1043</TypeId>
     </column>
-    <column id="182" parent="43" name="name">
+    <column id="196" parent="44" name="name">
       <Position>2</Position>
       <DataType>text|0s</DataType>
       <NotNull>1</NotNull>
       <StateNumber>1004</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="183" parent="43" name="surname">
+    <column id="197" parent="44" name="surname">
       <Position>3</Position>
       <DataType>text|0s</DataType>
       <StateNumber>1004</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="184" parent="43" name="password">
+    <column id="198" parent="44" name="password">
       <Position>4</Position>
       <DataType>text|0s</DataType>
       <StateNumber>1021</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="185" parent="43" name="imgpath">
+    <column id="199" parent="44" name="imgpath">
       <Position>5</Position>
       <DataType>text|0s</DataType>
       <StateNumber>2542</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <column id="186" parent="43" name="status">
+    <column id="200" parent="44" name="status">
       <Position>6</Position>
       <DataType>text|0s</DataType>
       <StateNumber>4709</StateNumber>
       <TypeId>25</TypeId>
     </column>
-    <index id="187" parent="43" name="users_pkey">
+    <index id="201" parent="44" name="users_pkey">
       <ObjectId>17057</ObjectId>
       <ColNames>login</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="188" parent="43" name="uk_00e08bb38d8b4ec1818ce2e6ca3">
+    <index id="202" parent="44" name="uk_00e08bb38d8b4ec1818ce2e6ca3">
       <ObjectId>17775</ObjectId>
       <ColNames>name</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="189" parent="43" name="uk_04e1387da97747a2b56b06cacf8">
+    <index id="203" parent="44" name="uk_04e1387da97747a2b56b06cacf8">
       <ObjectId>17735</ObjectId>
       <ColNames>name</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="190" parent="43" name="uk_05e8aa630b634d8b811b09a688e">
+    <index id="204" parent="44" name="uk_05e8aa630b634d8b811b09a688e">
       <ObjectId>17754</ObjectId>
       <ColNames>name</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="191" parent="43" name="uk_11b7c8f2af6c4cdd9d91f6947bb">
+    <index id="205" parent="44" name="uk_11b7c8f2af6c4cdd9d91f6947bb">
       <ObjectId>17747</ObjectId>
       <ColNames>name</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="192" parent="43" name="uk_3e425222ae4849ceaa23c3433af">
+    <index id="206" parent="44" name="uk_3e425222ae4849ceaa23c3433af">
       <ObjectId>17768</ObjectId>
       <ColNames>name</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="193" parent="43" name="uk_42d878c0682c4c83816dbf52710">
+    <index id="207" parent="44" name="uk_42d878c0682c4c83816dbf52710">
       <ObjectId>17761</ObjectId>
       <ColNames>name</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="194" parent="43" name="uk_9af353099fa940c79be09ebddbe">
+    <index id="208" parent="44" name="uk_9af353099fa940c79be09ebddbe">
       <ObjectId>17782</ObjectId>
       <ColNames>name</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="195" parent="43" name="users_pkey">
+    <key id="209" parent="44" name="users_pkey">
       <ObjectId>17058</ObjectId>
       <ColNames>login</ColNames>
       <UnderlyingIndexName>users_pkey</UnderlyingIndexName>
       <Primary>1</Primary>
     </key>
-    <key id="196" parent="43" name="uk_00e08bb38d8b4ec1818ce2e6ca3">
+    <key id="210" parent="44" name="uk_00e08bb38d8b4ec1818ce2e6ca3">
       <ObjectId>17776</ObjectId>
       <ColNames>name</ColNames>
       <UnderlyingIndexName>uk_00e08bb38d8b4ec1818ce2e6ca3</UnderlyingIndexName>
     </key>
-    <key id="197" parent="43" name="uk_04e1387da97747a2b56b06cacf8">
+    <key id="211" parent="44" name="uk_04e1387da97747a2b56b06cacf8">
       <ObjectId>17736</ObjectId>
       <ColNames>name</ColNames>
       <UnderlyingIndexName>uk_04e1387da97747a2b56b06cacf8</UnderlyingIndexName>
     </key>
-    <key id="198" parent="43" name="uk_05e8aa630b634d8b811b09a688e">
+    <key id="212" parent="44" name="uk_05e8aa630b634d8b811b09a688e">
       <ObjectId>17755</ObjectId>
       <ColNames>name</ColNames>
       <UnderlyingIndexName>uk_05e8aa630b634d8b811b09a688e</UnderlyingIndexName>
     </key>
-    <key id="199" parent="43" name="uk_11b7c8f2af6c4cdd9d91f6947bb">
+    <key id="213" parent="44" name="uk_11b7c8f2af6c4cdd9d91f6947bb">
       <ObjectId>17748</ObjectId>
       <ColNames>name</ColNames>
       <UnderlyingIndexName>uk_11b7c8f2af6c4cdd9d91f6947bb</UnderlyingIndexName>
     </key>
-    <key id="200" parent="43" name="uk_3e425222ae4849ceaa23c3433af">
+    <key id="214" parent="44" name="uk_3e425222ae4849ceaa23c3433af">
       <ObjectId>17769</ObjectId>
       <ColNames>name</ColNames>
       <UnderlyingIndexName>uk_3e425222ae4849ceaa23c3433af</UnderlyingIndexName>
     </key>
-    <key id="201" parent="43" name="uk_42d878c0682c4c83816dbf52710">
+    <key id="215" parent="44" name="uk_42d878c0682c4c83816dbf52710">
       <ObjectId>17762</ObjectId>
       <ColNames>name</ColNames>
       <UnderlyingIndexName>uk_42d878c0682c4c83816dbf52710</UnderlyingIndexName>
     </key>
-    <key id="202" parent="43" name="uk_9af353099fa940c79be09ebddbe">
+    <key id="216" parent="44" name="uk_9af353099fa940c79be09ebddbe">
       <ObjectId>17783</ObjectId>
       <ColNames>name</ColNames>
       <UnderlyingIndexName>uk_9af353099fa940c79be09ebddbe</UnderlyingIndexName>
     </key>
-    <foreign-key id="203" parent="43" name="fk_a5216a7aa0c44aa9b52f18796a1">
+    <foreign-key id="217" parent="44" name="fk_a5216a7aa0c44aa9b52f18796a1">
       <ObjectId>17705</ObjectId>
       <ColNames>login</ColNames>
       <RefTableId>17085</RefTableId>
@@ -1308,7 +1381,7 @@ projectid</ColNames>
       <RefKeyName>connectiondata_pkey</RefKeyName>
       <RefColNames>login</RefColNames>
     </foreign-key>
-    <foreign-key id="204" parent="43" name="fk_da1856d988bf42fbae0c4d2e84c">
+    <foreign-key id="218" parent="44" name="fk_da1856d988bf42fbae0c4d2e84c">
       <ObjectId>17730</ObjectId>
       <ColNames>login</ColNames>
       <RefTableId>17051</RefTableId>
