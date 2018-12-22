@@ -1,34 +1,20 @@
 package dao;
 
-import entity.UserpostEntity;
-import org.hibernate.LockMode;
-import org.hibernate.query.Query;
+import entity.Userpost;
 import util.DBService;
-
+import javax.persistence.EntityManager;
 import java.util.List;
 
-public class UserpostDAO extends AbstractDao<UserpostEntity,String> {
+public class UserpostDAO extends AbstractDao<Userpost,String> {
+
+    UserpostDAO(){super(Userpost.class);}
 
     @Override
-    public List<UserpostEntity> getAll() {
-        return  DBService.getSessionFactory()
-                .getCurrentSession()
-                .createQuery("from UserpostEntity ", UserpostEntity.class).list();
-    }
-
-    @Override
-    public UserpostEntity getEntityById(String id) {
-        return DBService.getSessionFactory()
-                .getCurrentSession()
-                .get(UserpostEntity.class, id, LockMode.PESSIMISTIC_READ);
-    }
-
-    public List<UserpostEntity> getUserPosts(String login) {
-
-        Query query = DBService.getSessionFactory()
-                .getCurrentSession()
-                .createQuery("from UserpostEntity  where userId= :Loginparam ");
-        query.setParameter("Loginparam",login);
-        return query.list();
+    public List<Userpost> getAll() {
+        EntityManager em= DBService.getEntytiManager();
+        em.getTransaction().begin();
+        List<Userpost> list=em.createNamedQuery("Userpost.getAll").getResultList();
+        em.getTransaction().commit();
+        return list;
     }
 }

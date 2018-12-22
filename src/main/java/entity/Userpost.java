@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(name = "userpost")
+@NamedQuery(name = "Userpost.getAll", query = "SELECT u from Userpost u")
 public class Userpost {
     @Id
     private String id;

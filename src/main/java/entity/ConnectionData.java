@@ -4,6 +4,7 @@ import javax.persistence.*;
 
 @Entity
 @Table(name = "connectiondata", schema = "public", catalog = "multhub")
+@NamedQuery(name = "ConnectionData.getAll", query = "SELECT u from ConnectionData u")
 public class ConnectionData {
     @Id
     private String login;

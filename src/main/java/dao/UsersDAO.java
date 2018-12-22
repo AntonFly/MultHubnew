@@ -19,6 +19,5 @@ public class UsersDAO extends AbstractDao<Users,String> {
             List<Users> list=em.createNamedQuery("Users.getAll").getResultList();
             em.getTransaction().commit();
             return list;
-
     }
 }

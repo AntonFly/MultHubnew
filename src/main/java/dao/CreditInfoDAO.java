@@ -1,26 +1,22 @@
 package dao;
 
-import entity.CreditinfoEntity;
-import org.hibernate.LockMode;
+import entity.Creditinfo;
 import util.DBService;
 
+import javax.persistence.EntityManager;
 import java.util.List;
 
-public class CreditInfoDAO extends AbstractDao<CreditinfoEntity,String> {
+public class CreditInfoDAO extends AbstractDao<Creditinfo,String> {
 
-
-    @Override
-    public List<CreditinfoEntity> getAll() {
-        return  DBService.getSessionFactory()
-                .getCurrentSession()
-                .createQuery("from CreditinfoEntity ", CreditinfoEntity.class).list();
-    }
+    CreditInfoDAO(){super(Creditinfo.class);}
 
     @Override
-    public CreditinfoEntity getEntityById(String id) {
-        return DBService.getSessionFactory()
-                .getCurrentSession()
-                .get(CreditinfoEntity.class, id, LockMode.PESSIMISTIC_READ);
+    public List<Creditinfo> getAll() {
+        EntityManager em= DBService.getEntytiManager();
+        em.getTransaction().begin();
+        List<Creditinfo> list=em.createNamedQuery("Creditinfo.getAll").getResultList();
+        em.getTransaction().commit();
+        return list;
     }
 
 }

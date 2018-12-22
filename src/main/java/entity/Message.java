@@ -5,6 +5,7 @@ import java.sql.Timestamp;
 
 @Entity
 @Table(name = "message", schema = "public", catalog = "multhub")
+@NamedQuery(name = "Message.getAll", query = "SELECT u from Message u")
 public class Message {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -5,6 +5,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "dialog")
+@NamedQuery(name = "Dialog.getAll", query = "SELECT u from Dialog u")
 public class Dialog {
     @Id
     private String id;

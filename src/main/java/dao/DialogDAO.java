@@ -1,44 +1,23 @@
 package dao;
 
-import entity.DialogEntity;
-import org.hibernate.LockMode;
-import org.hibernate.query.Query;
+import entity.Dialog;
 import util.DBService;
 
-import java.io.Serializable;
+import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.UUID;
 
-public class DialogDAO extends AbstractDao<DialogEntity,String> {
-    public DialogDAO(){}
+public class DialogDAO extends AbstractDao<Dialog,String> {
+    DialogDAO(){super(Dialog.class);}
 
     @Override
-    public List<DialogEntity> getAll() {
-        return  DBService.getSessionFactory()
-                .getCurrentSession()
-                .createQuery("from DialogEntity ", DialogEntity.class).list();
+    public List<Dialog> getAll() {
+        EntityManager em= DBService.getEntytiManager();
+        em.getTransaction().begin();
+        List<Dialog> list=em.createNamedQuery("Dialog.getAll").getResultList();
+        em.getTransaction().commit();
+        return list;
     }
 
-    @Override
-    public DialogEntity getEntityById(String id) {
-        return DBService.getSessionFactory()
-                .getCurrentSession()
-                .get(DialogEntity.class, id, LockMode.PESSIMISTIC_READ);
-    }
 
-    public Serializable create(DialogEntity entity){
-        entity.setId(UUID.nameUUIDFromBytes((entity.getOneUserId()+entity.getTwoUserId()).getBytes()).toString());
-        return  DBService.getSessionFactory()
-                .getCurrentSession()
-                .save(entity);
-    }
-
-    public List<DialogEntity> getUserDialogs(String login) {
-
-        Query query = DBService.getSessionFactory()
-                .getCurrentSession()
-                .createQuery("from DialogEntity  where oneUserId= :Loginparam  or twoUserId =:Loginparam");
-        query.setParameter("Loginparam",login);
-        return query.list();
-    }
 }

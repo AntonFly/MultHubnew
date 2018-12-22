@@ -5,6 +5,7 @@ import javax.persistence.*;
 @Entity
 @Table(name = "followers", schema = "public", catalog = "multhub")
 @IdClass(FollowersPK.class)
+@NamedQuery(name = "Followers.getAll", query = "SELECT u from Followers u")
 public class Followers {
     @Id
     @ManyToOne( fetch = FetchType.LAZY)

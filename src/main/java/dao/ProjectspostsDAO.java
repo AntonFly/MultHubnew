@@ -1,57 +1,31 @@
 package dao;
 
-import entity.ProjectpostsEntity;
-import org.hibernate.LockMode;
-import org.hibernate.SQLQuery;
-import org.hibernate.query.Query;
+import entity.Projectposts;
 import util.DBService;
 
-import java.io.Serializable;
+import javax.persistence.EntityManager;
 import java.util.List;
 import java.util.UUID;
 
-public class ProjectspostsDAO extends AbstractDao<ProjectpostsEntity,String> {
+public class ProjectspostsDAO extends AbstractDao<Projectposts,String> {
+    ProjectspostsDAO() {super(Projectposts.class);}
+
     @Override
-    public List<ProjectpostsEntity> getAll() {
-        return  DBService.getSessionFactory()
-                .getCurrentSession()
-                .createQuery("from CommitsEntity ", ProjectpostsEntity.class).list();
+    public List<Projectposts> getAll() {
+        EntityManager em = DBService.getEntytiManager();
+        em.getTransaction().begin();
+        List<Projectposts> list = em.createNamedQuery("Projectpost.getAll").getResultList();
+        em.getTransaction().commit();
+        return list;
     }
 
-    /**
-     *
-     * do not use
-     */
     @Override
-    public ProjectpostsEntity getEntityById(String id) {
-        return DBService.getSessionFactory()
-                .getCurrentSession()
-                .get(ProjectpostsEntity.class,id, LockMode.PESSIMISTIC_READ);
-    }
-
-    public Serializable create(ProjectpostsEntity entity){
+    public void create(Projectposts entity) {
         entity.setId( UUID.nameUUIDFromBytes(entity.getText().getBytes()).toString());
-        return  DBService.getSessionFactory()
-                .getCurrentSession()
-                .save(entity);
-    }
 
-    public ProjectpostsEntity getProjLastPost(String projId){
-        SQLQuery query= DBService.getSessionFactory()
-                .getCurrentSession()
-                .createSQLQuery("Select * from projectposts where projectid='"+projId+"' and time in(SELECT max(time ) from projectposts where projectid='"+projId+"');");
-        query.addEntity(ProjectpostsEntity.class);
-
-        return (ProjectpostsEntity) query.list().get(0);
-        }
-
-
-    public List<ProjectpostsEntity> getProjectPosts(String id){
-        Query query = DBService.getSessionFactory()
-                .getCurrentSession()
-                .createQuery("from ProjectpostsEntity where projectid =:paramId ");
-        query.setParameter("paramId",id);
-
-        return query.getResultList();
+        EntityManager em= DBService.getEntytiManager();
+        em.getTransaction().begin();
+        em.persist(entity);
+        em.getTransaction().commit();
     }
 }

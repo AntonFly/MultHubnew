@@ -1,27 +1,21 @@
 package dao;
 
-import entity.ConnectiondataEntity;
-import org.hibernate.LockMode;
+import entity.ConnectionData;
 import util.DBService;
-
+import javax.persistence.EntityManager;
 import java.util.List;
 
-public class ConnectiondataDao extends AbstractDao<ConnectiondataEntity,String> {
-    @Override
-    public List<ConnectiondataEntity> getAll() {
-        return  DBService.getSessionFactory()
-                .getCurrentSession()
-                .createQuery("from ConnectiondataEntity ", ConnectiondataEntity.class).list();
-
-    }
+public class ConnectiondataDao extends AbstractDao<ConnectionData,String> {
+    ConnectiondataDao(){super(ConnectionData.class);}
 
     @Override
-    public ConnectiondataEntity getEntityById(String id) {
-        return DBService.getSessionFactory()
-                .getCurrentSession()
-                .get(ConnectiondataEntity.class, id, LockMode.PESSIMISTIC_READ);
+    public List<ConnectionData> getAll() {
+        EntityManager em= DBService.getEntytiManager();
+        em.getTransaction().begin();
+        List<ConnectionData> list=em.createNamedQuery("ConnectionData.getAll").getResultList();
+        em.getTransaction().commit();
+        return list;
     }
-
 
 
 
