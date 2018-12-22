@@ -55,8 +55,29 @@ public class Projects {
     )
     private List<Requests> requests;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "id.projectid")
+    private List<Developers> developers;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name="projectid")
+    private List<Comments> comments;
     /////////////////////////////////////////////////////////////////////////////////////////
 
+    public List<Comments> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comments> comments) {
+        this.comments = comments;
+    }
+
+    public List<Developers> getDevelopers() {
+        return developers;
+    }
+
+    public void setDevelopers(List<Developers> developers) {
+        this.developers = developers;
+    }
 
     public List<Commits> getCommits() {
         return commits;

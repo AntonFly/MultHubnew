@@ -5,34 +5,50 @@ import javax.persistence.*;
 @Entity
 @Table(name = "commitsfile")
 @NamedQuery(name = "Commitsfile.getAll", query = "SELECT u from Commitsfile u")
-@IdClass(CommitsfileEntityPK.class)
+@AssociationOverrides({
+        @AssociationOverride(name = "id.commitid",
+                joinColumns = @JoinColumn(name = "commitid"))
+        })
 public class Commitsfile {
     public Commitsfile(){}
 
-    @Id
-    private String filename;
+    @EmbeddedId
+    private CommitsfileEntityPK id;
     @Column
     private String filepath;
-    @Id
-    @Column(name = "commitid")
-    private String commitid;
 
-    @ManyToOne( fetch = FetchType.EAGER)
-    @JoinColumn(
-            name = "commitid",
-            referencedColumnName = "id",
-            insertable = false,
-            updatable = false
-    )
-    private Commits commits;
+    //@ManyToOne( fetch = FetchType.EAGER)
+//    @JoinColumn(
+//            name = "commitid",
+//            referencedColumnName = "id",
+//            insertable = false,
+//            updatable = false
+//    )
+    //private Commits commits;
 
+    public CommitsfileEntityPK getId() {
+        return id;
+    }
+
+    public void setId(CommitsfileEntityPK id) {
+        this.id = id;
+    }
+    @Transient
     public String getFilename() {
-        return filename;
+        return getId().getFilename();
+    }
+    public void setFilename(String filename) {
+        getId().setFilename(filename);
     }
 
-    public void setFilename(String filename) {
-        this.filename = filename;
+    @Transient
+    public void setCommitid(Commits commitid) {
+        getId().setCommitid(commitid);
     }
+
+//    public Commits getCommits() {
+//        return commits;
+//    }
 
     public String getFilepath() {
         return filepath;
@@ -42,20 +58,12 @@ public class Commitsfile {
         this.filepath = filepath;
     }
 
-    public String getCommitid() {
-        return commitid;
+    public Commits getCommitid() {
+        return getId().getCommitid();
     }
 
-    public void setCommitid(String commitid) {
-        this.commitid = commitid;
-    }
-
-    public Commits getCommits() {
-        return commits;
-    }
-
-    public void setCommits(Commits commits) {
-        this.commits = commits;
-    }
+//    public void setCommits(Commits commits) {
+//        this.commits = commits;
+//    }
 }
 

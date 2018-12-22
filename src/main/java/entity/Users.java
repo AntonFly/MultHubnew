@@ -51,6 +51,21 @@ public class Users {
     )
     private List<Dialog> dialogs;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "id.login")
+    private List<Developers> developers;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name="login")
+    private List<Comments> comments;
+
+    public List<Developers> getDevelopers() {
+        return developers;
+    }
+
+    public void setDevelopers(List<Developers> developers) {
+        this.developers = developers;
+    }
+
     @ManyToMany(mappedBy = "subscribers")
     private List<Projects> subscriprions;
 

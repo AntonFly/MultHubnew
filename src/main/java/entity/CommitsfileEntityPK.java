@@ -1,31 +1,25 @@
 package entity;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
 
-
+@Embeddable
 public class CommitsfileEntityPK implements Serializable {
     private String filename;
-    private String commitid;
+    @ManyToOne
+    private Commits commitid;
 
-    @Column(name = "filename", nullable = false, length = -1)
-    @Id
     public String getFilename() {
         return filename;
     }
-
     public void setFilename(String filename) {
         this.filename = filename;
     }
 
-    @Column(name = "commitid", nullable = false, length = -1)
-    @Id
-    public String getCommitid() {
+    public Commits getCommitid() {
         return commitid;
     }
-
-    public void setCommitid(String commitid) {
+    public void setCommitid(Commits commitid) {
         this.commitid = commitid;
     }
 
