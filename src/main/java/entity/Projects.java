@@ -1,6 +1,7 @@
 package entity;
 
 import javax.persistence.*;
+import java.util.List;
 
 
 @Entity
@@ -19,9 +20,46 @@ public class Projects {
     private Double curbudget;
     @Column
     private Double goalbudget;
+    /////////////////////////////////////////////////////////////////////////////////////////
     @OneToOne(optional = false,cascade = CascadeType.ALL)
     @JoinColumn(name ="projectid")
     private Creditinfo credit;
+
+    @OneToMany( cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name="projectid")
+    private List<Projectposts> posts;
+
+    @OneToMany( cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name="projectid")
+    private List<Commits> commits;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "projectid", cascade=CascadeType.ALL)
+    private List<Donaters> donaters;
+
+    /////////////////////////////////////////////////////////////////////////////////////////
+    public List<Donaters> getDonaters() {
+        return donaters;
+    }
+
+    public void setDonaters(List<Donaters> donaters) {
+        this.donaters = donaters;
+    }
+
+    public List<Commits> getCommits() {
+        return commits;
+    }
+
+    public void setCommits(List<Commits> commits) {
+        this.commits = commits;
+    }
+
+    public List<Projectposts> getPosts() {
+        return posts;
+    }
+
+    public void setPosts(List<Projectposts> posts) {
+        this.posts = posts;
+    }
 
     public String getProjectid() {
         return projectid;
