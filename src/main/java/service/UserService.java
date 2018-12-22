@@ -1,6 +1,7 @@
 package service;
 
 import dao.*;
+import entity.Comments;
 import entity.Projpos;
 import entity.RequestsEntityPK;
 import entity.SubsEntityPK;
@@ -10,6 +11,7 @@ import org.hibernate.Transaction;
 import util.DBService;
 
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceException;
 import java.util.List;
 
 public class UserService extends AbstractService<UsersEntity,String> {
@@ -250,14 +252,11 @@ public class UserService extends AbstractService<UsersEntity,String> {
      * @return  in case of success TRUE
      * @throws DBException Hiber exceptions replaced with
      */
-     public boolean deleteComment(CommentsEntity comment) throws DBException{
-         Transaction transaction = DBService.getTransaction();
+     public boolean deleteComment(Comments comment) throws DBException{
          try{
              CommentsDAO commentsDAO = DaoFactory.getCommentsDAO();
              commentsDAO.delete(comment);
-             transaction.commit();
-         }catch (HibernateException | NoResultException e){
-             DBService.transactionRollback(transaction);
+         }catch (PersistenceException e){
              throw new DBException(e);
          }
          return true;
