@@ -6,6 +6,9 @@ import java.io.Serializable;
 @Embeddable
 public class DevelopersEntityPK implements Serializable {
 
+    public DevelopersEntityPK(){}
+    public DevelopersEntityPK(Users users,Projects projects){this.login=users;this.projectid=projects;}
+
     @ManyToOne
     private Users login;
 

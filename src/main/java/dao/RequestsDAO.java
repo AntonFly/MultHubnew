@@ -1,10 +1,10 @@
 package dao;
 
-import entity.Followers;
-import entity.FollowersPK;
+import entity.Projects;
 import entity.Requests;
 
 import entity.RequestsEntityPK;
+import entity.Users;
 import util.DBService;
 
 import javax.persistence.EntityManager;
@@ -21,11 +21,23 @@ public class RequestsDAO extends AbstractDao<Requests,String> {
         em.getTransaction().commit();
         return list;
     }
-    public void delete(RequestsEntityPK pk) {
+
+
+    public Requests getEntityById(Users user, Projects project) {
         EntityManager em= DBService.getEntytiManager();
         em.getTransaction().begin();
-        Requests entity = em.find(param,pk);
+        Requests entity = em.find(param,new RequestsEntityPK(user,project));
+        em.getTransaction().commit();
+        return entity;
+    }
+
+
+    public void delete(RequestsEntityPK developersEntityPK) {
+        EntityManager em= DBService.getEntytiManager();
+        em.getTransaction().begin();
+        Requests entity = em.find(param,developersEntityPK);
         em.remove(entity);
         em.getTransaction().commit();
+
     }
 }

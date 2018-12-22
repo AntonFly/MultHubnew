@@ -1,34 +1,25 @@
 package service;
 
 import dao.*;
-import entity.Approved;
-import entity.CommitsfileEntityPK;
-import entity.DevelopersEntityPK;
-import entity.RequestsEntityPK;
+import entity.*;
 import exception.DBException;
-import org.hibernate.HibernateException;
 import org.hibernate.Transaction;
 import util.DBService;
-
-import javax.persistence.NoResultException;
+import javax.persistence.PersistenceException;
 import java.util.List;
 import java.util.UUID;
 
 
-public class ProjectService extends AbstractService<ProjectsEntity,String> {
+public class ProjectService extends AbstractService<Projects,String> {
+
+
     @Override
-    public List<ProjectsEntity> getAll() throws DBException {
-        Transaction transaction = DBService.getTransaction();
+    public List<Projects> getAll() throws DBException {
         try {
             ProjectsDAO dao = DaoFactory.getProjectsDAO();
-            List<ProjectsEntity> list =  dao.getAll();
-
-            transaction.commit();
+            List<Projects> list =  dao.getAll();
             return list;
-//            logger.fine("Create item " + user);
-
-        } catch (HibernateException | NoResultException e) {
-            DBService.transactionRollback(transaction);
+        } catch (PersistenceException e) {
             throw new DBException(e);
         }
 
@@ -41,18 +32,11 @@ public class ProjectService extends AbstractService<ProjectsEntity,String> {
      * @throws DBException Hiber exceptions replaced with
      */
     @Override
-    public boolean create(ProjectsEntity project) throws DBException {
-        Transaction transaction = DBService.getTransaction();
+    public boolean create(Projects project) throws DBException {
         try {
             ProjectsDAO dao = DaoFactory.getProjectsDAO();
             dao.create(project);
-
-            transaction.commit();
-
-//            logger.fine("Create item " + user);
-
-        } catch (HibernateException | NoResultException e) {
-            DBService.transactionRollback(transaction);
+        } catch (PersistenceException e) {
             throw new DBException(e);
         }
         return true;
@@ -66,18 +50,11 @@ public class ProjectService extends AbstractService<ProjectsEntity,String> {
      */
     @Override
     @Deprecated
-    public boolean update(ProjectsEntity item) throws DBException {
-        Transaction transaction = DBService.getTransaction();
+    public boolean update(Projects item) throws DBException {
         try {
             ProjectsDAO dao = DaoFactory.getProjectsDAO();
             dao.update(item);
-
-            transaction.commit();
-
-//            logger.fine("Create item " + user);
-
-        } catch (HibernateException | NoResultException e) {
-            DBService.transactionRollback(transaction);
+        } catch (PersistenceException e) {
             throw new DBException(e);
         }
         return true;
@@ -85,32 +62,29 @@ public class ProjectService extends AbstractService<ProjectsEntity,String> {
 
 
     @Override
-    public ProjectsEntity get(String id) throws DBException {
-        Transaction transaction = DBService.getTransaction();
+    public Projects get(String id) throws DBException {
         try {
             ProjectsDAO dao = DaoFactory.getProjectsDAO();
-            ProjectsEntity pe =dao.getEntityById(id);
-            transaction.commit();
+            Projects pe =dao.getEntityById(id);
             return pe;
-        }catch (HibernateException | NoResultException e) {
-            DBService.transactionRollback(transaction);
+        }catch (PersistenceException e) {
             throw new DBException(e);
         }
     }
 
     @Override
     public boolean delete(String id) throws DBException {
-        Transaction transaction = DBService.getTransaction();
         try{
             ProjectsDAO dao= DaoFactory.getProjectsDAO();
             dao.delete(id);
-            transaction.commit();
-        } catch (HibernateException | NoResultException e) {
-            DBService.transactionRollback(transaction);
+        } catch (PersistenceException e) {
             throw new DBException(e);
         }
         return true;
     }
+/////////////////////////////////////////////////////////////////////////////////
+
+
 
     /**
      *  adds new row in developers
@@ -118,14 +92,11 @@ public class ProjectService extends AbstractService<ProjectsEntity,String> {
      * @return true in case of success
      * @throws DBException Hiber exceptions replaced with
      */
-    public boolean addDeveloper(DevelopersEntity developersEntity) throws DBException{
-        Transaction transaction = DBService.getTransaction();
+    public boolean addDeveloper(Developers developersEntity) throws DBException{
         try{
             DevelopersDAO developersDAO = DaoFactory.getDevelopersDAO();
             developersDAO.create(developersEntity);
-            transaction.commit();
-        } catch (HibernateException | NoResultException e) {
-            DBService.transactionRollback(transaction);
+        } catch (PersistenceException e) {
             throw new DBException(e);
         }
         return true;
@@ -137,8 +108,7 @@ public class ProjectService extends AbstractService<ProjectsEntity,String> {
      * @return true in case of success
      * @throws DBException Hiber exceptions replaced with
      */
-    public boolean deleteDeveloper(DevelopersEntity developersEntity) throws DBException{
-        Transaction transaction = DBService.getTransaction();
+    public boolean deleteDeveloper(Developers developersEntity) throws DBException{
         DevelopersEntityPK developersEntityPK = new DevelopersEntityPK();
         developersEntityPK.setLogin(developersEntity.getLogin());
         developersEntityPK.setProjectid(developersEntity.getProjectid());
@@ -146,9 +116,7 @@ public class ProjectService extends AbstractService<ProjectsEntity,String> {
         try{
             DevelopersDAO developersDAO = DaoFactory.getDevelopersDAO();
             developersDAO.delete(developersEntityPK);
-            transaction.commit();
-        } catch (HibernateException | NoResultException e) {
-            DBService.transactionRollback(transaction);
+        } catch (PersistenceException e) {
             throw new DBException(e);
         }
         return true;
@@ -160,15 +128,12 @@ public class ProjectService extends AbstractService<ProjectsEntity,String> {
      * @return true in case of success
      * @throws DBException Hiber exceptions replaced with
      */
-    public boolean sendInviteToProject(RequestsEntity requestsEntity)throws DBException{
-        Transaction transaction = DBService.getTransaction();
+    public boolean sendInviteToProject(Requests requestsEntity)throws DBException{
         requestsEntity.setIsrequest(false);
         try{
             RequestsDAO requestsDAO = DaoFactory.getRequestsDAO();
             requestsDAO.create(requestsEntity);
-            transaction.commit();
-        } catch (HibernateException | NoResultException e) {
-            DBService.transactionRollback(transaction);
+        } catch (PersistenceException e) {
             throw new DBException(e);
         }
         return true;
@@ -181,15 +146,11 @@ public class ProjectService extends AbstractService<ProjectsEntity,String> {
      * @return true in case of success
      * @throws DBException Hiber exceptions replaced with
      */
-    public boolean addPostToBlog(ProjectpostsEntity projectpostsEntity)throws DBException{
-        Transaction transaction = DBService.getTransaction();
-
+    public boolean addPostToBlog(Projectposts projectpostsEntity)throws DBException{
         try{
             ProjectspostsDAO projectspostsDAO = DaoFactory.getProjectspostsDAO();
             projectspostsDAO.create(projectpostsEntity);
-            transaction.commit();
-        } catch (HibernateException | NoResultException e) {
-            DBService.transactionRollback(transaction);
+        } catch (PersistenceException e) {
             throw new DBException(e);
         }
         return true;
@@ -201,15 +162,11 @@ public class ProjectService extends AbstractService<ProjectsEntity,String> {
      * @return true in case of success
      * @throws DBException Hiber exceptions replaced with
      */
-    public boolean deletePostInBlog(ProjectpostsEntity projectpostsEntity) throws DBException{
-        Transaction transaction = DBService.getTransaction();
+    public boolean deletePostInBlog(Projectposts projectpostsEntity) throws DBException{
         try{
             ProjectspostsDAO projectspostsDAO = DaoFactory.getProjectspostsDAO();
             projectspostsDAO.delete(UUID.nameUUIDFromBytes(projectpostsEntity.getText().getBytes()).toString());
-
-            transaction.commit();
-        } catch (HibernateException | NoResultException e) {
-            DBService.transactionRollback(transaction);
+        } catch (PersistenceException e) {
             throw new DBException(e);
         }
         return true;
@@ -221,24 +178,20 @@ public class ProjectService extends AbstractService<ProjectsEntity,String> {
      * @return true in case of success
      * @throws DBException Hiber exceptions replaced with
      */
-    public boolean approveRequest(RequestsEntity requestsEntity)throws DBException{
-        Transaction transaction = null;
+    public boolean approveRequest(Requests requestsEntity)throws DBException{
         RequestsEntityPK requestsEntityPK = new RequestsEntityPK();
         requestsEntityPK.setLogin(requestsEntity.getLogin());
         requestsEntityPK.setProjectid(requestsEntity.getProjectid());
         try{
-            DevelopersEntity developersEntity = new DevelopersEntity();
+            Developers developersEntity = new Developers();
             developersEntity.setProjectid(requestsEntity.getProjectid());
             developersEntity.setLogin(requestsEntity.getLogin());
             developersEntity.setDescription("empty");
             developersEntity.setProjpos(requestsEntity.getProjpos());
             addDeveloper(developersEntity);
-            transaction = DBService.getTransaction();
             RequestsDAO requestsDAO = DaoFactory.getRequestsDAO();
             requestsDAO.delete(requestsEntityPK);
-            transaction.commit();
-        } catch (HibernateException | NoResultException e) {
-            DBService.transactionRollback(transaction);
+        } catch (PersistenceException e) {
             throw new DBException(e);
         }
         return true;
@@ -250,17 +203,14 @@ public class ProjectService extends AbstractService<ProjectsEntity,String> {
      * @return true in case of success
      * @throws DBException Hiber exceptions replaced with
      */
-    public boolean rejectRequest(RequestsEntity requestsEntity)throws DBException{
-        Transaction transaction = DBService.getTransaction();
+    public boolean rejectRequest(Requests requestsEntity)throws DBException{
         RequestsEntityPK requestsEntityPK = new RequestsEntityPK();
         requestsEntityPK.setLogin(requestsEntity.getLogin());
         requestsEntityPK.setProjectid(requestsEntity.getProjectid());
         try{
             RequestsDAO requestsDAO = DaoFactory.getRequestsDAO();
             requestsDAO.delete(requestsEntityPK);
-            transaction.commit();
-        } catch (HibernateException | NoResultException e) {
-            DBService.transactionRollback(transaction);
+        } catch (PersistenceException e) {
             throw new DBException(e);
         }
         return true;
@@ -272,14 +222,11 @@ public class ProjectService extends AbstractService<ProjectsEntity,String> {
      * @return true in case of success
      * @throws DBException Hiber exceptions replaced with
      */
-    public boolean updateDeveloper(DevelopersEntity developersEntity)throws DBException{
-        Transaction transaction = DBService.getTransaction();
+    public boolean updateDeveloper(Developers developersEntity)throws DBException{
         try{
             DevelopersDAO developersDAO = DaoFactory.getDevelopersDAO();
             developersDAO.update(developersEntity);
-            transaction.commit();
-        } catch (HibernateException | NoResultException e) {
-            DBService.transactionRollback(transaction);
+        } catch (PersistenceException e) {
             throw new DBException(e);
         }
         return true;
@@ -291,14 +238,11 @@ public class ProjectService extends AbstractService<ProjectsEntity,String> {
      * @return true in case of success
      * @throws DBException Hiber exceptions replaced with
      */
-    public boolean addCreditInfo(CreditinfoEntity creditinfoEntity)throws DBException{
-        Transaction transaction = DBService.getTransaction();
+    public boolean addCreditInfo(Creditinfo creditinfoEntity)throws DBException{
         try{
              CreditInfoDAO creditInfoDAO = DaoFactory.getCreditInfoDAO();
              creditInfoDAO.create(creditinfoEntity);
-             transaction.commit();
-        } catch (HibernateException | NoResultException e) {
-            DBService.transactionRollback(transaction);
+        } catch (PersistenceException e) {
             throw new DBException(e);
         }
         return true;
@@ -310,14 +254,11 @@ public class ProjectService extends AbstractService<ProjectsEntity,String> {
      * @return true in case of success
      * @throws DBException Hiber exceptions replaced with
      */
-    public boolean deleteCreditInfo(CreditinfoEntity creditinfoEntity)throws DBException {
-        Transaction transaction = DBService.getTransaction();
+    public boolean deleteCreditInfo(Creditinfo creditinfoEntity)throws DBException {
         try {
             CreditInfoDAO creditInfoDAO = DaoFactory.getCreditInfoDAO();
             creditInfoDAO.delete(creditinfoEntity.getProjectid());
-            transaction.commit();
-        } catch (HibernateException | NoResultException e) {
-            DBService.transactionRollback(transaction);
+        } catch (PersistenceException e) {
             throw new DBException(e);
         }
         return true;
@@ -330,16 +271,13 @@ public class ProjectService extends AbstractService<ProjectsEntity,String> {
      * @return true in case of success
      * @throws DBException Hiber exceptions replaced with
      */
-    public boolean approveCommit( CommitsEntity commitsEntity)throws DBException{
-        Transaction transaction = DBService.getTransaction();
+    public boolean approveCommit( Commits commitsEntity)throws DBException{
         commitsEntity.setId(UUID.nameUUIDFromBytes(   (commitsEntity.getDeveloper()+commitsEntity.getProjectid()+commitsEntity.getTime())   .getBytes()  ).toString());
         commitsEntity.setApproved(Approved.APPROVED);
         try{
             CommitsDao commitsDao = DaoFactory.getCommitsDao();
             commitsDao.update(commitsEntity);
-            transaction.commit();
-        } catch (HibernateException | NoResultException e) {
-            DBService.transactionRollback(transaction);
+        } catch (PersistenceException e) {
             throw new DBException(e);
         }
         return true;
@@ -352,7 +290,7 @@ public class ProjectService extends AbstractService<ProjectsEntity,String> {
      * @return true in case of success
      * @throws DBException Hiber exceptions replaced with
      */
-    public boolean rejectCommit(CommitsEntity commitsEntity)throws DBException{
+    public boolean rejectCommit(Commits commitsEntity)throws DBException{
         commitsEntity.setId(UUID.nameUUIDFromBytes(   (commitsEntity.getDeveloper()+commitsEntity.getProjectid()+commitsEntity.getTime())   .getBytes()  ).toString());
         deleteCommit(commitsEntity);
         return true;
@@ -365,18 +303,15 @@ public class ProjectService extends AbstractService<ProjectsEntity,String> {
      * @return true in case of success
      * @throws DBException Hiber exceptions replaced with
      */
-    public boolean commitFiles(CommitsEntity commitsEntity,List<CommitsfileEntity> commitsfileEntities )throws DBException{
-        Transaction transaction = DBService.getTransaction();
+    public boolean commitFiles(Commits commitsEntity,List<Commitsfile> commitsfileEntities )throws DBException{
         try{
             CommitsDao commitsDao = DaoFactory.getCommitsDao();
             commitsDao.create(commitsEntity);
             CommitsfileDAO commitsfileDAO = DaoFactory.getCommitsfileDAO();
-            for (CommitsfileEntity file :commitsfileEntities) {
+            for (Commitsfile file :commitsfileEntities) {
                 commitsfileDAO.create(file);
             }
-            transaction.commit();
-        } catch (HibernateException | NoResultException e) {
-            DBService.transactionRollback(transaction);
+        } catch (PersistenceException e) {
             throw new DBException(e);
         }
 
@@ -389,15 +324,12 @@ public class ProjectService extends AbstractService<ProjectsEntity,String> {
      * @return list of not approved commits
      * @throws DBException Hiber exceptions replaced with
      */
-    public List<CommitsEntity> getUncheckedCommits()throws DBException{ //непонятки с commitsEntity
-        Transaction transaction = DBService.getTransaction();
-        List<CommitsEntity> commits;
+    public List<Commits> getUncheckedCommits()throws DBException{ //непонятки с commitsEntity
+        List<Commits> commits;
         try{
             CommitsDao commitsDao = DaoFactory.getCommitsDao();
             commits = commitsDao.getUnchecked();
-            transaction.commit();
-        } catch (HibernateException | NoResultException e) {
-            DBService.transactionRollback(transaction);
+        } catch (PersistenceException e) {
             throw new DBException(e);
         }
         return commits;
@@ -409,15 +341,13 @@ public class ProjectService extends AbstractService<ProjectsEntity,String> {
      * @return list of files connected with commit
      * @throws DBException Hiber exceptions replaced with
      */
-    public List<CommitsfileEntity> getCommitFiles(CommitsEntity commitsEntity)throws DBException{
-        Transaction transaction = DBService.getTransaction();
-        List<CommitsfileEntity> commits;
+    public List<Commitsfile> getCommitFiles(Commits commitsEntity)throws DBException{
+
+        List<Commitsfile> commits;
         try{
-            CommitsfileDAO commitsDao = DaoFactory.getCommitsfileDAO();
-            commits = commitsDao.getAssociatedFiles(  commitsEntity );
-            transaction.commit();
-        } catch (HibernateException | NoResultException e) {
-            DBService.transactionRollback(transaction);
+            CommitsDao commitsDao = DaoFactory.getCommitsDao();
+            commits = commitsDao.getEntityById(  UUID.nameUUIDFromBytes((commitsEntity.getDeveloper()+commitsEntity.getProjectid()+commitsEntity.getTime()).getBytes()).toString() ).getCommitsfile();
+        } catch (PersistenceException e) {
             throw new DBException(e);
         }
         return commits;
@@ -429,14 +359,12 @@ public class ProjectService extends AbstractService<ProjectsEntity,String> {
      * @return true in case of success
      * @throws DBException Hiber exceptions replaced with
      */
-    public boolean deleteCommit(CommitsEntity commitsEntity)throws DBException{
-        Transaction transaction = DBService.getTransaction();
+    public boolean deleteCommit(Commits commitsEntity)throws DBException{
         try{
             CommitsDao commitsDao = DaoFactory.getCommitsDao();
             commitsDao.delete(commitsEntity);
-            transaction.commit();
-        } catch (HibernateException | NoResultException e) {
-            DBService.transactionRollback(transaction);
+        } catch (PersistenceException e) {
+
             throw new DBException(e);
         }
 
@@ -449,17 +377,15 @@ public class ProjectService extends AbstractService<ProjectsEntity,String> {
      * @return true in case of success
      * @throws DBException Hiber exceptions replaced with
      */
-    public boolean deleteCommitFile(CommitsfileEntity commitsfileEntity)throws DBException{
-        Transaction transaction = DBService.getTransaction();
+    public boolean deleteCommitFile(Commitsfile commitsfileEntity)throws DBException{
+
         CommitsfileEntityPK commitsfileEntityPK = new CommitsfileEntityPK();
         commitsfileEntityPK.setCommitid(commitsfileEntity.getCommitid());
         commitsfileEntityPK.setFilename(commitsfileEntity.getFilename());
         try{
             CommitsfileDAO commitsfileDAO = DaoFactory.getCommitsfileDAO();
             commitsfileDAO.delete(commitsfileEntityPK);
-            transaction.commit();
-        } catch (HibernateException | NoResultException e) {
-            DBService.transactionRollback(transaction);
+        } catch (PersistenceException e) {
             throw new DBException(e);
         }
 
@@ -473,11 +399,11 @@ public class ProjectService extends AbstractService<ProjectsEntity,String> {
      * @return true in case of success
      * @throws DBException Hiber exceptions replaced with
      */
-    public boolean deleteComment(CommentsEntity commentsEntity)throws DBException{
+    public boolean deleteComment(Comments commentsEntity)throws DBException{
         try {
             ServiceFactory.getUserService().deleteComment(commentsEntity);
         }
-        catch (Exception ex){
+        catch (PersistenceException ex){
             throw new DBException(ex);
         }
         return true;
