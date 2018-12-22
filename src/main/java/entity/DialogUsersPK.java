@@ -5,11 +5,14 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 public class DialogUsersPK implements Serializable {
-    private String dialogId;
-    private String userId;
-
     @Column(name = "dialog_id", nullable = false, length = -1)
     @Id
+    private String dialogId;
+    @Column(name = "user_id", nullable = false, length = -1)
+    @Id
+    private String userId;
+
+
     public String getDialogId() {
         return dialogId;
     }
@@ -18,8 +21,7 @@ public class DialogUsersPK implements Serializable {
         this.dialogId = dialogId;
     }
 
-    @Column(name = "user_id", nullable = false, length = -1)
-    @Id
+
     public String getUserId() {
         return userId;
     }
