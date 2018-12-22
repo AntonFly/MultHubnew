@@ -1,32 +1,32 @@
 package entity;
 
 import javax.persistence.Column;
+import javax.persistence.Embeddable;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import java.io.Serializable;
-
+@Embeddable
 public class RequestsEntityPK implements Serializable {
-    private String login;
-    private String projectid;
+    @ManyToOne
+    private Users login;
 
-    public void setProjectid(String projectid) {
-        this.projectid = projectid;
-    }
+    @ManyToOne
+    private Projects projectid;
 
-    @Column(name = "login", nullable = false, length = 30)
-    @Id
-    public String getLogin() {
+    public Users getLogin() {
         return login;
     }
 
-    public void setLogin(String login) {
+    public void setLogin(Users login) {
         this.login = login;
     }
 
-    @Column(name = "projectid", nullable = false, length = -1)
-    @Id
-    public String getProjectid() {
+    public Projects getProjectid() {
         return projectid;
     }
 
+    public void setProjectid(Projects projectid) {
+        this.projectid = projectid;
+    }
 
 }

@@ -5,11 +5,14 @@ import javax.persistence.Id;
 import java.io.Serializable;
 
 public class SubsEntityPK implements Serializable {
-    private String login;
-    private String projectid;
-
     @Column(name = "login", nullable = false, length = 30)
     @Id
+    private String login;
+    @Column(name = "projectid", nullable = false)
+    @Id
+    private String projectid;
+
+
     public String getLogin() {
         return login;
     }
@@ -18,8 +21,7 @@ public class SubsEntityPK implements Serializable {
         this.login = login;
     }
 
-    @Column(name = "projectid", nullable = false, length = -1)
-    @Id
+
     public String getProjectid() {
         return projectid;
     }

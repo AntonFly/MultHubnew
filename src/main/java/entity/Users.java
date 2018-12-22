@@ -36,8 +36,11 @@ public class Users {
     @JoinColumn(name = "user_id")
     private List<Userpost> posts;
 
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "login",referencedColumnName = "login")//!!!!!!!!!ХУйня
+    @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    @JoinTable(name = "followers",
+            joinColumns = @JoinColumn(name = "login"),
+            inverseJoinColumns = @JoinColumn(name = "follower")
+    )
     private List<Users> followers;
 
 
@@ -47,6 +50,21 @@ public class Users {
             inverseJoinColumns = @JoinColumn(name = "dialog_id")
     )
     private List<Dialog> dialogs;
+
+    @ManyToMany(mappedBy = "subscribers")
+    private List<Projects> subscriprions;
+
+    @OneToMany(
+            mappedBy = "id.login",
+            fetch = FetchType.LAZY
+    )
+    private List<Donaters> donations;
+
+    @OneToMany(
+            mappedBy = "id.login",
+            fetch = FetchType.LAZY
+    )
+    private List<Requests> requests;
 
     public String getLogin() {
         return login;
@@ -127,5 +145,37 @@ public class Users {
 
     public void setDialogs(List<Dialog> dialogs) {
         this.dialogs = dialogs;
+    }
+
+    public List<Projects> getInterlocutors() {
+        return subscriprions;
+    }
+
+    public void setInterlocutors(List<Projects> interlocutors) {
+        this.subscriprions = interlocutors;
+    }
+
+    public List<Donaters> getDonations() {
+        return donations;
+    }
+
+    public void setDonations(List<Donaters> donations) {
+        this.donations = donations;
+    }
+
+    public List<Requests> getRequests() {
+        return requests;
+    }
+
+    public void setRequests(List<Requests> requests) {
+        this.requests = requests;
+    }
+
+    public List<Projects> getSubscriprions() {
+        return subscriprions;
+    }
+
+    public void setSubscriprions(List<Projects> subscriprions) {
+        this.subscriprions = subscriprions;
     }
 }

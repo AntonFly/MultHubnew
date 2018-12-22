@@ -12,4 +12,20 @@ public class Subs {
     private String login;
     @Id
     private String projectid;
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getProjectid() {
+        return projectid;
+    }
+
+    public void setProjectid(String projectid) {
+        this.projectid = projectid;
+    }
 }

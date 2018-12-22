@@ -9,7 +9,7 @@ import java.util.List;
 public class Commits {
     public Commits(){}
 
-    @Id
+    @Column
     private String projectid;
 
     @Column
@@ -22,7 +22,7 @@ public class Commits {
     @Enumerated(EnumType.STRING)
     private Approved approved;
 
-    @Column
+    @Id
     private String id;
 
     //на файлы

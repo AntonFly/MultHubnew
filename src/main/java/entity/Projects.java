@@ -33,17 +33,30 @@ public class Projects {
     @JoinColumn(name="projectid")
     private List<Commits> commits;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "projectid", cascade=CascadeType.ALL)
-    private List<Donaters> donaters;
+//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "projectid", cascade=CascadeType.ALL)
+//    private List<Donaters> donaters;
+
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "subs",
+            joinColumns = @JoinColumn(name = "projectid"),
+            inverseJoinColumns = @JoinColumn(name = "login")
+    )
+    private List<Users> subscribers;
+
+    @OneToMany(
+            mappedBy = "id.projectid",
+           fetch = FetchType.LAZY
+    )
+    private List<Donaters> donations;
+
+    @OneToMany(
+            mappedBy = "id.projectid",
+            fetch = FetchType.LAZY
+    )
+    private List<Requests> requests;
 
     /////////////////////////////////////////////////////////////////////////////////////////
-    public List<Donaters> getDonaters() {
-        return donaters;
-    }
 
-    public void setDonaters(List<Donaters> donaters) {
-        this.donaters = donaters;
-    }
 
     public List<Commits> getCommits() {
         return commits;
@@ -107,5 +120,29 @@ public class Projects {
 
     public void setCredit(Creditinfo credit) {
         this.credit = credit;
+    }
+
+    public List<Users> getSubscribers() {
+        return subscribers;
+    }
+
+    public void setSubscribers(List<Users> subscribers) {
+        this.subscribers = subscribers;
+    }
+
+    public List<Donaters> getDonations() {
+        return donations;
+    }
+
+    public void setDonations(List<Donaters> donations) {
+        this.donations = donations;
+    }
+
+    public List<Requests> getRequests() {
+        return requests;
+    }
+
+    public void setRequests(List<Requests> requests) {
+        this.requests = requests;
     }
 }

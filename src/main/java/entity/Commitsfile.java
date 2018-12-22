@@ -18,12 +18,12 @@ public class Commitsfile {
     private String commitid;
 
     @ManyToOne( fetch = FetchType.EAGER)
-//    @JoinColumn(
-//            name = "commitid",
-//            referencedColumnName = "id",
-//            insertable = false,
-//            updatable = false
-//    )
+    @JoinColumn(
+            name = "commitid",
+            referencedColumnName = "id",
+            insertable = false,
+            updatable = false
+    )
     private Commits commits;
 
     public String getFilename() {
