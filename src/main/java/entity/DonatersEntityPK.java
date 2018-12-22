@@ -3,7 +3,6 @@ package entity;
 import javax.persistence.Column;
 import javax.persistence.Id;
 import java.io.Serializable;
-import java.util.Objects;
 
 public class DonatersEntityPK implements Serializable {
     private String login;
@@ -29,17 +28,4 @@ public class DonatersEntityPK implements Serializable {
         this.projectid = projectid;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        DonatersEntityPK that = (DonatersEntityPK) o;
-        return Objects.equals(login, that.login) &&
-                Objects.equals(projectid, that.projectid);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(login, projectid);
-    }
 }
