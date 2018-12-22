@@ -10,6 +10,9 @@ public class Commits {
     public Commits(){}
 
     @Id
+    private String id;
+
+    @Column
     private String projectid;
 
     @Column
@@ -22,12 +25,11 @@ public class Commits {
     @Enumerated(EnumType.STRING)
     private Approved approved;
 
-    @Column
-    private String id;
 
     //на файлы
-    @OneToMany( cascade = CascadeType.ALL, orphanRemoval = true)
-    @JoinColumn(name="commitid")
+    //@OneToMany( cascade = CascadeType.ALL, orphanRemoval = true)
+    //@JoinColumn(name="commitid")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "id.commitid")
     private List<Commitsfile> commitsfile;
 
     //на проект

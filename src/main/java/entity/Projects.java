@@ -33,16 +33,29 @@ public class Projects {
     @JoinColumn(name="projectid")
     private List<Commits> commits;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "projectid", cascade=CascadeType.ALL)
-    private List<Donaters> donaters;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "id.projectid")
+    private List<Developers> developers;
+
+    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @JoinColumn(name="projectid")
+    private List<Comments> comments;
     /////////////////////////////////////////////////////////////////////////////////////////
-    public List<Donaters> getDonaters() {
-        return donaters;
+
+    public List<Comments> getComments() {
+        return comments;
     }
 
-    public void setDonaters(List<Donaters> donaters) {
-        this.donaters = donaters;
+    public void setComments(List<Comments> comments) {
+        this.comments = comments;
+    }
+
+    public List<Developers> getDevelopers() {
+        return developers;
+    }
+
+    public void setDevelopers(List<Developers> developers) {
+        this.developers = developers;
     }
 
     public List<Commits> getCommits() {
