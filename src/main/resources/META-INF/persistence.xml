@@ -10,6 +10,7 @@
 
 
         <properties>
+            <property name = "hibernate.show_sql" value = "true" />
             <property name="hibernate.connection.driver_class" value="org.postgresql.Driver"/>
             <property name="hibernate.connection.url" value="jdbc:postgresql://fly.sytes.net:5432/multhub"/>
             <property name="hibernate.connection.username" value="anton_fly"/>
