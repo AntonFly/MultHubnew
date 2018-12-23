@@ -21,22 +21,22 @@ public class Projects {
     @Column
     private Double goalbudget;
     /////////////////////////////////////////////////////////////////////////////////////////
-    @OneToOne(optional = false,cascade = CascadeType.ALL)
+    @OneToOne()
     @JoinColumn(name ="projectid")
     private Creditinfo credit;
 
-    @OneToMany( cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name="projectid")
     private List<Projectposts> posts;
 
-    @OneToMany( cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany( fetch = FetchType.LAZY)
     @JoinColumn(name="projectid")
     private List<Commits> commits;
 
 //    @OneToMany(fetch = FetchType.LAZY, mappedBy = "projectid", cascade=CascadeType.ALL)
 //    private List<Donaters> donaters;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "subs",
             joinColumns = @JoinColumn(name = "projectid"),
             inverseJoinColumns = @JoinColumn(name = "login")
@@ -58,7 +58,7 @@ public class Projects {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "id.projectid")
     private List<Developers> developers;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name="projectid")
     private List<Comments> comments;
     /////////////////////////////////////////////////////////////////////////////////////////

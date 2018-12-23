@@ -28,19 +28,20 @@ class ProjectsServiceTests {
     void init() {
         ps = new ProjectService();
         pe = new Projects();
-        pe.setProjectid(null);
         pe.setCurbudget(12.);
         pe.setDescription("TEST");
         pe.setGoalbudget(13.);
         pe.setName("TEST");
+        pe.setProjectid(UUID.nameUUIDFromBytes((pe.getName()+pe.getDescription()).getBytes()).toString());
 
     }
 
     @Test
     void GetProject() {
         try {
-            AddProject();
-            System.out.println("UPDATED:" +ps.get(UUID.nameUUIDFromBytes((pe.getName()+pe.getDescription()).getBytes()).toString()).getName());
+//            AddProject();
+            //System.out.println("UPDATED:" +ps.get(UUID.nameUUIDFromBytes((pe.getName()+pe.getDescription()).getBytes()).toString()).getName());
+            System.out.println("UPDATED:" +ps.get(pe.getProjectid()));
             //ps.delete(UUID.nameUUIDFromBytes((pe.getName()+pe.getDescription()).getBytes()).toString());
 
         } catch (DBException e) {
@@ -158,7 +159,7 @@ class ProjectsServiceTests {
     @Test
     void AddPostToBlog(){  //AddPostToBlog
         try {
-            //ps.create(pe);
+            ps.create(pe);
             projectpostsEntity = new Projectposts();
             projectpostsEntity.setId(null);
             projectpostsEntity.setFilepath("aaaaa");
@@ -308,6 +309,7 @@ class ProjectsServiceTests {
             Creditinfo Creditinfo = new Creditinfo();
             Creditinfo.setCardnumber(124312421);
             Creditinfo.setProjectid(pe.getProjectid());
+            Creditinfo.setProject(pe);
             ps.addCreditInfo(Creditinfo);
         }
         catch (DBException e){
