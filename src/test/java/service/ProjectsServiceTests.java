@@ -185,6 +185,7 @@ class ProjectsServiceTests {
     @Test
     void Commit(){
         try {
+            ps.create(pe);
             ps.approveCommit(Commits);
             ps.rejectCommit(Commits);
             ps.delete(UUID.nameUUIDFromBytes((pe.getName()+pe.getDescription()).getBytes()).toString()); //project
@@ -199,6 +200,7 @@ class ProjectsServiceTests {
     void AddDeveloper(){
         try {
             ps.create(pe);
+            Projects project = ps.get(pe.getProjectid());
             UserService service = ServiceFactory.getUserService();
             Users Users = new Users();
             Users.setLogin("TEST");
@@ -207,12 +209,14 @@ class ProjectsServiceTests {
             Users.setName("TEST");
             Users.setImgpath("TEST");
             service.create(Users);
+            Users user = service.get(Users.getLogin());
             Developers Developers = new Developers();
             Developers.setLogin(Users);
             Developers.setProjectid(pe);
             ps.addDeveloper(Developers);
-            //deleteDeveloper(Developers);
-            ps.deleteDeveloper(Developers);
+            service.delete(user.getLogin());
+            ps.delete(project.getProjectid());
+
         }
         catch (DBException e){
             e.printStackTrace();

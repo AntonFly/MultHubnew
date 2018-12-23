@@ -3,6 +3,8 @@ package dao;
 import entity.Approved;
 import entity.Commits;
 import util.DBService;
+
+import javax.persistence.Column;
 import javax.persistence.EntityManager;
 import java.io.Serializable;
 import java.util.List;
@@ -34,7 +36,7 @@ public class CommitsDao extends AbstractDao<Commits,String> {
         commitsEntity.setId(UUID.nameUUIDFromBytes((commitsEntity.getDeveloper()+commitsEntity.getProjectid()+commitsEntity.getTime()).getBytes()).toString());
         EntityManager em= DBService.getEntytiManager();
         em.getTransaction().begin();
-        Commits entity = em.find(param,commitsEntity);
+        Commits entity = em.find(Commits.class,commitsEntity);
         em.remove(entity);
         em.getTransaction().commit();
     }
