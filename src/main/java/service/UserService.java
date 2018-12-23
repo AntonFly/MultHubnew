@@ -365,7 +365,6 @@ public class UserService extends AbstractService<Users,String> {
     }
 
     public boolean approveInvite(Requests entity) throws DBException{
-        Transaction transaction=null;
         try{
             Developers dev= new Developers();
             dev.setDescription("null");
@@ -379,7 +378,6 @@ public class UserService extends AbstractService<Users,String> {
             pk.setLogin(entity.getLogin());
             pk.setProjectid(entity.getProjectid());
             dao.delete(pk);
-            transaction.commit();
 
         }catch (PersistenceException e){
             throw new DBException(e);
@@ -388,14 +386,12 @@ public class UserService extends AbstractService<Users,String> {
     }
 
     public boolean rejectInvite(Requests entity) throws DBException{
-        Transaction transaction= null;
         try{
             RequestsDAO dao= DaoFactory.getRequestsDAO();
             RequestsEntityPK pk=new RequestsEntityPK();
             pk.setLogin(entity.getLogin());
             pk.setProjectid(entity.getProjectid());
             dao.delete(pk);
-            transaction.commit();
         }catch (PersistenceException e){
             throw new DBException(e);
         }

@@ -11,7 +11,9 @@ import javax.persistence.*;
         @AssociationOverride(name = "id.projectid",
                 joinColumns = @JoinColumn(name = "projectid")) })
 public class Developers {
-    public Developers(){}
+    public Developers(){
+        this.id=new DevelopersEntityPK();
+    }
 
     @EmbeddedId
     private DevelopersEntityPK id;
