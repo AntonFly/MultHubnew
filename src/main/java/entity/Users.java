@@ -81,6 +81,12 @@ public class Users {
     )
     private List<Requests> requests;
 
+    public  void addDialog(Dialog dialog){
+        dialogs.add(dialog);
+    }
+
+
+
     public String getLogin() {
         return login;
     }
