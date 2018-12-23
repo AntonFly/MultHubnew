@@ -7,6 +7,8 @@ import org.junit.jupiter.api.*;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 import org.junit.runners.MethodSorters;
+
+import javax.jws.soap.SOAPBinding;
 import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
@@ -185,7 +187,7 @@ class ProjectsServiceTests {
     @Test
     void Commit(){
         try {
-            ps.create(pe);
+            //ps.create(pe);
             ps.approveCommit(Commits);
             ps.rejectCommit(Commits);
             ps.delete(UUID.nameUUIDFromBytes((pe.getName()+pe.getDescription()).getBytes()).toString()); //project
@@ -238,7 +240,7 @@ class ProjectsServiceTests {
     @Test
     void sendInvite(){
         try {
-            //ps.create(pe);
+            ps.create(pe);
             UserService service = ServiceFactory.getUserService();
 
             Requests Requests = new Requests();
@@ -248,7 +250,9 @@ class ProjectsServiceTests {
             Users.setSurname("TEST");
             Users.setName("TEST");
             Users.setImgpath("TEST");
-
+            ///////
+            service.create(Users);
+            ////////
             Requests.setIsrequest(false);
             Requests.setProjpos(Projpos.DEVELOPER);
             Requests.setLogin(Users);

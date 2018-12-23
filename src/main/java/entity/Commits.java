@@ -1,12 +1,13 @@
 package entity;
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
 @Table(name = "commits")
 @NamedQuery(name = "Commits.getAll", query = "SELECT u from Commits u")
-public class Commits {
+public class Commits implements Serializable {
     public Commits(){}
 
     @Id

@@ -36,7 +36,7 @@ public class CommitsDao extends AbstractDao<Commits,String> {
         commitsEntity.setId(UUID.nameUUIDFromBytes((commitsEntity.getDeveloper()+commitsEntity.getProjectid()+commitsEntity.getTime()).getBytes()).toString());
         EntityManager em= DBService.getEntytiManager();
         em.getTransaction().begin();
-        Commits entity = em.find(Commits.class,commitsEntity);
+        Commits entity = em.find(param,commitsEntity.getId());
         em.remove(entity);
         em.getTransaction().commit();
     }
