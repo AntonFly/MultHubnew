@@ -47,4 +47,12 @@ public class Dialog {
     public void setInterlocutors(List<Users> interlocutors) {
         this.interlocutors = interlocutors;
     }
+
+    public List<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
+    }
 }

@@ -168,9 +168,7 @@ public class Users {
         this.dialogs = dialogs;
     }
 
-    public List<Projects> getInterlocutors() {
-        return subscriprions;
-    }
+
 
     public void setInterlocutors(List<Projects> interlocutors) {
         this.subscriprions = interlocutors;
@@ -198,5 +196,13 @@ public class Users {
 
     public void setSubscriprions(List<Projects> subscriprions) {
         this.subscriprions = subscriprions;
+    }
+
+    public List<Comments> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comments> comments) {
+        this.comments = comments;
     }
 }

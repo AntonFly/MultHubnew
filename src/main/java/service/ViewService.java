@@ -123,13 +123,12 @@ public class ViewService  {
     public Map<String, Object> developersPageProjectInfo(Projects projectsEntity) throws DBException{
         Map<String,Object> mapa = new HashMap();
         try {
-            DevelopersDAO developersDAO = DaoFactory.getDevelopersDAO();
+            ProjectsDAO projectspostsDAO = DaoFactory.getProjectsDAO();
+            Projects project=projectspostsDAO.getEntityById(projectsEntity.getProjectid());
             mapa.put("ProjectEntity",projectsEntity);
-            mapa.put("Devs",developersDAO.getProjectDevs(projectsEntity.getProjectid()));
-            transaction.commit();
+            mapa.put("Devs",project.getDevelopers());
 
-        } catch (HibernateException | NoResultException e) {
-            DBService.transactionRollback(transaction);
+        } catch (PersistenceException e) {
             throw new DBException(e);
         }
         return mapa;
@@ -141,48 +140,27 @@ public class ViewService  {
      * @return List of priject's unapproved commits
      * @throws DBException Hiber exceptions replaced withon
      */
-    public List<Object[]> uncheckedfilesPageProjectInfo(ProjectsEntity projectsEntity) throws DBException{ //for manager approvence
-        Transaction transaction= DBService.getTransaction();
-        List<Object[]> list;
+    public List<Commitsfile> uncheckedfilesPageProjectInfo(Projects projectsEntity) throws DBException{ //for manager approvence
+        List<Commitsfile> list= new ArrayList();
         try {
-            CommitsDao commitsDao = DaoFactory.getCommitsDao();
-            list = commitsDao.getUncheckCommitsFiles(projectsEntity);
-            transaction.commit();
+            ProjectsDAO projectspostsDAO = DaoFactory.getProjectsDAO();
+            Projects project=projectspostsDAO.getEntityById(projectsEntity.getProjectid());
+            List<Commits> commits =project.getCommits();
+            for (Commits commit:
+                 commits) {
+                if(commit.getApproved()== Approved.AWAITS){
+                    list.addAll(commit.getCommitsfile());
+                }
 
-        } catch (HibernateException | NoResultException e) {
-            DBService.transactionRollback(transaction);
+            }
+
+
+        } catch (PersistenceException e) {
             throw new DBException(e);
         }
         return list;
     }
-    /**
-     * Return information about history of commits of file
-     * @param fileDirectory directory with file
-     * @return map of file's commits
-     * @throws DBException Hiber exceptions replaced withon
-     */
-    public Map<CommitsEntity, CommitsfileEntity> getFilecommits(String fileDirectory) throws DBException {
-        Transaction transaction= DBService.getTransaction();
-        Map<CommitsEntity,CommitsfileEntity> map = new HashMap<>();
-        try {
-            CommitsfileDAO commitsfileDAO = DaoFactory.getCommitsfileDAO();
-            List<CommitsfileEntity> files = commitsfileDAO.getFilesByPath(fileDirectory);
-            transaction.commit();
-            //List<CommitsEntity> commits = new LinkedList<>();
-            CommitsDao commitsDao = DaoFactory.getCommitsDao();
-            for (CommitsfileEntity file: files) {
-                transaction = DBService.getTransaction();
-                map.put(commitsDao.getEntityById(file.getCommitid()),file);
-              //      commits.add(commitsDao.getEntityById(file.getCommitid()));
-                transaction.commit();
-            }
 
-        } catch (HibernateException | NoResultException e) {
-            DBService.transactionRollback(transaction);
-            throw new DBException(e);
-        }
-        return map;
-    }
 
 
     /**
@@ -191,39 +169,14 @@ public class ViewService  {
      * @return  List of each dialog information
      * @throws DBException Hiber exceptions replaced withon
      */
-    public  List<Map<String,Object>> getDialogs(String login) throws DBException {
-        List<Map<String,Object>> result= new ArrayList<>();
-        Transaction transaction= DBService.getTransaction();
+    public  List<Dialog> getDialogs(String login) throws DBException {
         try{
         UsersDAO userDao= DaoFactory.getUsersDAO();
-        DialogDAO dialogDAO = DaoFactory.getDialogDao();
-        MessageDAO messageDao= DaoFactory.getMessageDao();
-
-        List<DialogEntity> dialogs=dialogDAO.getUserDialogs(login);
-        transaction.commit();
-        for (DialogEntity dialog:dialogs
-             ) {
-            UsersEntity other;
-            transaction= DBService.getTransaction();
-            Map<String,Object> map=new HashMap<>();
-            if (dialog.getOneUserId().equals(login)){
-                map.put("other",dialog.getTwoUserId());
-             other=userDao.getEntityById(dialog.getTwoUserId());
-            }else{
-                map.put("other",dialog.getOneUserId());
-                other=userDao.getEntityById(dialog.getOneUserId());
-            }
-            MessageEntity message =messageDao.getLastMessage(login);
-            map.put("otherImage",other.getImgpath());
-            map.put("text",message.getText());
-            map.put("time",message.getTime());
-            result.add(map);
-        }
-        } catch (HibernateException | NoResultException e) {
-            DBService.transactionRollback(transaction);
+        Users user = userDao.getEntityById(login);
+         return user.getDialogs();
+        } catch (PersistenceException e) {
             throw new DBException(e);
         }
-        return result;
     }
 
     /**
@@ -232,18 +185,14 @@ public class ViewService  {
      * @return List of messages
      * @throws DBException Hiber exceptions replaced withon
      */
-    public List<MessageEntity> getDialogMessages(String id) throws DBException{
-        Transaction transaction= DBService.getTransaction();
-        List<MessageEntity> result;
+    public List<Message> getDialogMessages(String id) throws DBException{
         try{
-        MessageDAO messageDAO= DaoFactory.getMessageDao();
-        result =messageDAO.getDialogMessages(id);
-        transaction.commit();
-        } catch (HibernateException | NoResultException e) {
-            DBService.transactionRollback(transaction);
+        DialogDAO dialogDAO= DaoFactory.getDialogDao();
+        Dialog dialog =dialogDAO.getEntityById(id);
+        return  dialog.getMessages();
+        } catch (PersistenceException e) {
             throw new DBException(e);
         }
-        return  result;
     }
 
     /**
@@ -251,33 +200,15 @@ public class ViewService  {
      * @return List of main page objects
      * @throws DBException Hiber exceptions replaced witho
      */
-    public  List<Map<String,Object>> mainPage() throws DBException{
-        List<Map<String,Object>> result= new ArrayList<>();
-        Transaction transaction= DBService.getTransaction();
-
-        SubsDAO subsDao= DaoFactory.getSubsDAO();
-        ProjectsDAO projectsDao= DaoFactory.getProjectsDAO();
-        ProjectspostsDAO postDao= DaoFactory.getProjectspostsDAO();
-        CommitsDao commitsDao= DaoFactory.getCommitsDao();
-        CommitsfileDAO commitsfileDao= DaoFactory.getCommitsfileDAO();
-        List<Object[]> subs=subsDao.getMostPopular();
-        transaction.commit();
-        for (Object[] sub: subs
-             ) {
-            transaction= DBService.getTransaction();
-            ProjectsEntity proj=projectsDao.getEntityById((String) sub[0]);
-            ProjectpostsEntity post=postDao.getProjLastPost(proj.getProjectid());
-            List<CommitsfileEntity> latestMedia=commitsfileDao.getLatestMedea(proj.getProjectid());
-            transaction.commit();
-            Map<String,Object> map=new HashMap<>();
-            map.put("followers",sub[1]);
-            map.put("prjName", proj.getName());
-            map.put("description",proj.getDescription());
-            map.put("lastPost",post.getText());
-            map.put("lastMedia",latestMedia);
-            result.add(map);
-
+    public  List<Projects> mainPage(String login) throws DBException{
+        try{
+            UsersDAO usersDAO= DaoFactory.getUsersDAO();
+            Users user= usersDAO.getEntityById(login);
+            return  user.getSubscriprions();
+        } catch (PersistenceException e) {
+            throw new DBException(e);
         }
-        return result;
+
+
     }
 }
