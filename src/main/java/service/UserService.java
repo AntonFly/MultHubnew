@@ -273,7 +273,10 @@ public class UserService extends AbstractService<Users,String> {
      public boolean followUser(Followers follow)throws DBException {
          try{
              FollowersDAO dao = DaoFactory.getFollowersDao();
-             dao.create(follow);
+             UsersDAO usersDAO= DaoFactory.getUsersDAO();
+             Users owner =usersDAO.getEntityById(follow.getLogin().getLogin());
+             Users follower =usersDAO.getEntityById(follow.getFollower().getLogin());
+             owner.addFollower(follower);
          }catch (PersistenceException e){
              throw new DBException(e);
          }
@@ -288,11 +291,11 @@ public class UserService extends AbstractService<Users,String> {
      */
      public boolean unfollowUser(Followers follow)throws DBException{
          try{
-             FollowersDAO dao= DaoFactory.getFollowersDao();
-             FollowersPK followersEntityPK= new FollowersPK();
-             followersEntityPK.setLogin(follow.getLogin().getLogin());
-             followersEntityPK.setFollower(follow.getFollower().getLogin());
-             dao.delete(followersEntityPK);
+             FollowersDAO dao = DaoFactory.getFollowersDao();
+             UsersDAO usersDAO= DaoFactory.getUsersDAO();
+             Users owner =usersDAO.getEntityById(follow.getLogin().getLogin());
+             Users follower =usersDAO.getEntityById(follow.getFollower().getLogin());
+             owner.dellFollower(follower);
          }catch (PersistenceException e){
              throw new DBException(e);
          }
