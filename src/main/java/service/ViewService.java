@@ -8,6 +8,7 @@ import org.hibernate.Transaction;
 import util.DBService;
 
 import javax.persistence.NoResultException;
+import javax.persistence.PersistenceException;
 import java.util.*;
 
 public class ViewService  {
@@ -61,36 +62,26 @@ public class ViewService  {
      * @return map of project's information
      * @throws DBException Hiber exceptions replaced with
      */
-    public Map<String,Object> mainPageProjectInfo(ProjectsEntity projectsEntity) throws DBException{
-        Transaction transaction= DBService.getTransaction();
-        Map<String,Object> mapa = new HashMap<>();
+    public Map<String,Object> mainPageProjectInfo(Projects projectsEntity) throws DBException{
+        Map<String,Object> mapa = new HashMap();
         try {
-            //posts
-            ProjectspostsDAO projectspostsDAO = DaoFactory.getProjectspostsDAO();
-            List<ProjectpostsEntity> posts = projectspostsDAO.getProjectPosts(projectsEntity.getProjectid());
+
+            ProjectsDAO projectspostsDAO = DaoFactory.getProjectsDAO();
+            Projects project=projectspostsDAO.getEntityById(projectsEntity.getProjectid());
+            List<Projectposts> posts =project.getPosts();
             //donaters
-            DonatersDAO donatersDAO = DaoFactory.getDonatersDAO();
-            List<DonatersEntity> donaters = donatersDAO.getProjectDonaters(projectsEntity.getProjectid());
+            List<Donaters> donaters =project.getDonations();
             //comments
-            CommentsDAO commentsDAO = DaoFactory.getCommentsDAO();
-            List<CommentsEntity> comments = commentsDAO.getProjectComments(projectsEntity.getProjectid());
+            List<Comments> comments = project.getComments();
             //followers
-            SubsDAO subsDAO = DaoFactory.getSubsDAO();
-            UsersDAO usersDAO = DaoFactory.getUsersDAO();
-            List<SubsEntity> subsEntities = subsDAO.getProjectSubs(projectsEntity.getProjectid());
-            List<UsersEntity> users = new LinkedList<>();
-            for (SubsEntity sub: subsEntities) {
-                users.add(usersDAO.getEntityById(sub.getLogin()));
-            }
+            List<Users> users = project.getSubscribers();
             mapa.put("ProjectEntity",projectsEntity);
             mapa.put("Posts",posts);
             mapa.put("Subs",users);
             mapa.put("Comments",comments);
             mapa.put("Donaters",donaters);
 
-            transaction.commit();
-        } catch (HibernateException | NoResultException e) {
-            DBService.transactionRollback(transaction);
+        } catch (PersistenceException e) {
             throw new DBException(e);
         }
         return mapa;
@@ -102,19 +93,24 @@ public class ViewService  {
      * @return list of project's files
      * @throws DBException Hiber exceptions replaced withon
      */
-    public List<Object[]> filesPageProjectInfo(ProjectsEntity projectsEntity) throws DBException{
-        Transaction transaction= DBService.getTransaction();
-        List<Object[]> list;
+    public List<Commitsfile> filesPageProjectInfo(Projects projectsEntity) throws DBException{
+        List<Commitsfile> files=new ArrayList();
         try {
-            CommitsDao commitsDao = DaoFactory.getCommitsDao();
-            list = commitsDao.getCommitsFiles(projectsEntity);
-            transaction.commit();
+            ProjectsDAO projectspostsDAO = DaoFactory.getProjectsDAO();
+            Projects project=projectspostsDAO.getEntityById(projectsEntity.getProjectid());
+            List<Commits> commits =project.getCommits();
+            for (Commits commit:
+                commits ) {
+                files.addAll(commit.getCommitsfile());
 
-        } catch (HibernateException | NoResultException e) {
-            DBService.transactionRollback(transaction);
+            }
+
+
+
+        } catch (PersistenceException e) {
             throw new DBException(e);
         }
-        return list;
+        return files;
     }
 
     /**
@@ -124,9 +120,8 @@ public class ViewService  {
      * @throws DBException Hiber exceptions replaced withon
      */
 
-    public Map<String, Object> developersPageProjectInfo(ProjectsEntity projectsEntity) throws DBException{
-        Transaction transaction= DBService.getTransaction();
-        Map<String,Object> mapa = new HashMap<>();
+    public Map<String, Object> developersPageProjectInfo(Projects projectsEntity) throws DBException{
+        Map<String,Object> mapa = new HashMap();
         try {
             DevelopersDAO developersDAO = DaoFactory.getDevelopersDAO();
             mapa.put("ProjectEntity",projectsEntity);

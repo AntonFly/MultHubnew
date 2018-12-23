@@ -228,16 +228,16 @@ public class UserService extends AbstractService<Users,String> {
      */
      public boolean createDialog(Users user1,Users user2)throws DBException{
          Dialog dialogEntity = new Dialog();
-         DialogUsers dialogUsers1=new DialogUsers();
-         DialogUsers dialogUsers2=new DialogUsers();
-         dialogUsers1.setId(new DialogUsersPK(dialogEntity,user1));
-         dialogUsers2.setId(new DialogUsersPK(dialogEntity,user2));
+
          try{
              DialogDAO dialogDao = DaoFactory.getDialogDao();
-             DialogUsersDAO dialogUsersDAO =DaoFactory.getDialogUsersDAO();
+             UsersDAO UsersDAO =DaoFactory.getUsersDAO();
              dialogDao.create(dialogEntity);
-             dialogUsersDAO.create(dialogUsers1);
-             dialogUsersDAO.create(dialogUsers1);
+             user1.addDialog(dialogEntity);
+             user2.addDialog(dialogEntity);
+             UsersDAO.update(user1);
+             UsersDAO.update(user2);
+
          }catch (PersistenceException e){
              throw new DBException(e);
          }
