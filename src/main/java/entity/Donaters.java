@@ -59,7 +59,7 @@ public class Donaters {
         return  getId().getProjectid();
     }
 
-    public  void setLogin(Projects projects){
+    public  void setProjectid(Projects projects){
         getId().setProjectid(projects);
     }
 }
