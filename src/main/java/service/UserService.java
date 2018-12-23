@@ -1,10 +1,7 @@
 package service;
 
 import dao.*;
-import entity.Comments;
-import entity.Projpos;
-import entity.RequestsEntityPK;
-import entity.SubsEntityPK;
+import entity.*;
 import exception.DBException;
 import org.hibernate.HibernateException;
 import org.hibernate.Transaction;
@@ -14,7 +11,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 import java.util.List;
 
-public class UserService extends AbstractService<UsersEntity,String> {
+public class UserService extends AbstractService<Users,String> {
 
     public UserService() {
     }
@@ -26,18 +23,14 @@ public class UserService extends AbstractService<UsersEntity,String> {
      */
 
     @Override
-    public List<UsersEntity> getAll() throws DBException {
-        Transaction transaction = DBService.getTransaction();
+    public List<Users> getAll() throws DBException {
+
         try {
             UsersDAO dao = DaoFactory.getUsersDAO();
-            List<UsersEntity> list =  dao.getAll();
-
-            transaction.commit();
+            List<Users> list =  dao.getAll();
             return list;
-//            logger.fine("Create item " + user);
 
-        } catch (HibernateException | NoResultException e) {
-            DBService.transactionRollback(transaction);
+        } catch (PersistenceException e) {
             throw new DBException(e);
         }
 
@@ -50,18 +43,11 @@ public class UserService extends AbstractService<UsersEntity,String> {
      * @throws DBException Hiber exceptions replaced with
      */
     @Override
-    public boolean create(UsersEntity user) throws DBException {
-        Transaction transaction = DBService.getTransaction();
+    public boolean create(Users user) throws DBException {
         try {
             UsersDAO dao = DaoFactory.getUsersDAO();
             dao.create(user);
-
-            transaction.commit();
-
-//            logger.fine("Create item " + user);
-
-        } catch (HibernateException | NoResultException e) {
-            DBService.transactionRollback(transaction);
+        } catch (PersistenceException e) {
             throw new DBException(e);
         }
         return true;
@@ -74,18 +60,11 @@ public class UserService extends AbstractService<UsersEntity,String> {
      *@throws DBException Hiber exceptions replaced with
      */
     @Override
-    public boolean update(UsersEntity item) throws DBException {
-        Transaction transaction = DBService.getTransaction();
+    public boolean update(Users item) throws DBException {
         try {
             UsersDAO dao = DaoFactory.getUsersDAO();
             dao.update(item);
-
-            transaction.commit();
-
-//            logger.fine("Create item " + user);
-
-        } catch (HibernateException | NoResultException e) {
-            DBService.transactionRollback(transaction);
+        } catch (PersistenceException e) {
             throw new DBException(e);
         }
         return true;
@@ -98,15 +77,12 @@ public class UserService extends AbstractService<UsersEntity,String> {
      *@throws DBException Hiber exceptions replaced with
      */
     @Override
-    public UsersEntity get(String id) throws DBException {
-        Transaction transaction = DBService.getTransaction();
+    public Users get(String id) throws DBException {
         try {
             UsersDAO dao = DaoFactory.getUsersDAO();
-            UsersEntity ue =dao.getEntityById(id);
-            transaction.commit();
+            Users ue =dao.getEntityById(id);
             return ue;
-        }catch (HibernateException | NoResultException e) {
-            DBService.transactionRollback(transaction);
+        }catch (PersistenceException e) {
             throw new DBException(e);
         }
 
@@ -121,13 +97,10 @@ public class UserService extends AbstractService<UsersEntity,String> {
      */
     @Override
     public boolean delete(String id) throws DBException {
-        Transaction transaction = DBService.getTransaction();
         try{
             UsersDAO dao= DaoFactory.getUsersDAO();
             dao.delete(id);
-            transaction.commit();
-        } catch (HibernateException | NoResultException e) {
-            DBService.transactionRollback(transaction);
+        } catch (PersistenceException e) {
             throw new DBException(e);
         }
         return true;
@@ -141,14 +114,11 @@ public class UserService extends AbstractService<UsersEntity,String> {
      * @throws DBException Hiber exceptions replaced with@throws DBException
      */
     public  boolean signIn(String login,String password ) throws DBException {
-        Transaction transaction= DBService.getTransaction();
-        UsersEntity user=null;
+        Users user=null;
         try{
             UsersDAO dao = DaoFactory.getUsersDAO();
             user =dao.getEntityById(login);
-            transaction.commit();
-        }catch (HibernateException | NoResultException e){
-            DBService.transactionRollback(transaction);
+        }catch (PersistenceException e){
             throw new DBException(e);
         }
         return user.getPassword().equals(password);
@@ -161,16 +131,13 @@ public class UserService extends AbstractService<UsersEntity,String> {
      * @return in case of success TRUE
      * @throws DBException Hiber exceptions replaced withhrows DBException
      */
-    public boolean signUp(UsersEntity user,ConnectiondataEntity con)throws DBException {
-        Transaction transaction = DBService.getTransaction();
+    public boolean signUp(Users user, ConnectionData con)throws DBException {
         try {
             UsersDAO uDao = DaoFactory.getUsersDAO();
             ConnectiondataDao connectiondataDao = DaoFactory.getConnectiondataDao();
             uDao.create(user);
             connectiondataDao.create(con);
-            transaction.commit();
-        }catch (HibernateException | NoResultException e){
-            DBService.transactionRollback(transaction);
+        }catch (PersistenceException e){
             throw new DBException(e);
         }
         return true;
@@ -186,17 +153,13 @@ public class UserService extends AbstractService<UsersEntity,String> {
      * @throws DBException Hiber exceptions replaced with
      * adds new sub into SubsEntity
      */
-     public  boolean sub(UsersEntity user, ProjectsEntity projectsEntity)throws DBException{
-        Transaction transaction = DBService.getTransaction();
-        SubsEntity subsEntity = new SubsEntity();
-        subsEntity.setLogin(user.getLogin());
-        subsEntity.setProjectid(projectsEntity.getProjectid());
+     public  boolean sub(Users user, Projects projectsEntity)throws DBException{
+        Subs subsEntity = new Subs();
+        subsEntity.setId(new SubsEntityPK(user,projectsEntity));
         try{
             SubsDAO subsDAO= DaoFactory.getSubsDAO();
             subsDAO.create(subsEntity);
-            transaction.commit();
-        }catch (HibernateException | NoResultException e){
-            DBService.transactionRollback(transaction);
+        }catch (PersistenceException e){
             throw new DBException(e);
         }
          return true;
@@ -211,17 +174,11 @@ public class UserService extends AbstractService<UsersEntity,String> {
      * @throws DBException Hiber exceptions replaced with
      *
      */
-     public boolean unsub(UsersEntity user, ProjectsEntity projectsEntity)throws DBException {
-         Transaction transaction = DBService.getTransaction();
-         SubsEntityPK subsEntitypk = new SubsEntityPK();
-         subsEntitypk.setLogin(user.getLogin());
-         subsEntitypk.setProjectid(projectsEntity.getProjectid());
+     public boolean unsub(Users user, Projects projectsEntity)throws DBException {
          try{
                 SubsDAO subsDAO= DaoFactory.getSubsDAO();
-                subsDAO.delete(subsEntitypk);
-                transaction.commit();
-         }catch (HibernateException | NoResultException e){
-             DBService.transactionRollback(transaction);
+                subsDAO.delete(user,projectsEntity);
+         }catch (PersistenceException e){
              throw new DBException(e);
          }
          return true;
@@ -233,14 +190,11 @@ public class UserService extends AbstractService<UsersEntity,String> {
      * @return in case of success TRUE
      * @throws DBException Hiber exceptions replaced with
      */
-     public boolean doComment(CommentsEntity comment)throws DBException{
-         Transaction transaction = DBService.getTransaction();
+     public boolean doComment(Comments comment)throws DBException{
          try{
              CommentsDAO commentsDAO = DaoFactory.getCommentsDAO();
              commentsDAO.create(comment);
-             transaction.commit();
-         }catch (HibernateException | NoResultException e){
-             DBService.transactionRollback(transaction);
+         }catch (PersistenceException e){
              throw new DBException(e);
          }
          return true;
@@ -272,18 +226,19 @@ public class UserService extends AbstractService<UsersEntity,String> {
      * @return in case of success TRUE
      * @throws DBException Hiber exceptions replaced with
      */
-     public boolean createDialog(UsersEntity user1,UsersEntity user2)throws DBException{
-         Transaction transaction = DBService.getTransaction();
-         DialogEntity dialogEntity = new DialogEntity();
-         dialogEntity.setId(null);
-         dialogEntity.setOneUserId(user1.getLogin());
-         dialogEntity.setTwoUserId(user2.getLogin());
+     public boolean createDialog(Users user1,Users user2)throws DBException{
+         Dialog dialogEntity = new Dialog();
+         DialogUsers dialogUsers1=new DialogUsers();
+         DialogUsers dialogUsers2=new DialogUsers();
+         dialogUsers1.setId(new DialogUsersPK(dialogEntity,user1));
+         dialogUsers2.setId(new DialogUsersPK(dialogEntity,user2));
          try{
              DialogDAO dialogDao = DaoFactory.getDialogDao();
+             DialogUsersDAO dialogUsersDAO =DaoFactory.getDialogUsersDAO();
              dialogDao.create(dialogEntity);
-             transaction.commit();
-         }catch (HibernateException | NoResultException e){
-             DBService.transactionRollback(transaction);
+             dialogUsersDAO.create(dialogUsers1);
+             dialogUsersDAO.create(dialogUsers1);
+         }catch (PersistenceException e){
              throw new DBException(e);
          }
          return true;
@@ -295,30 +250,17 @@ public class UserService extends AbstractService<UsersEntity,String> {
      * @return in case of success TRUE
      * @throws DBException Hiber exceptions replaced with
      */
-     public boolean addMessgae(MessageEntity message)throws DBException{
-         Transaction transaction = DBService.getTransaction();
+     public boolean addMessgae(Message message)throws DBException{
          try{
              MessageDAO dao= DaoFactory.getMessageDao();
              dao.create(message);
-             transaction.commit();
-         }catch (HibernateException | NoResultException e){
-             DBService.transactionRollback(transaction);
+         }catch (PersistenceException e){
              throw new DBException(e);
          }
          return true;
      }
 
-//     public boolean deleteMessage()throws DBException{
-//         Transaction transaction =DBService.getTransaction();
-//         try{
 //
-//             transaction.commit();
-//         }catch (HibernateException | NoResultException e){
-//             DBService.transactionRollback(transaction);
-//             throw new DBException(e);
-//         }
-//         return true;
-//     }
 
     /**
      *  Following the user's posts
@@ -326,14 +268,11 @@ public class UserService extends AbstractService<UsersEntity,String> {
      * @return in case of success TRUE
      * @throws DBException Hiber exceptions replaced with
      */
-     public boolean followUser(FollowersEntity follow)throws DBException {
-         Transaction transaction = DBService.getTransaction();
+     public boolean followUser(Followers follow)throws DBException {
          try{
              FollowersDAO dao = DaoFactory.getFollowersDao();
              dao.create(follow);
-             transaction.commit();
-         }catch (HibernateException | NoResultException e){
-             DBService.transactionRollback(transaction);
+         }catch (PersistenceException e){
              throw new DBException(e);
          }
          return true;
@@ -345,17 +284,14 @@ public class UserService extends AbstractService<UsersEntity,String> {
      * @return in case of success TRUE
      * @throws DBException Hiber exceptions replaced with
      */
-     public boolean unfollowUser(FollowersEntity follow)throws DBException{
-         Transaction transaction = DBService.getTransaction();
+     public boolean unfollowUser(Followers follow)throws DBException{
          try{
              FollowersDAO dao= DaoFactory.getFollowersDao();
-             FollowersEntityPK followersEntityPK= new FollowersEntityPK();
-             followersEntityPK.setLogin(follow.getLogin());
-             followersEntityPK.setFollower(follow.getFollower());
+             FollowersPK followersEntityPK= new FollowersPK();
+             followersEntityPK.setLogin(follow.getLogin().getLogin());
+             followersEntityPK.setFollower(follow.getFollower().getLogin());
              dao.delete(followersEntityPK);
-             transaction.commit();
-         }catch (HibernateException | NoResultException e){
-             DBService.transactionRollback(transaction);
+         }catch (PersistenceException e){
              throw new DBException(e);
          }
          return true;
@@ -366,12 +302,12 @@ public class UserService extends AbstractService<UsersEntity,String> {
      *@return in case of success TRUE
      *@throws DBException Hiber exceptions replaced with
      */
-    public boolean createProject(ProjectsEntity projectsEntity,UsersEntity usersEntity)throws  DBException{
+    public boolean createProject(Projects projectsEntity,Users Users)throws  DBException{
         ProjectService service= ServiceFactory.getProjectService();
         service.create(projectsEntity);
-        DevelopersEntity dev= new DevelopersEntity();
-        dev.setLogin(usersEntity.getLogin());
-        dev.setProjectid(projectsEntity.getProjectid());
+        Developers dev= new Developers();
+        dev.setLogin(Users);
+        dev.setProjectid(projectsEntity);
         dev.setProjpos(Projpos.MANAGER);
         dev.setDescription(null);
         service.addDeveloper(dev);
@@ -384,7 +320,7 @@ public class UserService extends AbstractService<UsersEntity,String> {
      *@return in case of success TRUE
      *@throws DBException Hiber exceptions replaced with
      */
-    public boolean deleteProject(ProjectsEntity entity)throws DBException{
+    public boolean deleteProject(Projects entity)throws DBException{
         ProjectService service=ServiceFactory.getProjectService();
         service.delete(entity.getProjectid());
         return true;
@@ -397,49 +333,42 @@ public class UserService extends AbstractService<UsersEntity,String> {
      *@return in case of success TRUE
      *@throws DBException Hiber exceptions replaced with
      */
-    public boolean requestProj(ProjectsEntity proj,UsersEntity user) throws DBException{
-        Transaction transaction = DBService.getTransaction();
-        RequestsEntity req= new RequestsEntity();
-        req.setLogin(user.getLogin());
-        req.setProjectid(proj.getProjectid());
+    public boolean requestProj(Projects proj,Users user) throws DBException{
+        Requests req= new Requests();
+        req.setLogin(user);
+        req.setProjectid(proj);
         req.setProjpos(Projpos.DEVELOPER);
         req.setIsrequest(true);
         try{
             RequestsDAO dao = DaoFactory.getRequestsDAO();
             dao.create(req);
-            transaction.commit();
-        }catch (HibernateException | NoResultException e){
-            DBService.transactionRollback(transaction);
+        }catch (PersistenceException e){
             throw new DBException(e);
         }
         return true;
     }
 
 
-    public  boolean donate(DonatersEntity donate) throws DBException{
-        Transaction transaction= DBService.getTransaction();
+    public  boolean donate(Donaters donate) throws DBException{
         try{
             DonatersDAO dao= DaoFactory.getDonatersDAO();
             dao.create(donate);
-            transaction.commit();
-        }catch (HibernateException | NoResultException e){
-            DBService.transactionRollback(transaction);
+        }catch (PersistenceException e){
             throw new DBException(e);
         }
     return true;
     }
 
-    public boolean approveInvite(RequestsEntity entity) throws DBException{
+    public boolean approveInvite(Requests entity) throws DBException{
         Transaction transaction=null;
         try{
-            DevelopersEntity dev= new DevelopersEntity();
+            Developers dev= new Developers();
             dev.setDescription("null");
             dev.setProjpos(Projpos.DEVELOPER);
             dev.setLogin(entity.getLogin());
             dev.setProjectid(entity.getProjectid());
             ProjectService ps=ServiceFactory.getProjectService();
             ps.addDeveloper(dev);
-            transaction= DBService.getTransaction();
             RequestsDAO dao= DaoFactory.getRequestsDAO();
             RequestsEntityPK pk=new RequestsEntityPK();
             pk.setLogin(entity.getLogin());
@@ -447,39 +376,33 @@ public class UserService extends AbstractService<UsersEntity,String> {
             dao.delete(pk);
             transaction.commit();
 
-        }catch (HibernateException | NoResultException e){
-            DBService.transactionRollback(transaction);
+        }catch (PersistenceException e){
             throw new DBException(e);
         }
         return true;
     }
 
-    public boolean rejectInvite(RequestsEntity entity) throws DBException{
+    public boolean rejectInvite(Requests entity) throws DBException{
         Transaction transaction= null;
         try{
             RequestsDAO dao= DaoFactory.getRequestsDAO();
             RequestsEntityPK pk=new RequestsEntityPK();
             pk.setLogin(entity.getLogin());
             pk.setProjectid(entity.getProjectid());
-            transaction= DBService.getTransaction();
             dao.delete(pk);
             transaction.commit();
-        }catch (HibernateException | NoResultException e){
-            DBService.transactionRollback(transaction);
+        }catch (PersistenceException e){
             throw new DBException(e);
         }
         return true;
     }
 
-    public  boolean newStatus(UsersEntity user, String status) throws DBException{
-        Transaction transaction= DBService.getTransaction();
+    public  boolean newStatus(Users user, String status) throws DBException{
         try{
             UsersDAO dao= DaoFactory.getUsersDAO();
             user.setStatus(status);
             dao.update(user);
-            transaction.commit();
-        }catch (HibernateException | NoResultException e){
-            DBService.transactionRollback(transaction);
+        }catch (PersistenceException e){
             throw new DBException(e);
 
         }

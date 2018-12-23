@@ -5,27 +5,16 @@ import javax.persistence.*;
 @Entity
 @Table(name = "subs")
 @NamedQuery(name = "Subs.getAll", query = "SELECT u from Subs u")
-@IdClass(SubsEntityPK.class)
 public class Subs {
     public Subs(){}
-    @Id
-    private String login;
-    @Id
-    private String projectid;
+    @EmbeddedId
+    private SubsEntityPK id;
 
-    public String getLogin() {
-        return login;
+    public SubsEntityPK getId() {
+        return id;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
-    }
-
-    public String getProjectid() {
-        return projectid;
-    }
-
-    public void setProjectid(String projectid) {
-        this.projectid = projectid;
+    public void setId(SubsEntityPK id) {
+        this.id = id;
     }
 }

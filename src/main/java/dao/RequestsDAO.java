@@ -1,7 +1,10 @@
 package dao;
 
-import entity.*;
+import entity.Projects;
+import entity.Requests;
 
+import entity.RequestsEntityPK;
+import entity.Users;
 import util.DBService;
 
 import javax.persistence.EntityManager;
@@ -18,6 +21,7 @@ public class RequestsDAO extends AbstractDao<Requests,String> {
         em.getTransaction().commit();
         return list;
     }
+
 
     public Requests getEntityById(Users user, Projects project) {
         EntityManager em= DBService.getEntytiManager();

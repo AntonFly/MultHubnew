@@ -21,20 +21,17 @@ public class Requests {
     private Projpos projpos;
     @Column
     private Boolean isrequest;
+    @Transient
+    public Projects getProjectid(){return getId().getProjectid();}
+    public void setProjectid(Projects pr){getId().setProjectid(pr);}
 
     @Transient
-    public  Users getLogin(){
-        return  getId().getLogin();
-    }
+    public Users getLogin(){return getId().getLogin();}
+    public void setLogin(Users us){getId().setLogin(us); }
 
-    public  void setLogin(Users user){
-        getId().setLogin(user);
-    }
 
-    @Transient
-    public  Projects getProjectid(){
-        return  getId().getProjectid();
-    }
+
+
 
     public  void setLogin(Projects projects){
         getId().setProjectid(projects);

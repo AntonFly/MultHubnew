@@ -1,33 +1,36 @@
 package entity;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
-
+@Embeddable
 public class SubsEntityPK implements Serializable {
-    @Column(name = "login", nullable = false, length = 30)
-    @Id
-    private String login;
-    @Column(name = "projectid", nullable = false)
-    @Id
-    private String projectid;
-
-
-    public String getLogin() {
-        return login;
+    public SubsEntityPK() {
     }
 
-    public void setLogin(String login) {
+    public SubsEntityPK(Users login, Projects projectid) {
         this.login = login;
-    }
-
-
-    public String getProjectid() {
-        return projectid;
-    }
-
-    public void setProjectid(String projectid) {
         this.projectid = projectid;
     }
 
+    @ManyToOne
+    private Users login;
+    @ManyToOne
+    private Projects projectid;
+
+
+    public Users getLogin() {
+        return login;
+    }
+
+    public void setLogin(Users login) {
+        this.login = login;
+    }
+
+    public Projects getProjectid() {
+        return projectid;
+    }
+
+    public void setProjectid(Projects projectid) {
+        this.projectid = projectid;
+    }
 }

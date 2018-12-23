@@ -1,32 +1,35 @@
 package entity;
 
-import javax.persistence.Column;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.io.Serializable;
-
+@Embeddable
 public class DialogUsersPK implements Serializable {
-    @Column(name = "dialog_id", nullable = false, length = -1)
-    @Id
-    private String dialogId;
-    @Column(name = "user_id", nullable = false, length = -1)
-    @Id
-    private String userId;
+    @ManyToOne
+    private Dialog dialogId;
+    @ManyToOne
+    private Users userId;
 
+    public DialogUsersPK() {
+    }
 
-    public String getDialogId() {
+    public DialogUsersPK(Dialog dialogId, Users userId) {
+        this.dialogId = dialogId;
+        this.userId = userId;
+    }
+
+    public Dialog getDialogId() {
         return dialogId;
     }
 
-    public void setDialogId(String dialogId) {
+    public void setDialogId(Dialog dialogId) {
         this.dialogId = dialogId;
     }
 
-
-    public String getUserId() {
+    public Users getUserId() {
         return userId;
     }
 
-    public void setUserId(String userId) {
+    public void setUserId(Users userId) {
         this.userId = userId;
     }
 

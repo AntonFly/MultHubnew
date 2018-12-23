@@ -19,5 +19,9 @@ public class DialogDAO extends AbstractDao<Dialog,String> {
         return list;
     }
 
-
+    @Override
+    public void create(Dialog entity) {
+        entity.setId(UUID.nameUUIDFromBytes((entity.getCreationtime().toString().getBytes())).toString());
+        super.create(entity);
+    }
 }
