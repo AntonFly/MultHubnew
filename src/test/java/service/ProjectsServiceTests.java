@@ -18,8 +18,8 @@ import java.util.UUID;
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 class ProjectsServiceTests {
     private ProjectService ps;
-    static Projects pe;
-    static Commits Commits;
+    private static Projects pe;
+    private static Commits Commits;
 
     static void main(String[] args) {
         JUnitCore runner = new JUnitCore();
@@ -97,7 +97,7 @@ class ProjectsServiceTests {
             Commitsfile2.setFilepath("et");
             Commitsfile Commitsfile3 = new Commitsfile();
             Commitsfile3.setCommitid(Commits);
-            Commitsfile3.setFilename("mangusta");
+            Commitsfile3.setFilename("1mangusta");
             Commitsfile3.setFilepath("et");
             commitsfileEntities.add(Commitsfile1);
             commitsfileEntities.add(Commitsfile2);
@@ -157,7 +157,7 @@ class ProjectsServiceTests {
 
 
 
-    static Projectposts projectpostsEntity;
+    private static Projectposts projectpostsEntity;
     @Test
     void AddPostToBlog(){  //AddPostToBlog
         try {
