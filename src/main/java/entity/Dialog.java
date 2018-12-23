@@ -3,18 +3,24 @@ package entity;
 import javax.persistence.*;
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.UUID;
 
 @Entity
 @Table(name = "dialog")
 @NamedQuery(name = "Dialog.getAll", query = "SELECT u from Dialog u")
 public class Dialog {
+    public Dialog() {
+        this.creationtime=new Timestamp(System.currentTimeMillis());
+        this.id= UUID.nameUUIDFromBytes((this.creationtime.toString().getBytes())).toString();
+    }
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+//    @GeneratedValue(strategy = GenerationType.AUTO)
     private String id;
 
     @Column(name = "creationtime")
-//    @Temporal(TemporalType.TIMESTAMP)
     private Timestamp creationtime;
+
 
     @ManyToMany(mappedBy = "dialogs")
     private List<Users> interlocutors;
@@ -46,5 +52,13 @@ public class Dialog {
 
     public void setInterlocutors(List<Users> interlocutors) {
         this.interlocutors = interlocutors;
+    }
+
+    public List<Message> getMessages() {
+        return messages;
+    }
+
+    public void setMessages(List<Message> messages) {
+        this.messages = messages;
     }
 }

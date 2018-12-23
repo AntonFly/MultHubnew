@@ -28,11 +28,11 @@ public class Users {
     @Column
     private String status;
 
-    @OneToOne(optional = false,cascade = CascadeType.ALL)
-    @JoinColumn(name ="login")
+    @OneToOne()
+    @JoinColumn(name ="login",nullable = true)
     private ConnectionData condata;
 
-    @OneToMany( cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(  fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private List<Userpost> posts;
 
@@ -44,7 +44,7 @@ public class Users {
     private List<Users> followers;
 
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(name = "dialog_users",
             joinColumns = @JoinColumn(name = "user_id"),
             inverseJoinColumns = @JoinColumn(name = "dialog_id")
@@ -54,7 +54,7 @@ public class Users {
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "id.login")
     private List<Developers> developers;
 
-    @OneToMany(cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany()
     @JoinColumn(name="login")
     private List<Comments> comments;
 
@@ -93,7 +93,21 @@ public class Users {
         dialogs.add(dialog);
     }
 
+    public  void sub(Projects proj){
+        subscriprions.add(proj);
+    }
 
+    public  void unSub(Projects proj){
+        subscriprions.remove(proj);
+    }
+
+    public  void addFollower(Users user){
+        followers.add(user);
+    }
+
+    public  void dellFollower(Users user){
+        followers.remove(user);
+    }
 
     public String getLogin() {
         return login;
@@ -176,9 +190,7 @@ public class Users {
         this.dialogs = dialogs;
     }
 
-    public List<Projects> getInterlocutors() {
-        return subscriprions;
-    }
+
 
     public void setInterlocutors(List<Projects> interlocutors) {
         this.subscriprions = interlocutors;
@@ -206,5 +218,13 @@ public class Users {
 
     public void setSubscriprions(List<Projects> subscriprions) {
         this.subscriprions = subscriprions;
+    }
+
+    public List<Comments> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comments> comments) {
+        this.comments = comments;
     }
 }

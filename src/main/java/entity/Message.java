@@ -79,5 +79,11 @@ public class Message {
         this.time = time;
     }
 
+    public String getSender() {
+        return sender;
+    }
 
+    public void setSender(String sender) {
+        this.sender = sender;
+    }
 }

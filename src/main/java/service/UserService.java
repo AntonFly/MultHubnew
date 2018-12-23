@@ -154,11 +154,12 @@ public class UserService extends AbstractService<Users,String> {
      * adds new sub into SubsEntity
      */
      public  boolean sub(Users user, Projects projectsEntity)throws DBException{
-        Subs subsEntity = new Subs();
-        subsEntity.setId(new SubsEntityPK(user,projectsEntity));
+
         try{
-            SubsDAO subsDAO= DaoFactory.getSubsDAO();
-            subsDAO.create(subsEntity);
+            UsersDAO usersDAO= DaoFactory.getUsersDAO();
+            Users users= usersDAO.getEntityById(user.getLogin());
+            users.sub(projectsEntity);
+            usersDAO.update(users);
         }catch (PersistenceException e){
             throw new DBException(e);
         }
@@ -176,8 +177,10 @@ public class UserService extends AbstractService<Users,String> {
      */
      public boolean unsub(Users user, Projects projectsEntity)throws DBException {
          try{
-                SubsDAO subsDAO= DaoFactory.getSubsDAO();
-                subsDAO.delete(user,projectsEntity);
+             UsersDAO usersDAO= DaoFactory.getUsersDAO();
+             Users users= usersDAO.getEntityById(user.getLogin());
+             users.unSub(projectsEntity);
+             usersDAO.update(users);
          }catch (PersistenceException e){
              throw new DBException(e);
          }
@@ -226,13 +229,12 @@ public class UserService extends AbstractService<Users,String> {
      * @return in case of success TRUE
      * @throws DBException Hiber exceptions replaced with
      */
-     public boolean createDialog(Users user1,Users user2)throws DBException{
+     public Dialog createDialog(Users user1,Users user2)throws DBException{
          Dialog dialogEntity = new Dialog();
 
          try{
              DialogDAO dialogDao = DaoFactory.getDialogDao();
              UsersDAO UsersDAO =DaoFactory.getUsersDAO();
-             dialogDao.create(dialogEntity);
              user1.addDialog(dialogEntity);
              user2.addDialog(dialogEntity);
              UsersDAO.update(user1);
@@ -241,7 +243,7 @@ public class UserService extends AbstractService<Users,String> {
          }catch (PersistenceException e){
              throw new DBException(e);
          }
-         return true;
+         return dialogEntity;
      }
 
     /**
