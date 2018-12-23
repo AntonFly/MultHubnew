@@ -2,14 +2,14 @@ package entity;
 
 import javax.persistence.*;
 
-
 @Entity
-@Table(name="projects")
+@Table(name="creditinfo")
 @NamedQuery(name = "Creditinfo.getAll", query = "SELECT u from Creditinfo u")
 public class Creditinfo {
     @Id
-    private String projectid;
     @Column
+    private String projectid;
+    @Column(name = "cardnumber")
     private Integer cardnumber;
     @Column
     private Integer qiwimobilephone;

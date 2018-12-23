@@ -81,6 +81,14 @@ public class Users {
     )
     private List<Requests> requests;
 
+    public List<Comments> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comments> comments) {
+        this.comments = comments;
+    }
+
     public  void addDialog(Dialog dialog){
         dialogs.add(dialog);
     }
