@@ -81,13 +81,7 @@ public class Users {
     )
     private List<Requests> requests;
 
-    public List<Comments> getComments() {
-        return comments;
-    }
 
-    public void setComments(List<Comments> comments) {
-        this.comments = comments;
-    }
 
     public  void addDialog(Dialog dialog){
         dialogs.add(dialog);
@@ -107,6 +101,14 @@ public class Users {
 
     public  void dellFollower(Users user){
         followers.remove(user);
+    }
+
+    public  void addDeveloper(Developers user){
+        developers.add(user);
+    }
+
+    public  void dellDeveloper(Developers user){
+        developers.remove(user);
     }
 
     public String getLogin() {

@@ -13,7 +13,9 @@ import javax.persistence.*;
 public class Donaters {
     @EmbeddedId
     private DonatersEntityPK id;
-    public Donaters(){}
+    public Donaters(){
+        this.id=new DonatersEntityPK();
+    }
 
     @Column
     private Double value;

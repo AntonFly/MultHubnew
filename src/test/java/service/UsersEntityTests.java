@@ -306,9 +306,12 @@ class UsersEntityTests {
         proj.setCurbudget(2.);
         proj.setGoalbudget(3.);
         try{
+
             ds.create(usersEntity);
-        ds.createProject(proj,usersEntity);
-        ds.deleteProject(proj);
+            usersEntity=ds.get("4d");
+            ds.createProject(proj,usersEntity);
+
+            ds.deleteProject(proj);
         ds.delete(usersEntity.getLogin());
         } catch (DBException e) {
             e.printStackTrace();
@@ -328,6 +331,7 @@ class UsersEntityTests {
         projectsEntity.setProjectid("1");
         try{
             ds.create(usersEntity);
+            usersEntity=ds.get("4d");
             ds.requestProj(projectsEntity,usersEntity);
             ds.delete(usersEntity.getLogin());
 

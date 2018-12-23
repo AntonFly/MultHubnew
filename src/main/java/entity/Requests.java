@@ -13,7 +13,9 @@ import javax.persistence.*;
                 joinColumns = @JoinColumn(name = "projectid"))
 })
 public class Requests {
-    public Requests(){}
+    public Requests(){
+        this.id=new RequestsEntityPK();
+    }
     @EmbeddedId
     private RequestsEntityPK id;
     @Column
