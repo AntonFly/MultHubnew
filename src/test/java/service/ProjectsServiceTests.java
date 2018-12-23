@@ -7,6 +7,8 @@ import org.junit.jupiter.api.*;
 import org.junit.runner.JUnitCore;
 import org.junit.runner.Result;
 import org.junit.runners.MethodSorters;
+
+import javax.jws.soap.SOAPBinding;
 import java.sql.Timestamp;
 import java.util.LinkedList;
 import java.util.List;
@@ -87,16 +89,16 @@ class ProjectsServiceTests {
             List<Commitsfile> commitsfileEntities = new LinkedList();
             Commitsfile Commitsfile1 = new Commitsfile();
             Commitsfile1.setCommitid(Commits);
-            Commitsfile1.setFilename("pizda ebanaya cherez rot mangusta blyat");
-            Commitsfile1.setFilepath("epta");
+            Commitsfile1.setFilename("mangusta");
+            Commitsfile1.setFilepath("et");
             Commitsfile Commitsfile2 = new Commitsfile();
             Commitsfile2.setCommitid(Commits);
-            Commitsfile2.setFilename("pizda ebanaya cherez rot mangusta blyat2");
-            Commitsfile2.setFilepath("epta");
+            Commitsfile2.setFilename("mangusta2");
+            Commitsfile2.setFilepath("et");
             Commitsfile Commitsfile3 = new Commitsfile();
             Commitsfile3.setCommitid(Commits);
-            Commitsfile3.setFilename("pizda ebanaya cherez rot mangusta blyat3");
-            Commitsfile3.setFilepath("epta");
+            Commitsfile3.setFilename("mangusta");
+            Commitsfile3.setFilepath("et");
             commitsfileEntities.add(Commitsfile1);
             commitsfileEntities.add(Commitsfile2);
             commitsfileEntities.add(Commitsfile3);
@@ -185,6 +187,7 @@ class ProjectsServiceTests {
     @Test
     void Commit(){
         try {
+            //ps.create(pe);
             ps.approveCommit(Commits);
             ps.rejectCommit(Commits);
             ps.delete(UUID.nameUUIDFromBytes((pe.getName()+pe.getDescription()).getBytes()).toString()); //project
@@ -199,6 +202,7 @@ class ProjectsServiceTests {
     void AddDeveloper(){
         try {
             ps.create(pe);
+            Projects project = ps.get(pe.getProjectid());
             UserService service = ServiceFactory.getUserService();
             Users Users = new Users();
             Users.setLogin("TEST");
@@ -207,12 +211,14 @@ class ProjectsServiceTests {
             Users.setName("TEST");
             Users.setImgpath("TEST");
             service.create(Users);
+            Users user = service.get(Users.getLogin());
             Developers Developers = new Developers();
             Developers.setLogin(Users);
             Developers.setProjectid(pe);
             ps.addDeveloper(Developers);
-            //deleteDeveloper(Developers);
-            ps.deleteDeveloper(Developers);
+            service.delete(user.getLogin());
+            ps.delete(project.getProjectid());
+
         }
         catch (DBException e){
             e.printStackTrace();
@@ -234,7 +240,7 @@ class ProjectsServiceTests {
     @Test
     void sendInvite(){
         try {
-            //ps.create(pe);
+            ps.create(pe);
             UserService service = ServiceFactory.getUserService();
 
             Requests Requests = new Requests();
@@ -244,7 +250,9 @@ class ProjectsServiceTests {
             Users.setSurname("TEST");
             Users.setName("TEST");
             Users.setImgpath("TEST");
-
+            ///////
+            service.create(Users);
+            ////////
             Requests.setIsrequest(false);
             Requests.setProjpos(Projpos.DEVELOPER);
             Requests.setLogin(Users);

@@ -10,7 +10,9 @@ import javax.persistence.*;
                 joinColumns = @JoinColumn(name = "commitid"))
         })
 public class Commitsfile {
-    public Commitsfile(){}
+    public Commitsfile(){
+        this.id = new CommitsfileEntityPK();
+    }
 
     @EmbeddedId
     private CommitsfileEntityPK id;

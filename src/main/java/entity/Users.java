@@ -222,11 +222,4 @@ public class Users {
         this.subscriprions = subscriprions;
     }
 
-    public List<Comments> getComments() {
-        return comments;
-    }
-
-    public void setComments(List<Comments> comments) {
-        this.comments = comments;
-    }
 }
