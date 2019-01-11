@@ -4,11 +4,12 @@ import dataAccesLayer.dao.*;
 import dataAccesLayer.entity.*;
 import dataAccesLayer.exception.DBException;
 
+import javax.ejb.Singleton;
 import javax.persistence.PersistenceException;
 import java.util.List;
 import java.util.UUID;
 
-
+@Singleton
 public class ProjectService extends AbstractService<Projects,String> {
 
 

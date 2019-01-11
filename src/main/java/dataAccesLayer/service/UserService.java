@@ -4,9 +4,10 @@ import dataAccesLayer.dao.*;
 import dataAccesLayer.entity.*;
 import dataAccesLayer.exception.DBException;
 
+import javax.ejb.Singleton;
 import javax.persistence.PersistenceException;
 import java.util.List;
-
+@Singleton
 public class UserService extends AbstractService<Users,String> {
 
     public UserService() {
