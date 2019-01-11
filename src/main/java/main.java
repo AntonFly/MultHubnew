@@ -1,16 +1,12 @@
-import dao.*;
-import entity.Dialog;
-import entity.Projects;
-import entity.Users;
-import exception.DBException;
-import service.ServiceFactory;
-import service.UserService;
-import sun.plugin.javascript.navig.Link;
+import dataAccesLayer.dao.*;
+import dataAccesLayer.entity.Dialog;
+import dataAccesLayer.entity.Users;
+import dataAccesLayer.exception.DBException;
+import dataAccesLayer.service.ServiceFactory;
+import dataAccesLayer.service.UserService;
 
-import javax.jws.soap.SOAPBinding;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
-import java.util.List;
 
 public class main {
     public static void main(String[] args) throws DBException {
