@@ -167,6 +167,14 @@ public class Users {
         this.condata = condata;
     }
 
+//    public  void setEmail(String email){
+//        this.condata.seteMail(email);
+//    }
+//
+//    public void setMobile(String mobile){
+//        this.condata.setMobilenumb();
+//    }
+
 
     public List<Userpost> getPosts() {
         return posts;

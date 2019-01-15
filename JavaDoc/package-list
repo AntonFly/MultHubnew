@@ -1,6 +1,6 @@
 
-dao
-entity
-exception
-service
-util
+dataAccesLayer.dao
+dataAccesLayer.entity
+dataAccesLayer.exception
+dataAccesLayer.service
+dataAccesLayer.util

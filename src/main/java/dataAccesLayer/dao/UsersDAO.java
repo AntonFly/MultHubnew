@@ -19,4 +19,9 @@ public class UsersDAO extends AbstractDao<Users,String> {
             em.getTransaction().commit();
             return list;
     }
+
+    public  void  detach(Users user){
+        EntityManager em= DBService.getEntytiManager();
+        em.detach(user);
+    }
 }

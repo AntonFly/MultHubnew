@@ -103,6 +103,11 @@ public class UserService extends AbstractService<Users,String> {
         return true;
     }
 
+    public void  detach(Users user){
+            UsersDAO dao= DaoFactory.getUsersDAO();
+            dao.detach(user);
+    }
+
     /**
      *
      * @param login user's login
