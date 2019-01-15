@@ -6,7 +6,6 @@ import com.google.common.base.Charsets;
 import com.google.common.hash.HashCode;
 import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;
-import com.sun.jersey.multipart.FormDataParam;
 import dataAccesLayer.entity.Users;
 import dataAccesLayer.exception.DBException;
 import dataAccesLayer.service.UserService;
@@ -15,10 +14,8 @@ import javax.ejb.Stateful;
 import javax.inject.Inject;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
-import java.io.*;
 
 @Stateful
 @Path("/user")
@@ -32,6 +29,7 @@ public class UserResources {
 
     @Inject
     UserService userService;
+
 
     @GET
     public  String hello(){
@@ -131,53 +129,53 @@ public class UserResources {
 
 
 
-    @POST
-    @Path("/uploadAvatar")  //Your Path or URL to call this service
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public void uploadFile(
-            @DefaultValue("true") @FormDataParam("enabled") boolean enabled,
-            @FormDataParam("file") InputStream uploadedInputStream,
-//            @FormDataParam("file") FormDataContentDisposition fileDetail,
-            @FormParam("login") String login) {
-        //Your local disk path where you want to store the file
-        String uploadedFileLocation = generalAvatarPath + login;
-        avatarPath =uploadedFileLocation;
-        System.out.println(uploadedFileLocation);
-        // save it
-        File objFile=new File(uploadedFileLocation);
-        if(objFile.exists())
-        {
-            objFile.delete();
-
-        }
-
-//        saveToFile(uploadedInputStream, uploadedFileLocation);
-
-        String output = "File uploaded via Jersey based RESTFul Webservice to: " + uploadedFileLocation;
-
-//        return Response.status(200).entity("{\"msg\":\"uploaded\"}").build();
-
-    }
-    private void saveToFile(InputStream uploadedInputStream,
-                            String uploadedFileLocation) {
-
-        try {
-            OutputStream out = null;
-            int read = 0;
-            byte[] bytes = new byte[1024];
-
-            out = new FileOutputStream(new File(uploadedFileLocation));
-            while ((read = uploadedInputStream.read(bytes)) != -1) {
-                out.write(bytes, 0, read);
-            }
-            out.flush();
-            out.close();
-        } catch (IOException e) {
-
-            e.printStackTrace();
-        }
-
-    }
+//    @POST
+//    @Path("/uploadAvatar")  //Your Path or URL to call this service
+//    @Consumes(MediaType.MULTIPART_FORM_DATA)
+//    public void uploadFile(
+//            @DefaultValue("true") @FormDataParam("enabled") boolean enabled,
+//            @FormDataParam("file") InputStream uploadedInputStream,
+////            @FormDataParam("file") FormDataContentDisposition fileDetail,
+//            @FormParam("login") String login) {
+//        //Your local disk path where you want to store the file
+//        String uploadedFileLocation = generalAvatarPath + login;
+//        avatarPath =uploadedFileLocation;
+//        System.out.println(uploadedFileLocation);
+//        // save it
+//        File objFile=new File(uploadedFileLocation);
+//        if(objFile.exists())
+//        {
+//            objFile.delete();
+//
+//        }
+//
+////        saveToFile(uploadedInputStream, uploadedFileLocation);
+//
+//        String output = "File uploaded via Jersey based RESTFul Webservice to: " + uploadedFileLocation;
+//
+////        return Response.status(200).entity("{\"msg\":\"uploaded\"}").build();
+//
+//    }
+//    private void saveToFile(InputStream uploadedInputStream,
+//                            String uploadedFileLocation) {
+//
+//        try {
+//            OutputStream out = null;
+//            int read = 0;
+//            byte[] bytes = new byte[1024];
+//
+//            out = new FileOutputStream(new File(uploadedFileLocation));
+//            while ((read = uploadedInputStream.read(bytes)) != -1) {
+//                out.write(bytes, 0, read);
+//            }
+//            out.flush();
+//            out.close();
+//        } catch (IOException e) {
+//
+//            e.printStackTrace();
+//        }
+//
+//    }
 }
 
 

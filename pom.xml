@@ -10,6 +10,11 @@
     <dependencies>
         <dependency>
             <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>4.2.1.Final</version>
+        </dependency>
+        <dependency>
+            <groupId>org.hibernate</groupId>
             <artifactId>hibernate-entitymanager</artifactId>
             <version>4.2.1.Final</version>
         </dependency>
@@ -42,6 +47,16 @@
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-core</artifactId>
+            <version>2.9.8</version>
+        </dependency>
+        <dependency>
+            <groupId>com.fasterxml.jackson.core</groupId>
+            <artifactId>jackson-databind</artifactId>
+            <version>2.9.6</version>
+        </dependency>
 
         <dependency>
             <groupId>javax</groupId>
@@ -66,42 +81,110 @@
             <version>2.9.8</version>
         </dependency>
 
-        <dependency>
-            <groupId>com.fasterxml.jackson.core</groupId>
-            <artifactId>jackson-databind</artifactId>
-            <version>2.9.6</version>
-        </dependency>
-
-        <!--<dependency>-->
-            <!--<groupId>org.glassfish.jersey.media</groupId>-->
-            <!--<artifactId>jersey-media-multipart</artifactId>-->
-            <!--<version>2.27</version>-->
-        <!--</dependency>-->
-
-        <dependency>
-            <groupId>javax.ws.rs</groupId>
-            <artifactId>jsr311-api</artifactId>
-            <version>1.1.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.jersey</groupId>
-            <artifactId>jersey-server</artifactId>
-            <version>1.8</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.jersey.contribs</groupId>
-            <artifactId>jersey-multipart</artifactId>
-            <version>1.8</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/org.hibernate/hibernate-entitymanager -->
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-entitymanager</artifactId>
-            <version>5.4.0.Final</version>
-        </dependency>
-
-
     </dependencies>
 
 
 </project>
+<!--<?xml version="1.0" encoding="UTF-8"?>-->
+<!--<project xmlns="http://maven.apache.org/POM/4.0.0"-->
+         <!--xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"-->
+         <!--xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">-->
+    <!--<modelVersion>4.0.0</modelVersion>-->
+
+    <!--<groupId>net.sytes.fly</groupId>-->
+    <!--<artifactId>MultHub(new)</artifactId>-->
+    <!--<version>1.0-SNAPSHOT</version>-->
+    <!--<dependencies>-->
+
+        <!--<dependency>-->
+            <!--<groupId>junit</groupId>-->
+            <!--<artifactId>junit</artifactId>-->
+            <!--<version>4.11</version>-->
+        <!--</dependency>-->
+        <!--&lt;!&ndash; JDBC Drivers &ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.postgresql</groupId>-->
+            <!--<artifactId>postgresql</artifactId>-->
+            <!--<version>42.2.5</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.junit.jupiter</groupId>-->
+            <!--<artifactId>junit-jupiter-api</artifactId>-->
+            <!--<version>RELEASE</version>-->
+            <!--<scope>test</scope>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>junit</groupId>-->
+            <!--<artifactId>junit</artifactId>-->
+            <!--<version>4.12</version>-->
+            <!--<scope>test</scope>-->
+        <!--</dependency>-->
+
+
+        <!--<dependency>-->
+            <!--<groupId>javax</groupId>-->
+            <!--<artifactId>javaee-api</artifactId>-->
+            <!--<version>7.0</version>-->
+            <!--<scope>provided</scope>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>com.airhacks</groupId>-->
+            <!--<artifactId>jaxrs-cors</artifactId>-->
+            <!--<version>0.0.2</version>-->
+        <!--</dependency>-->
+
+        <!--<dependency>-->
+            <!--<groupId>com.googlecode.perfect-hashes</groupId>-->
+            <!--<artifactId>perfect-hashes</artifactId>-->
+            <!--<version>1.0</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>com.fasterxml.jackson.core</groupId>-->
+            <!--<artifactId>jackson-core</artifactId>-->
+            <!--<version>2.9.8</version>-->
+        <!--</dependency>-->
+
+        <!--<dependency>-->
+            <!--<groupId>com.fasterxml.jackson.core</groupId>-->
+            <!--<artifactId>jackson-databind</artifactId>-->
+            <!--<version>2.9.6</version>-->
+        <!--</dependency>-->
+
+
+
+        <!--<dependency>-->
+            <!--<groupId>javax.ws.rs</groupId>-->
+            <!--<artifactId>jsr311-api</artifactId>-->
+            <!--<version>1.1.1</version>-->
+        <!--</dependency>-->
+        <!--&lt;!&ndash;<dependency>&ndash;&gt;-->
+            <!--&lt;!&ndash;<groupId>com.sun.jersey</groupId>&ndash;&gt;-->
+            <!--&lt;!&ndash;<artifactId>jersey-server</artifactId>&ndash;&gt;-->
+            <!--&lt;!&ndash;<version>1.8</version>&ndash;&gt;-->
+        <!--&lt;!&ndash;</dependency>&ndash;&gt;-->
+        <!--&lt;!&ndash;<dependency>&ndash;&gt;-->
+            <!--&lt;!&ndash;<groupId>com.sun.jersey.contribs</groupId>&ndash;&gt;-->
+            <!--&lt;!&ndash;<artifactId>jersey-multipart</artifactId>&ndash;&gt;-->
+            <!--&lt;!&ndash;<version>1.8</version>&ndash;&gt;-->
+        <!--&lt;!&ndash;</dependency>&ndash;&gt;-->
+        <!--<dependency>-->
+            <!--<groupId>org.hibernate.javax.persistence</groupId>-->
+            <!--<artifactId>hibernate-jpa-2.0-api</artifactId>-->
+            <!--<version>1.0.1.Final</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.hibernate</groupId>-->
+            <!--<artifactId>hibernate-core</artifactId>-->
+            <!--<version>4.2.1.Final</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.hibernate</groupId>-->
+            <!--<artifactId>hibernate-entitymanager</artifactId>-->
+            <!--<version>4.2.1.Final</version>-->
+        <!--</dependency>-->
+
+
+    <!--</dependencies>-->
+
+
+<!--</project>-->
