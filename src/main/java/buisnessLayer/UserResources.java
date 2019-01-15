@@ -30,6 +30,9 @@ public class UserResources {
     @Inject
     UserService userService;
 
+//    @Inject
+//    DBService dbService;
+
 
     @GET
     public  String hello(){

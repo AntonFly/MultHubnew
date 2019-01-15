@@ -1,12 +1,10 @@
 package dataAccesLayer.util;
 
-import javax.ejb.Singleton;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
 
-@Singleton
 public class DBService {
         private static EntityManagerFactory managerFactory;
 
