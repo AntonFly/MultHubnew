@@ -4,7 +4,7 @@
     <facet type="jpa" name="JPA">
       <configuration>
         <setting name="validation-enabled" value="true" />
-        <setting name="provider-name" value="" />
+        <setting name="provider-name" value="Hibernate" />
         <datasource-mapping>
           <factory-entry name="MULTHUB" value="b0fe5796-c86d-45a4-a78b-04f68f809a81" />
         </datasource-mapping>
@@ -23,8 +23,4 @@
       </configuration>
     </facet>
   </component>
-  <init-param>
-      <param-name>jersey.config.server.provider.classnames</param-name>
-      <param-value>org.glassfish.jersey.media.multipart.MultiPartFeature</param-value>
-  </init-param>
 </module>

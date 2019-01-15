@@ -5,11 +5,12 @@
                                  http://java.sun.com/xml/ns/persistence/persistence_1_0.xsd"
              version="1.0">
 
-    <persistence-unit name="MULTHUB" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="MULTHUB" transaction-type="RESOURCE_LOCAL" >
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <jta-data-source>jdbc/__MultHub</jta-data-source>
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
+            <property name="hibernate.archive.autodetection" value="class, hbm"/>
             <property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.SunOneJtaPlatform" />
         </properties>
         <!--<properties>-->
