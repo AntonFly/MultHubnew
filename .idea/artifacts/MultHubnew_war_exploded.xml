@@ -47,6 +47,22 @@
           <element id="library" level="project" name="Maven: com.sun.jersey:jersey-core:1.8" />
           <element id="library" level="project" name="Maven: com.sun.jersey.contribs:jersey-multipart:1.8" />
           <element id="library" level="project" name="Maven: org.jvnet:mimepull:1.4" />
+          <element id="library" level="project" name="Maven: com.fasterxml:classmate:1.3.0" />
+          <element id="library" level="project" name="Maven: dom4j:dom4j:1.6.1" />
+          <element id="library" level="project" name="Maven: javax.annotation:jsr250-api:1.0" />
+          <element id="library" level="project" name="Maven: javax.el:el-api:2.2" />
+          <element id="library" level="project" name="Maven: javax.enterprise:cdi-api:1.1" />
+          <element id="library" level="project" name="Maven: javax.inject:javax.inject:1" />
+          <element id="library" level="project" name="Maven: net.bytebuddy:byte-buddy:1.8.17" />
+          <element id="library" level="project" name="Maven: org.apache.geronimo.specs:geronimo-jta_1.1_spec:1.1.1" />
+          <element id="library" level="project" name="Maven: org.hibernate.common:hibernate-commons-annotations:5.0.1.Final" />
+          <element id="library" level="project" name="Maven: org.hibernate.javax.persistence:hibernate-jpa-2.1-api:1.0.0.Final" />
+          <element id="library" level="project" name="Maven: org.hibernate:hibernate-core:5.2.2.Final" />
+          <element id="library" level="project" name="Maven: org.hibernate:hibernate-entitymanager:5.3.6.Final" />
+          <element id="library" level="project" name="Maven: org.javassist:javassist:3.20.0-GA" />
+          <element id="library" level="project" name="Maven: org.jboss.logging:jboss-logging:3.3.0.Final" />
+          <element id="library" level="project" name="Maven: org.jboss.spec.javax.interceptor:jboss-interceptors-api_1.1_spec:1.0.0.Beta1" />
+          <element id="library" level="project" name="Maven: org.jboss:jandex:2.0.0.Final" />
         </element>
         <element id="jpa-descriptors" facet="MultHubnew/jpa/JPA" />
       </element>

@@ -9,16 +9,19 @@ public class DBService {
         private static EntityManagerFactory managerFactory;
 
         static {
-                managerFactory = Persistence.createEntityManagerFactory("MULTHUB");
+
+            managerFactory = Persistence.createEntityManagerFactory("MULTHUB");
         }
 
         private DBService() {}
 
     private static EntityManagerFactory getEntytiManagerFactory(){
-        return managerFactory;
+
+            return managerFactory;
     }
 
     public static EntityManager getEntytiManager(){
+
             return getEntytiManagerFactory().createEntityManager();
     }
     public static EntityTransaction getTransaction() {

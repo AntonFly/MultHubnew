@@ -6,20 +6,34 @@ import com.google.common.base.Charsets;
 import com.google.common.hash.HashCode;
 import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;
+//import com.sun.jersey.multipart.FormDataParam;
 import dataAccesLayer.entity.Users;
 import dataAccesLayer.exception.DBException;
 import dataAccesLayer.service.UserService;
 
+import javax.annotation.Resource;
 import javax.ejb.Stateful;
+import javax.ejb.TransactionManagement;
+import javax.enterprise.inject.spi.Bean;
 import javax.inject.Inject;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.UserTransaction;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
+import java.io.*;
+import dataAccesLayer.service.UserService;
 
 @Stateful
 @Path("/user")
 public class UserResources {
+//@PersistenceContext(unitName = "MULTHUB")
+//    EntityManager em;
+//    @Resource
+//    UserTransaction tx;
 
     private String avatarPath=null;
     private  String generalAvatarPath="E:/Печатные работы/ПИП/Курсач/resources/avatars/";
@@ -29,10 +43,6 @@ public class UserResources {
 
     @Inject
     UserService userService;
-
-//    @Inject
-//    DBService dbService;
-
 
     @GET
     public  String hello(){
@@ -44,6 +54,7 @@ public class UserResources {
     @Path("/signIn")
     public Response fingByLogin(@FormParam("login") final String login, @FormParam("password") String password ) throws JsonProcessingException {
         Users user = null;
+//        UserService userService = new UserService();
         try {
             user = userService.get(login);
         } catch (DBException e) {
@@ -78,6 +89,7 @@ public class UserResources {
                            @FormParam("email") String email,
                            @FormParam("modile") String mobile
     ){
+//        UserService userService = new UserService();
         try {
 
             System.out.println("sfdsfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAdsfsdfsdfsdffdsfsdv!!!!!!!"+login+" "+password+" "+name+" ");
@@ -93,7 +105,7 @@ public class UserResources {
             if(avatarPath==null)
                 avatarPath=generalAvatarPath+"default.png";
             user.setImgpath(avatarPath);
-            this.userService.create(user);
+            userService.create(user);
             if(email !=null){
                 user = userService.get(login);
                 user.getCondata().seteMail(email);
@@ -101,7 +113,7 @@ public class UserResources {
             if(mobile !=null){
                 user.getCondata().setMobilenumb(Long.valueOf(mobile));
             }
-            this.userService.create(user);
+            userService.create(user);
             return   Response.ok().status(200).build();
         }catch (Exception e){
             e.printStackTrace();
@@ -114,17 +126,29 @@ public class UserResources {
     @GET
     @Path("/try{login}")
     public  Response tryLogin(@PathParam(value = "login") String login) throws DBException {
-        Users user =this.userService.get(login);
-        System.out.println(login);
-        if (user == null)
-            return Response.ok("{\"msg\":\"true\"}").build();
-        return Response.ok("{\"msg\":\"false\"}").build();
+//        UserService userService = new UserService();
+//        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+//        try {
+//            tx.begin();
+            Users user = userService.get(login);
+//        this.em.createQuery("insert into comments () ");
+            System.out.println(login);
+//            tx.commit();
+            if (user == null)
+                return Response.ok("{\"msg\":\"true\"}").build();
+            return Response.ok("{\"msg\":\"false\"}").build();
+//        }catch (Exception ex){ex.printStackTrace();}
+//        finally {
+//            return Response.ok("{\"msg\":\"fail\"}").build();
+//                    }
+//        return Response.ok("{\"msg\":\"false\"}").build();
     }
 
     @POST
     @Path("/NewStatus")
     public  Response newPost(@FormParam("login") String login, @FormParam("status") String status) throws DBException {
-        Users users = this.userService.get(login);
+//        UserService userService = new UserService();
+        Users users = userService.get(login);
         users.setStatus(status);
         return Response.ok().build();
 
@@ -159,26 +183,26 @@ public class UserResources {
 ////        return Response.status(200).entity("{\"msg\":\"uploaded\"}").build();
 //
 //    }
-//    private void saveToFile(InputStream uploadedInputStream,
-//                            String uploadedFileLocation) {
-//
-//        try {
-//            OutputStream out = null;
-//            int read = 0;
-//            byte[] bytes = new byte[1024];
-//
-//            out = new FileOutputStream(new File(uploadedFileLocation));
-//            while ((read = uploadedInputStream.read(bytes)) != -1) {
-//                out.write(bytes, 0, read);
-//            }
-//            out.flush();
-//            out.close();
-//        } catch (IOException e) {
-//
-//            e.printStackTrace();
-//        }
-//
-//    }
+    private void saveToFile(InputStream uploadedInputStream,
+                            String uploadedFileLocation) {
+
+        try {
+            OutputStream out = null;
+            int read = 0;
+            byte[] bytes = new byte[1024];
+
+            out = new FileOutputStream(new File(uploadedFileLocation));
+            while ((read = uploadedInputStream.read(bytes)) != -1) {
+                out.write(bytes, 0, read);
+            }
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+
+    }
 }
 
 

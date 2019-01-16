@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <persistence xmlns="http://java.sun.com/xml/ns/persistence" version="2.0">
 
-    <persistence-unit name="MULTHUB" transaction-type="RESOURCE_LOCAL">
+    <persistence-unit name="MULTHUB"  >
         <provider>org.hibernate.jpa.HibernatePersistenceProvider</provider>
         <jta-data-source>jdbc/__MultHub</jta-data-source>
         <class>dataAccesLayer.util.DBService</class>

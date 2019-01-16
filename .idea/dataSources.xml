@@ -11,9 +11,7 @@
       <driver-ref>postgresql</driver-ref>
       <synchronize>true</synchronize>
       <imported>true</imported>
-      <remarks>Hibernate
-
-C:/Users/anton/IdeaProjects/MultHubnew/src/main/resources/META-INF/persistence.xml</remarks>
+      <remarks>Hibernate  C:/Users/anton/IdeaProjects/MultHubnew/src/main/resources/META-INF/persistence.xml</remarks>
       <jdbc-driver>org.postgresql.Driver</jdbc-driver>
       <jdbc-url>jdbc:postgresql://fly.sytes.net:5432/multhub</jdbc-url>
     </data-source>
