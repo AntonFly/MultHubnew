@@ -120,14 +120,13 @@ public class ProjectService extends AbstractService<Projects,String> {
 
     /**
      * removes row from Developers dataAccesLayer.entity
-     * @param developersEntity developerEntity obkect
      * @return true in case of success
      * @throws DBException Hiber exceptions replaced with
      */
-    public boolean deleteDeveloper(Developers developersEntity) throws DBException{
+    public boolean deleteDeveloper(Users login,Projects projectId) throws DBException{
         DevelopersEntityPK developersEntityPK = new DevelopersEntityPK();
-        developersEntityPK.setLogin(developersEntity.getLogin());
-        developersEntityPK.setProjectid(developersEntity.getProjectid());
+        developersEntityPK.setLogin(login);
+        developersEntityPK.setProjectid(projectId);
 
         try{
             DevelopersDAO developersDAO = DaoFactory.getDevelopersDAO();
@@ -181,7 +180,8 @@ public class ProjectService extends AbstractService<Projects,String> {
     public boolean deletePostInBlog(Projectposts projectpostsEntity) throws DBException{
         try{
             ProjectspostsDAO projectspostsDAO = DaoFactory.getProjectspostsDAO();
-            projectspostsDAO.delete(UUID.nameUUIDFromBytes(projectpostsEntity.getText().getBytes()).toString());
+//            projectspostsDAO.delete(UUID.nameUUIDFromBytes(projectpostsEntity.getText().getBytes()).toString());
+            projectspostsDAO.delete(projectpostsEntity.getId());
         } catch (PersistenceException e) {
             throw new DBException(e);
         }
@@ -288,7 +288,7 @@ public class ProjectService extends AbstractService<Projects,String> {
      * @throws DBException Hiber exceptions replaced with
      */
     public boolean approveCommit( Commits commitsEntity)throws DBException{
-        commitsEntity.setId(UUID.nameUUIDFromBytes(   (commitsEntity.getDeveloper()+commitsEntity.getProjectid()+commitsEntity.getTime())   .getBytes()  ).toString());
+//        commitsEntity.setId(UUID.nameUUIDFromBytes(   (commitsEntity.getDeveloper()+commitsEntity.getProjectid()+commitsEntity.getTime())   .getBytes()  ).toString());
         commitsEntity.setApproved(Approved.APPROVED);
         try{
             CommitsDao commitsDao = DaoFactory.getCommitsDao();
@@ -307,7 +307,7 @@ public class ProjectService extends AbstractService<Projects,String> {
      * @throws DBException Hiber exceptions replaced with
      */
     public boolean rejectCommit(Commits commitsEntity)throws DBException{
-        commitsEntity.setId(UUID.nameUUIDFromBytes(   (commitsEntity.getDeveloper()+commitsEntity.getProjectid()+commitsEntity.getTime())   .getBytes()  ).toString());
+//        commitsEntity.setId(UUID.nameUUIDFromBytes(   (commitsEntity.getDeveloper()+commitsEntity.getProjectid()+commitsEntity.getTime())   .getBytes()  ).toString());
         deleteCommit(commitsEntity);
         return true;
     }
@@ -362,7 +362,8 @@ public class ProjectService extends AbstractService<Projects,String> {
         List<Commitsfile> commits;
         try{
             CommitsDao commitsDao = DaoFactory.getCommitsDao();
-            commits = commitsDao.getEntityById(  UUID.nameUUIDFromBytes((commitsEntity.getDeveloper()+commitsEntity.getProjectid()+commitsEntity.getTime()).getBytes()).toString() ).getCommitsfile();
+//            commits = commitsDao.getEntityById(  UUID.nameUUIDFromBytes((commitsEntity.getDeveloper()+commitsEntity.getProjectid()+commitsEntity.getTime()).getBytes()).toString() ).getCommitsfile();
+            commits = commitsDao.getEntityById(  commitsEntity.getId() ).getCommitsfile();
         } catch (PersistenceException e) {
             throw new DBException(e);
         }

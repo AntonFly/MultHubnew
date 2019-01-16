@@ -15,7 +15,13 @@ import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+//import javax.ws.rs.sse.OutboundSseEvent;
+//import javax.ws.rs.sse.Sse;
+//import javax.ws.rs.sse.SseEventSink;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -29,6 +35,29 @@ public class ViewResources {
     //еще тоха шото говорил
     //уведомления
     //конкретный дифф
+
+//int i = 0;
+
+//    @GET
+//    @Path("/getEvent")
+//    public void news(@Context SseEventSink eventSink, @Context Sse sse) {
+//        try (SseEventSink sink = eventSink) {
+//            i++;
+//            sink.send(sse.newEvent("data"+i));
+//            sink.send(sse.newEvent("MyEventName", "more data"));
+//
+//            OutboundSseEvent event = sse.newEventBuilder().
+//                    id("EventId").
+//                    name("EventName").
+//                    data(i).
+//                    reconnectDelay(10000).
+//                    comment("Anything i wanna comment here!").
+//                    build();
+//
+//            sink.send(event);
+//
+//        }
+//    }
 
 
     @Inject

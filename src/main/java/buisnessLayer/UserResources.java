@@ -6,7 +6,9 @@ import com.google.common.base.Charsets;
 import com.google.common.hash.HashCode;
 import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;
+//import com.sun.jersey.core.header.FormDataContentDisposition;
 import com.sun.jersey.multipart.FormDataParam;
+import com.sun.xml.internal.ws.api.message.Attachment;
 import dataAccesLayer.entity.Users;
 import dataAccesLayer.exception.DBException;
 import dataAccesLayer.service.UserService;
@@ -17,6 +19,7 @@ import javax.ejb.Stateful;
 import javax.ejb.TransactionManagement;
 import javax.enterprise.inject.spi.Bean;
 import javax.inject.Inject;
+import javax.mail.Multipart;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
@@ -29,6 +32,7 @@ import java.io.*;
 import java.util.List;
 
 import dataAccesLayer.service.UserService;
+//import org.glassfish.jersey.media.multipart.FormDataParam;
 
 @Stateful
 @Path("/user")
@@ -44,7 +48,7 @@ public class UserResources {
 
 
     private String avatarPath=null;
-    private  String generalAvatarPath="E:/Печатные работы/ПИП/Курсач/resources/avatars/";
+    private  String generalAvatarPath="D:/projects/kek/";
 
     @Context
     UriInfo uriInfo;
@@ -150,33 +154,31 @@ public class UserResources {
 
 
 
-//    @POST
-//    @Path("/uploadAvatar")  //Your Path or URL to call this service
-//    @Consumes(MediaType.MULTIPART_FORM_DATA)
-//    public void uploadFile(
-//            @DefaultValue("true") @FormDataParam("enabled") boolean enabled,
-//            @FormDataParam("file") InputStream uploadedInputStream,
-////            @FormDataParam("file") FormDataContentDisposition fileDetail,
-//            @FormParam("login") String login) {
-//        //Your local disk path where you want to store the file
-//        String uploadedFileLocation = generalAvatarPath + login;
-//        avatarPath =uploadedFileLocation;
-//        System.out.println(uploadedFileLocation);
-//        // save it
-//        File objFile=new File(uploadedFileLocation);
-//        if(objFile.exists())
-//        {
-//            objFile.delete();
-//
-//        }
-//
-////        saveToFile(uploadedInputStream, uploadedFileLocation);
-//
-//        String output = "File uploaded via Jersey based RESTFul Webservice to: " + uploadedFileLocation;
-//
-////        return Response.status(200).entity("{\"msg\":\"uploaded\"}").build();
-//
-//    }
+    @Path("/uploadAvatar")
+    @POST
+//    @Produces(MediaType.MULTIPART_FORM_DATA)
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
+    public javax.ws.rs.core.Response uploadNewAdvJson(@FormDataParam("file") InputStream is) {
+        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        //Your local disk path where you want to store the file
+        String uploadedFileLocation = generalAvatarPath + "login.png";
+        avatarPath =uploadedFileLocation;
+        System.out.println(uploadedFileLocation);
+        // save it
+        File objFile=new File(uploadedFileLocation);
+        if(objFile.exists())
+        {
+            objFile.delete();
+
+        }
+
+        saveToFile(is, uploadedFileLocation);
+
+        String output = "File uploaded via Jersey based RESTFul Webservice to: " + uploadedFileLocation;
+
+        return Response.status(200).entity("{\"msg\":\"uploaded\"}").build();
+
+    }
 
     private void saveToFile(InputStream uploadedInputStream,
                             String uploadedFileLocation) {
