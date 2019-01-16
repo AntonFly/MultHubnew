@@ -108,7 +108,7 @@ class ViewServiceTest {
             Projects.setCurbudget(12.);
             Projects.setGoalbudget(13.);
             Projects.setProjectid(UUID.nameUUIDFromBytes((Projects.getName()+Projects.getDescription()).getBytes()).toString());
-            List<Commitsfile> list = ServiceFactory.getViewService().filesPageProjectInfo(Projects);
+            List<Commitsfile> list = ServiceFactory.getViewService().filesPageProjectInfo(Projects.getProjectid());
             System.out.println("Commits and files connected with project:");
             for(Commitsfile row:list){
                 System.out.println("CommitId: "+row.getCommitid().getId()+" \nDEVELOPER: "+ row.getCommitid().getDeveloper()+" TIME:"+row.getCommitid().getTime());
@@ -133,7 +133,7 @@ class ViewServiceTest {
             Projects.setGoalbudget(13.);
             Projects.setProjectid(UUID.nameUUIDFromBytes((Projects.getName()+Projects.getDescription()).getBytes()).toString());
 
-            Map<String,Object> map = ServiceFactory.getViewService().mainPageProjectInfo(Projects);
+            Map<String,Object> map = ServiceFactory.getViewService().mainPageProjectInfo(Projects.getProjectid());
             System.out.println("posts text: "+((List<Projectposts>)map.get("Posts")).get(0).getText());
             System.out.println("subs: "+((List<Users>)map.get("Subs")).get(0).getLogin());
 
@@ -153,7 +153,7 @@ class ViewServiceTest {
             Projects.setGoalbudget(13.);
             Projects.setProjectid(UUID.nameUUIDFromBytes((Projects.getName()+Projects.getDescription()).getBytes()).toString());
 
-            Map<String,Object> map = ServiceFactory.getViewService().developersPageProjectInfo(Projects);
+            Map<String,Object> map = ServiceFactory.getViewService().developersPageProjectInfo(Projects.getProjectid());
             System.out.println("developers: login = "+((List<Developers>)map.get("Devs")).get(0).getLogin().getLogin() +" description = "+((List<Developers>)map.get("Devs")).get(0).getDescription());
 
         } catch (Exception e) {
@@ -174,7 +174,7 @@ class ViewServiceTest {
             Projects.setProjectid(UUID.nameUUIDFromBytes((Projects.getName()+Projects.getDescription()).getBytes()).toString());
 
 
-            List<Commitsfile> list = ServiceFactory.getViewService().uncheckedfilesPageProjectInfo(Projects);
+            List<Commitsfile> list = ServiceFactory.getViewService().uncheckedfilesPageProjectInfo(Projects.getProjectid());
             for(Commitsfile row:list){
                 System.out.println("CommitId: "+row.getId().getCommitid()+" \nDEVELOPER: "+ row.getCommitid().getDeveloper()+" TIME:"+row.getCommitid().getTime());
                 System.out.println("FILENAME: "+row.getFilename() +" FILEPATH:"+row.getFilepath()+"\n");
