@@ -1,9 +1,12 @@
 package buisnessLayer;
 
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dataAccesLayer.entity.*;
+import dataAccesLayer.entity.Commitsfile;
+import dataAccesLayer.entity.Dialog;
+import dataAccesLayer.entity.Message;
+import dataAccesLayer.entity.Users;
 import dataAccesLayer.exception.DBException;
-import dataAccesLayer.service.ProjectService;
 import dataAccesLayer.service.ViewService;
 
 import javax.ejb.Stateful;
@@ -22,6 +25,11 @@ import java.util.Map;
 public class ViewResources {
 //просмотр коммитов для простых юзеров
     //популярые проекты
+    //еще тоха шото говорил
+    //уведомления
+    //конкретный дифф
+
+
     @Inject
     ViewService viewService;
 
@@ -41,10 +49,10 @@ public class ViewResources {
         try {
             List<Dialog> dialogs = this.viewService.getDialogs(login);
 
-            HashMap<String,HashMap<String,Object>> maps = new HashMap();
+            HashMap<String,HashMap<String,Object>> maps = new HashMap<>();
             System.out.println(dialogs.size()+" AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
             for(int i = 0; i< dialogs.size(); i++) {
-                HashMap<String, Object> toJson = new HashMap();
+                HashMap<String, Object> toJson = new HashMap<>();
 
                 toJson.put("dialogs", dialogs.get(i));
                 Users user;
@@ -218,4 +226,5 @@ public class ViewResources {
         }
         return Response.ok(json).build();
     }
+
 }

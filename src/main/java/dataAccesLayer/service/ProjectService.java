@@ -33,13 +33,29 @@ public class ProjectService extends AbstractService<Projects,String> {
 
     /**
      * Generate new project
-     * @param project - project obj
      * @return true in case of success
      * @throws DBException Hiber exceptions replaced with
      */
+    public boolean create(String name, String description, double goalBudget) throws DBException {
+        try {
+            Projects project = new Projects();
+            project.setName(name);
+            project.setDescription(description);
+            project.setGoalbudget(goalBudget);
+            project.setProjectid(UUID.nameUUIDFromBytes((project.getName()+project.getDescription()).getBytes()).toString());
+            project.setCurbudget(0.);
+            ProjectsDAO dao = DaoFactory.getProjectsDAO();
+            dao.create(project);
+        } catch (PersistenceException e) {
+            throw new DBException(e);
+        }
+        return true;
+    }
+
     @Override
     public boolean create(Projects project) throws DBException {
         try {
+
             ProjectsDAO dao = DaoFactory.getProjectsDAO();
             dao.create(project);
         } catch (PersistenceException e) {

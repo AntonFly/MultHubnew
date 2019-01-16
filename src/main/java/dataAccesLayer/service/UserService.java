@@ -8,6 +8,8 @@ import javax.ejb.Singleton;
 import javax.persistence.PersistenceException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
+
 @Singleton
 public class UserService extends AbstractService<Users,String> {
 
@@ -33,11 +35,7 @@ public class UserService extends AbstractService<Users,String> {
         }
 
     }
-    public List<Users> search(String namePart){
-        UsersDAO dao = DaoFactory.getUsersDAO();
-        List<Users> list =  dao.searchUsers(namePart);
-        return list;
-    };
+
     /**
      * Generate new user
      * @param user - user obj
@@ -225,6 +223,15 @@ public class UserService extends AbstractService<Users,String> {
          }
          return true;
      }
+    public boolean deleteComment(String id) throws DBException{
+        try{
+            CommentsDAO commentsDAO = DaoFactory.getCommentsDAO();
+            commentsDAO.delete(id);
+        }catch (PersistenceException e){
+            throw new DBException(e);
+        }
+        return true;
+    }
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -246,8 +253,6 @@ public class UserService extends AbstractService<Users,String> {
              user2.addDialog(dialogEntity);
              UsersDAO.update(user1);
              UsersDAO.update(user2);
-
-
 
          }catch (PersistenceException e){
              throw new DBException(e);
@@ -312,18 +317,38 @@ public class UserService extends AbstractService<Users,String> {
      }
     /**
      * Creating project by user
-     * @param projectsEntity obj of the project
+//     * @param projectsEntity obj of the project
      *@return in case of success TRUE
      *@throws DBException Hiber exceptions replaced with
      */
-    public boolean createProject(Projects projectsEntity,Users Users,String discription)throws  DBException{
+    public boolean createProject(String name, String description, double goalBudget,Users Users)throws  DBException{
+        ProjectService service= ServiceFactory.getProjectService();
+
+        Projects project = new Projects();
+        project.setName(name);
+        project.setDescription(description);
+        project.setGoalbudget(goalBudget);
+        project.setProjectid(UUID.nameUUIDFromBytes((project.getName()+project.getDescription()).getBytes()).toString());
+        project.setCurbudget(0.);
+
+        service.create(project);
+        Developers dev= new Developers();
+        dev.setLogin(Users);
+        dev.setProjectid(project);
+        dev.setProjpos(Projpos.MANAGER);
+        dev.setDescription(description);
+        service.addDeveloper(dev);
+        return true;
+    }
+    public boolean createProject(Projects projectsEntity,Users Users)throws  DBException{
+
         ProjectService service= ServiceFactory.getProjectService();
         service.create(projectsEntity);
         Developers dev= new Developers();
         dev.setLogin(Users);
         dev.setProjectid(projectsEntity);
         dev.setProjpos(Projpos.MANAGER);
-        dev.setDescription(discription);
+        dev.setDescription(null);
         service.addDeveloper(dev);
         return true;
     }
