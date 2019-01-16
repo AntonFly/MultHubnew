@@ -41,13 +41,13 @@ public class ViewService  {
             proj.add(dev.getProjectid());
         }
 
-        map.put("login",user.getLogin());
-        map.put("name",user.getName());
-        map.put("surname",user.getSurname());
-        map.put("imjPath",user.getImgpath());
-        map.put("email",connectiondata.geteMail());
-        map.put("mobilenumb",connectiondata.getMobilenumb());
-        map.put("satus",user.getStatus());
+//        map.put("login",user.getLogin());
+//        map.put("name",user.getName());
+//        map.put("surname",user.getSurname());
+//        map.put("imjPath",user.getImgpath());
+//        map.put("satus",user.getStatus());
+        map.put("user", user);
+        map.put("connect",connectiondata);
         map.put("posts",posts);
         map.put("projects",proj);
         map.put("followers",followers);

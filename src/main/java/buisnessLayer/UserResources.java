@@ -11,6 +11,7 @@ import dataAccesLayer.entity.Users;
 import dataAccesLayer.exception.DBException;
 import dataAccesLayer.service.UserService;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.ejb.Stateful;
 import javax.ejb.TransactionManagement;
@@ -25,11 +26,23 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.io.*;
+import java.util.List;
+
 import dataAccesLayer.service.UserService;
 
 @Stateful
 @Path("/user")
 public class UserResources {
+
+//    @PostConstruct
+//    void initQuery(){
+//        try {
+//            List<Users> users  = this.userService.getAll();
+//            System.out.println(users.size()+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
+//        }catch(Exception ex){}
+//    }
+
+
     private String avatarPath=null;
     private  String generalAvatarPath="E:/Печатные работы/ПИП/Курсач/resources/avatars/";
 
@@ -56,7 +69,7 @@ public class UserResources {
         }
         if (user == null)
             return Response.ok("{\"msg\":\"Неверный пароль или логин\"}").build();
-        HashFunction hf = Hashing.adler32();
+        HashFunction hf = Hashing.md5();
         HashCode hc = hf.newHasher()
                 .putString(password, Charsets.UTF_8)
                 .hash();
@@ -78,10 +91,10 @@ public class UserResources {
     @Path("/signUp")
     public Response signUp(@FormParam("login") final String login,
                            @FormParam("password") String password,
-                           @FormParam("firstname") String name,
-                           @FormParam("lastname") String surname,
+                           @FormParam("name") String name,
+                           @FormParam("surname") String surname,
                            @FormParam("email") String email,
-                           @FormParam("modile") String mobile
+                           @FormParam("mobile") String mobile
     ){
         try {
             System.out.println("sfdsfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAdsfsdfsdfsdffdsfsdv!!!!!!!"+login+" "+password+" "+name+" ");
@@ -105,7 +118,7 @@ public class UserResources {
             if(mobile !=null){
                 user.getCondata().setMobilenumb(Long.valueOf(mobile));
             }
-            userService.create(user);
+//            user = userService.get(login);
             return   Response.ok().status(200).build();
         }catch (Exception e){
             e.printStackTrace();
@@ -133,7 +146,6 @@ public class UserResources {
         Users users = userService.get(login);
         users.setStatus(status);
         return Response.ok().build();
-
     }
 
 
@@ -165,6 +177,7 @@ public class UserResources {
 ////        return Response.status(200).entity("{\"msg\":\"uploaded\"}").build();
 //
 //    }
+
     private void saveToFile(InputStream uploadedInputStream,
                             String uploadedFileLocation) {
 

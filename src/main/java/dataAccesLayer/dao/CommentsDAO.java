@@ -29,4 +29,8 @@ public class CommentsDAO extends AbstractDao<Comments,String> {
         String uuid=UUID.nameUUIDFromBytes((comment.getComment()+comment.getLogin()).getBytes()).toString();
         super.delete(uuid);
     }
+    @Override
+    public void delete(String id){
+        super.delete(id);
+    }
 }

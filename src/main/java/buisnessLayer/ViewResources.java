@@ -1,5 +1,6 @@
 package buisnessLayer;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dataAccesLayer.entity.Commitsfile;
@@ -25,6 +26,11 @@ import java.util.Map;
 public class ViewResources {
 //просмотр коммитов для простых юзеров
     //популярые проекты
+    //еще тоха шото говорил
+    //уведомления
+    //конкретный дифф
+
+
     @Inject
     ViewService viewService;
 
@@ -83,7 +89,7 @@ public class ViewResources {
 
             this.viewService.readMessages(dialogId, login);  //посылает запрос
             json = mapper.writeValueAsString(messages);
-        }catch (com.fasterxml.jackson.core.JsonProcessingException | DBException ex){
+        }catch (JsonProcessingException | DBException ex){
 //            ex.printStackTrace();
             Response.ResponseBuilder response = Response.ok();
             response.status(401);
@@ -101,7 +107,7 @@ public class ViewResources {
             Map<String,Object> result = this.viewService.UserPageInformation(login);
 //            result.put("Image",new) как то отправить пикчу
             json = mapper.writeValueAsString(result);
-        }catch (com.fasterxml.jackson.core.JsonProcessingException | DBException e){
+        }catch (JsonProcessingException | DBException e){
 //            e.printStackTrace();
             Response.ResponseBuilder response = Response.ok();
             response.status(401);
@@ -119,7 +125,7 @@ public class ViewResources {
             Map<String,Object> result = this.viewService.mainPageProjectInfo(projectId);
 //            result.put("Image",new) как то отправить пикчи гг
             json = mapper.writeValueAsString(result);
-        }catch (com.fasterxml.jackson.core.JsonProcessingException | DBException e){
+        }catch (JsonProcessingException | DBException e){
 //            e.printStackTrace();
             Response.ResponseBuilder response = Response.ok();
             response.status(401);
@@ -137,7 +143,7 @@ public class ViewResources {
             Map<String,Object> result = this.viewService.developersPageProjectInfo(projectId);
 //            result.put("Image",new) как то отправить пикчи гг
             json = mapper.writeValueAsString(result);
-        }catch (com.fasterxml.jackson.core.JsonProcessingException | DBException e){
+        }catch (JsonProcessingException | DBException e){
 //            e.printStackTrace();
             Response.ResponseBuilder response = Response.ok();
             response.status(401);
@@ -155,7 +161,7 @@ public class ViewResources {
             List<Commitsfile> result = this.viewService.filesPageProjectInfo(projectId);
 //хер пойми че надо вместе с ними пикчи наверн
             json = mapper.writeValueAsString(result);
-        }catch (com.fasterxml.jackson.core.JsonProcessingException | DBException e){
+        }catch (JsonProcessingException | DBException e){
 //            e.printStackTrace();
             Response.ResponseBuilder response = Response.ok();
             response.status(401);
@@ -173,7 +179,7 @@ public class ViewResources {
             List<Commitsfile> result = this.viewService.uncheckedfilesPageProjectInfo(projectId);
 //хер пойми че надо вместе с ними пикчи наверн
             json = mapper.writeValueAsString(result);
-        }catch (com.fasterxml.jackson.core.JsonProcessingException | DBException e){
+        }catch (JsonProcessingException | DBException e){
 //            e.printStackTrace();
             Response.ResponseBuilder response = Response.ok();
             response.status(401);
@@ -191,7 +197,7 @@ public class ViewResources {
 
 //хер пойми че надо вместе с ними пикчи наверн
             json = mapper.writeValueAsString(this.viewService.mainPage(login));
-        }catch (com.fasterxml.jackson.core.JsonProcessingException | DBException e){
+        }catch (JsonProcessingException | DBException e){
 //            e.printStackTrace();
             Response.ResponseBuilder response = Response.ok();
             response.status(401);
