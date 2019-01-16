@@ -1,12 +1,9 @@
 package buisnessLayer;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dataAccesLayer.entity.Commitsfile;
-import dataAccesLayer.entity.Dialog;
-import dataAccesLayer.entity.Message;
-import dataAccesLayer.entity.Users;
+import dataAccesLayer.entity.*;
 import dataAccesLayer.exception.DBException;
+import dataAccesLayer.service.ProjectService;
 import dataAccesLayer.service.ViewService;
 
 import javax.ejb.Stateful;
@@ -28,6 +25,9 @@ public class ViewResources {
     @Inject
     ViewService viewService;
 
+    @Inject
+    ProjectService projectService;
+
     @GET
     public  String hello(){
         return "<H2 style=\"color : red\">View EJB</H2>";
@@ -41,10 +41,10 @@ public class ViewResources {
         try {
             List<Dialog> dialogs = this.viewService.getDialogs(login);
 
-            HashMap<String,HashMap<String,Object>> maps = new HashMap<>();
+            HashMap<String,HashMap<String,Object>> maps = new HashMap();
             System.out.println(dialogs.size()+" AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
             for(int i = 0; i< dialogs.size(); i++) {
-                HashMap<String, Object> toJson = new HashMap<>();
+                HashMap<String, Object> toJson = new HashMap();
 
                 toJson.put("dialogs", dialogs.get(i));
                 Users user;
@@ -192,7 +192,7 @@ public class ViewResources {
 //хер пойми че надо вместе с ними пикчи наверн
             json = mapper.writeValueAsString(this.viewService.mainPage(login));
         }catch (com.fasterxml.jackson.core.JsonProcessingException | DBException e){
-//            e.printStackTrace();
+            e.printStackTrace();
             Response.ResponseBuilder response = Response.ok();
             response.status(401);
             return response.build();
@@ -200,4 +200,22 @@ public class ViewResources {
         return Response.ok(json).build();
     }
 
+    @GET
+    @Path("/search{projectName}")
+    public  Response searchProject(@PathParam("projectName") String projectname){
+        String json;
+        try{
+            List<Projects> projects =  projectService.search(projectname);
+            ObjectMapper mapper = new ObjectMapper();
+
+            json = mapper.writeValueAsString(projects);
+
+        }catch (com.fasterxml.jackson.core.JsonProcessingException e){
+            e.printStackTrace();
+            Response.ResponseBuilder response = Response.ok();
+            response.status(401);
+            return response.build();
+        }
+        return Response.ok(json).build();
+    }
 }

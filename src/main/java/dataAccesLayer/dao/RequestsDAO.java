@@ -34,10 +34,15 @@ public class RequestsDAO extends AbstractDao<Requests,String> {
 
     public void delete(RequestsEntityPK developersEntityPK) {
         EntityManager em= DBService.getEntytiManager();
-        em.getTransaction().begin();
         Requests entity = em.find(param,developersEntityPK);
         em.remove(entity);
-        em.getTransaction().commit();
 
     }
+
+    public List<Requests> getIvites(String login) {
+        EntityManager em= DBService.getEntytiManager();
+        List<Requests> list=em.createQuery("from Requests r where r.id.login like '"+login+"' and r.isrequest=false").getResultList();
+        return list;
+    }
+
 }

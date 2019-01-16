@@ -6,6 +6,7 @@ import dataAccesLayer.exception.DBException;
 
 import javax.ejb.Singleton;
 import javax.persistence.PersistenceException;
+import java.util.ArrayList;
 import java.util.List;
 @Singleton
 public class UserService extends AbstractService<Users,String> {
@@ -32,7 +33,11 @@ public class UserService extends AbstractService<Users,String> {
         }
 
     }
-
+    public List<Users> search(String namePart){
+        UsersDAO dao = DaoFactory.getUsersDAO();
+        List<Users> list =  dao.searchUsers(namePart);
+        return list;
+    };
     /**
      * Generate new user
      * @param user - user obj
@@ -242,6 +247,8 @@ public class UserService extends AbstractService<Users,String> {
              UsersDAO.update(user1);
              UsersDAO.update(user2);
 
+
+
          }catch (PersistenceException e){
              throw new DBException(e);
          }
@@ -309,14 +316,14 @@ public class UserService extends AbstractService<Users,String> {
      *@return in case of success TRUE
      *@throws DBException Hiber exceptions replaced with
      */
-    public boolean createProject(Projects projectsEntity,Users Users)throws  DBException{
+    public boolean createProject(Projects projectsEntity,Users Users,String discription)throws  DBException{
         ProjectService service= ServiceFactory.getProjectService();
         service.create(projectsEntity);
         Developers dev= new Developers();
         dev.setLogin(Users);
         dev.setProjectid(projectsEntity);
         dev.setProjpos(Projpos.MANAGER);
-        dev.setDescription(null);
+        dev.setDescription(discription);
         service.addDeveloper(dev);
         return true;
     }
@@ -410,5 +417,24 @@ public class UserService extends AbstractService<Users,String> {
 
         }
         return true;
+    }
+
+    public Requests getRequest(String login,String projectId) throws DBException {
+        ProjectService projectService=ServiceFactory.getProjectService();
+        Requests req = DaoFactory.getRequestsDAO().getEntityById(get(login), projectService.get(projectId));
+        return req;
+    }
+
+    public List<Requests> getInvites(String login) throws DBException {
+        Users user = get(login);
+        List<Requests> reqs= new ArrayList<>();
+        for (Requests req:
+                user.getRequests()
+             ) {
+            if(!req.getIsrequest())
+                reqs.add(req);
+        }
+        return reqs;
+
     }
 }

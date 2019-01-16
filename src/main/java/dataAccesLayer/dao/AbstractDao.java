@@ -18,9 +18,7 @@ abstract class AbstractDao<E, K> {
 
         public  E getEntityById(K id){
                 EntityManager em= DBService.getEntytiManager();
-                em.getTransaction().begin();
                 E entity = em.find(param,id);
-                em.getTransaction().commit();
                 return entity;
         }
 
