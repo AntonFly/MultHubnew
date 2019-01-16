@@ -2,11 +2,12 @@ package dataAccesLayer.dao;
 
 import dataAccesLayer.util.DBService;
 
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import java.util.List;
 
 ;
-
+@Stateless
 abstract class AbstractDao<E, K> {
         final Class<E> param;
         public AbstractDao(Class<E> param) {
@@ -17,9 +18,7 @@ abstract class AbstractDao<E, K> {
 
         public  E getEntityById(K id){
                 EntityManager em= DBService.getEntytiManager();
-                em.getTransaction().begin();
                 E entity = em.find(param,id);
-                em.getTransaction().commit();
                 return entity;
         }
 

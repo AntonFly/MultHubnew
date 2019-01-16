@@ -6,6 +6,7 @@ import dataAccesLayer.exception.DBException;
 
 import javax.ejb.Singleton;
 import javax.persistence.PersistenceException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -316,6 +317,7 @@ public class UserService extends AbstractService<Users,String> {
      }
     /**
      * Creating project by user
+//     * @param projectsEntity obj of the project
      *@return in case of success TRUE
      *@throws DBException Hiber exceptions replaced with
      */
@@ -349,7 +351,6 @@ public class UserService extends AbstractService<Users,String> {
         dev.setDescription(null);
         service.addDeveloper(dev);
         return true;
-
     }
 
     /**
@@ -441,5 +442,24 @@ public class UserService extends AbstractService<Users,String> {
 
         }
         return true;
+    }
+
+    public Requests getRequest(String login,String projectId) throws DBException {
+        ProjectService projectService=ServiceFactory.getProjectService();
+        Requests req = DaoFactory.getRequestsDAO().getEntityById(get(login), projectService.get(projectId));
+        return req;
+    }
+
+    public List<Requests> getInvites(String login) throws DBException {
+        Users user = get(login);
+        List<Requests> reqs= new ArrayList<>();
+        for (Requests req:
+                user.getRequests()
+             ) {
+            if(!req.getIsrequest())
+                reqs.add(req);
+        }
+        return reqs;
+
     }
 }

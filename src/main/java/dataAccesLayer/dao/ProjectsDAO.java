@@ -29,5 +29,13 @@ public class ProjectsDAO extends AbstractDao<Projects,String> {
         em.persist(entity);
         em.getTransaction().commit();
     }
+
+    public List<Projects> searchProjects(String namePart){
+        EntityManager em = DBService.getEntytiManager();
+//        em.getTransaction().begin();
+        List<Projects> projects=em.createQuery("from Projects where name like '%"+namePart+"%'").getResultList();
+//        em.getTransaction().commit();
+        return  projects;
+    }
 }
 

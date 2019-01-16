@@ -24,4 +24,12 @@ public class UsersDAO extends AbstractDao<Users,String> {
         EntityManager em= DBService.getEntytiManager();
         em.detach(user);
     }
+
+    public List<Users> searchUsers(String namePart){
+        EntityManager em = DBService.getEntytiManager();
+//        em.getTransaction().begin();
+        List<Users> projects=em.createQuery("from Users where login like '%"+namePart+"%'").getResultList();
+//        em.getTransaction().commit();
+        return  projects;
+    }
 }

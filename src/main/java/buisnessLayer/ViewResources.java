@@ -1,6 +1,5 @@
 package buisnessLayer;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dataAccesLayer.entity.Commitsfile;
@@ -63,6 +62,9 @@ public class ViewResources {
     @Inject
     ViewService viewService;
 
+    @Inject
+    ProjectService projectService;
+
     @GET
     public  String hello(){
         return "<H2 style=\"color : red\">View EJB</H2>";
@@ -118,7 +120,7 @@ public class ViewResources {
 
             this.viewService.readMessages(dialogId, login);  //посылает запрос
             json = mapper.writeValueAsString(messages);
-        }catch (JsonProcessingException | DBException ex){
+        }catch (com.fasterxml.jackson.core.JsonProcessingException | DBException ex){
 //            ex.printStackTrace();
             Response.ResponseBuilder response = Response.ok();
             response.status(401);
@@ -136,7 +138,7 @@ public class ViewResources {
             Map<String,Object> result = this.viewService.UserPageInformation(login);
 //            result.put("Image",new) как то отправить пикчу
             json = mapper.writeValueAsString(result);
-        }catch (JsonProcessingException | DBException e){
+        }catch (com.fasterxml.jackson.core.JsonProcessingException | DBException e){
 //            e.printStackTrace();
             Response.ResponseBuilder response = Response.ok();
             response.status(401);
@@ -154,7 +156,7 @@ public class ViewResources {
             Map<String,Object> result = this.viewService.mainPageProjectInfo(projectId);
 //            result.put("Image",new) как то отправить пикчи гг
             json = mapper.writeValueAsString(result);
-        }catch (JsonProcessingException | DBException e){
+        }catch (com.fasterxml.jackson.core.JsonProcessingException | DBException e){
 //            e.printStackTrace();
             Response.ResponseBuilder response = Response.ok();
             response.status(401);
@@ -172,7 +174,7 @@ public class ViewResources {
             Map<String,Object> result = this.viewService.developersPageProjectInfo(projectId);
 //            result.put("Image",new) как то отправить пикчи гг
             json = mapper.writeValueAsString(result);
-        }catch (JsonProcessingException | DBException e){
+        }catch (com.fasterxml.jackson.core.JsonProcessingException | DBException e){
 //            e.printStackTrace();
             Response.ResponseBuilder response = Response.ok();
             response.status(401);
@@ -190,7 +192,7 @@ public class ViewResources {
             List<Commitsfile> result = this.viewService.filesPageProjectInfo(projectId);
 //хер пойми че надо вместе с ними пикчи наверн
             json = mapper.writeValueAsString(result);
-        }catch (JsonProcessingException | DBException e){
+        }catch (com.fasterxml.jackson.core.JsonProcessingException | DBException e){
 //            e.printStackTrace();
             Response.ResponseBuilder response = Response.ok();
             response.status(401);
@@ -208,7 +210,7 @@ public class ViewResources {
             List<Commitsfile> result = this.viewService.uncheckedfilesPageProjectInfo(projectId);
 //хер пойми че надо вместе с ними пикчи наверн
             json = mapper.writeValueAsString(result);
-        }catch (JsonProcessingException | DBException e){
+        }catch (com.fasterxml.jackson.core.JsonProcessingException | DBException e){
 //            e.printStackTrace();
             Response.ResponseBuilder response = Response.ok();
             response.status(401);
@@ -226,8 +228,27 @@ public class ViewResources {
 
 //хер пойми че надо вместе с ними пикчи наверн
             json = mapper.writeValueAsString(this.viewService.mainPage(login));
-        }catch (JsonProcessingException | DBException e){
-//            e.printStackTrace();
+        }catch (com.fasterxml.jackson.core.JsonProcessingException | DBException e){
+            e.printStackTrace();
+            Response.ResponseBuilder response = Response.ok();
+            response.status(401);
+            return response.build();
+        }
+        return Response.ok(json).build();
+    }
+
+    @GET
+    @Path("/search{projectName}")
+    public  Response searchProject(@PathParam("projectName") String projectname){
+        String json;
+        try{
+            List<Projects> projects =  projectService.search(projectname);
+            ObjectMapper mapper = new ObjectMapper();
+
+            json = mapper.writeValueAsString(projects);
+
+        }catch (com.fasterxml.jackson.core.JsonProcessingException e){
+            e.printStackTrace();
             Response.ResponseBuilder response = Response.ok();
             response.status(401);
             return response.build();

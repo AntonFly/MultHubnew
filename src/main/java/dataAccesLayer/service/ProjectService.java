@@ -25,6 +25,12 @@ public class ProjectService extends AbstractService<Projects,String> {
 
     }
 
+    public List<Projects> search(String namePart){
+        ProjectsDAO dao = DaoFactory.getProjectsDAO();
+        List<Projects> list =  dao.searchProjects(namePart);
+        return list;
+    };
+
     /**
      * Generate new project
      * @return true in case of success

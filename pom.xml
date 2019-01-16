@@ -95,11 +95,12 @@
             <version>2.9.6</version>
         </dependency>
 
-        <dependency>
-            <groupId>org.glassfish.jersey.media</groupId>
-            <artifactId>jersey-media-multipart</artifactId>
-            <version>2.27</version>
-        </dependency>
+
+        <!--<dependency>-->
+        <!--<groupId>org.glassfish.jersey.media</groupId>-->
+        <!--<artifactId>jersey-media-multipart</artifactId>-->
+        <!--<version>2.27</version>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>javax.ws.rs</groupId>
