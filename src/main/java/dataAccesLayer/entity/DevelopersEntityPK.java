@@ -1,5 +1,7 @@
 package dataAccesLayer.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 
@@ -9,9 +11,11 @@ public class DevelopersEntityPK implements Serializable {
     public DevelopersEntityPK(){}
     public DevelopersEntityPK(Users users,Projects projects){this.login=users;this.projectid=projects;}
 
+    @JsonIgnore
     @ManyToOne
     private Users login;
 
+    @JsonIgnore
     @ManyToOne
     private Projects projectid;
 

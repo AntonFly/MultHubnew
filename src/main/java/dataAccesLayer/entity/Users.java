@@ -1,5 +1,7 @@
 package dataAccesLayer.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -28,14 +30,17 @@ public class Users {
     @Column
     private String status;
 
+    @JsonIgnore
     @OneToOne()
     @JoinColumn(name ="login",nullable = true)
     private ConnectionData condata;
 
+    @JsonIgnore
     @OneToMany(  fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id")
     private List<Userpost> posts;
 
+    @JsonIgnore
     @ManyToMany(cascade = CascadeType.ALL,fetch = FetchType.LAZY)
     @JoinTable(name = "followers",
             joinColumns = @JoinColumn(name = "login"),
@@ -43,7 +48,7 @@ public class Users {
     )
     private List<Users> followers;
 
-
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.MERGE)
     @JoinTable(name = "dialog_users",
             joinColumns = @JoinColumn(name = "user_id"),
@@ -51,9 +56,11 @@ public class Users {
     )
     private List<Dialog> dialogs;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "id.login")
     private List<Developers> developers;
 
+    @JsonIgnore
     @OneToMany()
     @JoinColumn(name="login")
     private List<Comments> comments;
@@ -66,15 +73,18 @@ public class Users {
         this.developers = developers;
     }
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "subscribers")
     private List<Projects> subscriprions;
 
+    @JsonIgnore
     @OneToMany(
             mappedBy = "id.login",
             fetch = FetchType.LAZY
     )
     private List<Donaters> donations;
 
+    @JsonIgnore
     @OneToMany(
             mappedBy = "id.login",
             fetch = FetchType.LAZY

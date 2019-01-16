@@ -6,7 +6,7 @@ import com.google.common.base.Charsets;
 import com.google.common.hash.HashCode;
 import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;
-//import com.sun.jersey.multipart.FormDataParam;
+import com.sun.jersey.multipart.FormDataParam;
 import dataAccesLayer.entity.Users;
 import dataAccesLayer.exception.DBException;
 import dataAccesLayer.service.UserService;
@@ -30,11 +30,6 @@ import dataAccesLayer.service.UserService;
 @Stateful
 @Path("/user")
 public class UserResources {
-//@PersistenceContext(unitName = "MULTHUB")
-//    EntityManager em;
-//    @Resource
-//    UserTransaction tx;
-
     private String avatarPath=null;
     private  String generalAvatarPath="E:/Печатные работы/ПИП/Курсач/resources/avatars/";
 
@@ -54,7 +49,6 @@ public class UserResources {
     @Path("/signIn")
     public Response fingByLogin(@FormParam("login") final String login, @FormParam("password") String password ) throws JsonProcessingException {
         Users user = null;
-//        UserService userService = new UserService();
         try {
             user = userService.get(login);
         } catch (DBException e) {
@@ -89,9 +83,7 @@ public class UserResources {
                            @FormParam("email") String email,
                            @FormParam("modile") String mobile
     ){
-//        UserService userService = new UserService();
         try {
-
             System.out.println("sfdsfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAdsfsdfsdfsdffdsfsdv!!!!!!!"+login+" "+password+" "+name+" ");
             Users user =new Users();
             user.setLogin(login);
@@ -126,22 +118,12 @@ public class UserResources {
     @GET
     @Path("/try{login}")
     public  Response tryLogin(@PathParam(value = "login") String login) throws DBException {
-//        UserService userService = new UserService();
-//        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-//        try {
-//            tx.begin();
+
             Users user = userService.get(login);
-//        this.em.createQuery("insert into comments () ");
             System.out.println(login);
-//            tx.commit();
             if (user == null)
                 return Response.ok("{\"msg\":\"true\"}").build();
-            return Response.ok("{\"msg\":\"false\"}").build();
-//        }catch (Exception ex){ex.printStackTrace();}
-//        finally {
-//            return Response.ok("{\"msg\":\"fail\"}").build();
-//                    }
-//        return Response.ok("{\"msg\":\"false\"}").build();
+            return Response.ok("{\"msg\":\""+user.getLogin()+"\"}").build();
     }
 
     @POST

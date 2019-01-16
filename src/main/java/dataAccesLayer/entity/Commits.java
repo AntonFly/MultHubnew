@@ -1,4 +1,6 @@
 package dataAccesLayer.entity;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
@@ -22,6 +24,7 @@ public class Commits implements Serializable {
     @Column
     private Timestamp time;
 
+    @JsonIgnore
     @Column
     @Enumerated(EnumType.STRING)
     private Approved approved;
@@ -30,10 +33,12 @@ public class Commits implements Serializable {
     //на файлы
     //@OneToMany( cascade = CascadeType.ALL, orphanRemoval = true)
     //@JoinColumn(name="commitid")
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "id.commitid")
     private List<Commitsfile> commitsfile;
 
     //на проект
+    @JsonIgnore
     @ManyToOne( fetch = FetchType.EAGER)
     @JoinColumn(
             name = "projectid",

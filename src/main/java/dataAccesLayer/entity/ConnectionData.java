@@ -1,5 +1,7 @@
 package dataAccesLayer.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -12,6 +14,8 @@ public class ConnectionData {
     private String eMail;
     @Column(name = "mobilenumb")
     private Long mobilenumb;
+
+    @JsonIgnore
     @OneToOne(optional = false,mappedBy = "condata")
     private Users owner;
 

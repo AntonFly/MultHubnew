@@ -1,5 +1,7 @@
 package dataAccesLayer.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -21,6 +23,8 @@ public class Projectposts {
     private Timestamp time;
     @Column
     private String filepath;
+
+    @JsonIgnore
     @ManyToOne( fetch = FetchType.EAGER)
     @JoinColumn(
             name = "projectid",

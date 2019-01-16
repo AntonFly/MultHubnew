@@ -39,8 +39,8 @@ public class ViewService  {
         for (Developers dev:
                 devEnt) {
             proj.add(dev.getProjectid());
-
         }
+
         map.put("login",user.getLogin());
         map.put("name",user.getName());
         map.put("surname",user.getSurname());
@@ -57,17 +57,17 @@ public class ViewService  {
 
 
     /**
-     *  Return full information tu display projectpage
-     * @param projectsEntity object of project
+     *  Return full information to display projectpage
+     * @param projectId object of project
      * @return map of project's information
      * @throws DBException Hiber exceptions replaced with
      */
-    public Map<String,Object> mainPageProjectInfo(Projects projectsEntity) throws DBException{
+    public Map<String,Object> mainPageProjectInfo(String projectId) throws DBException{
         Map<String,Object> mapa = new HashMap();
         try {
 
             ProjectsDAO projectspostsDAO = DaoFactory.getProjectsDAO();
-            Projects project=projectspostsDAO.getEntityById(projectsEntity.getProjectid());
+            Projects project=projectspostsDAO.getEntityById(projectId);
             List<Projectposts> posts =project.getPosts();
             //donaters
             List<Donaters> donaters =project.getDonations();
@@ -75,7 +75,7 @@ public class ViewService  {
             List<Comments> comments = project.getComments();
             //followers
             List<Users> users = project.getSubscribers();
-            mapa.put("ProjectEntity",projectsEntity);
+            mapa.put("Project",project);
             mapa.put("Posts",posts);
             mapa.put("Subs",users);
             mapa.put("Comments",comments);
@@ -89,15 +89,15 @@ public class ViewService  {
 
     /**
      * Return full information to display file tab of project
-     * @param projectsEntity object of project
+     * @param projectId object of project
      * @return list of project's files
      * @throws DBException Hiber exceptions replaced withon
      */
-    public List<Commitsfile> filesPageProjectInfo(Projects projectsEntity) throws DBException{
+    public List<Commitsfile> filesPageProjectInfo(String projectId) throws DBException{
         List<Commitsfile> files=new ArrayList();
         try {
-            ProjectsDAO projectspostsDAO = DaoFactory.getProjectsDAO();
-            Projects project=projectspostsDAO.getEntityById(projectsEntity.getProjectid());
+            ProjectsDAO projectsDAO = DaoFactory.getProjectsDAO();
+            Projects project=projectsDAO.getEntityById(projectId);
             List<Commits> commits =project.getCommits();
             for (Commits commit:
                 commits ) {
@@ -115,17 +115,17 @@ public class ViewService  {
 
     /**
      * Return full information to display developer tab of project
-     * @param projectsEntity object of project
+     * @param projectId object of project
      * @return map of projects's developers
      * @throws DBException Hiber exceptions replaced withon
      */
 
-    public Map<String, Object> developersPageProjectInfo(Projects projectsEntity) throws DBException{
+    public Map<String, Object> developersPageProjectInfo(String projectId) throws DBException{
         Map<String,Object> mapa = new HashMap();
         try {
             ProjectsDAO projectspostsDAO = DaoFactory.getProjectsDAO();
-            Projects project=projectspostsDAO.getEntityById(projectsEntity.getProjectid());
-            mapa.put("ProjectEntity",projectsEntity);
+            Projects project = projectspostsDAO.getEntityById( projectId);
+            mapa.put("Project",project);
             mapa.put("Devs",project.getDevelopers());
 
         } catch (PersistenceException e) {
@@ -136,15 +136,15 @@ public class ViewService  {
 
     /**
      * Return full information to display tab with commits which is'n approved by maneger
-     * @param projectsEntity object of project
+     * @param projectId object of project
      * @return List of priject's unapproved commits
      * @throws DBException Hiber exceptions replaced withon
      */
-    public List<Commitsfile> uncheckedfilesPageProjectInfo(Projects projectsEntity) throws DBException{ //for manager approvence
+    public List<Commitsfile> uncheckedfilesPageProjectInfo(String projectId) throws DBException{ //for manager approvence
         List<Commitsfile> list= new ArrayList();
         try {
             ProjectsDAO projectspostsDAO = DaoFactory.getProjectsDAO();
-            Projects project=projectspostsDAO.getEntityById(projectsEntity.getProjectid());
+            Projects project=projectspostsDAO.getEntityById(projectId);
             List<Commits> commits =project.getCommits();
             for (Commits commit:
                  commits) {
@@ -188,7 +188,7 @@ public class ViewService  {
     public List<Message> getDialogMessages(String id) throws DBException{
         try{
         DialogDAO dialogDAO= DaoFactory.getDialogDao();
-        Dialog dialog =dialogDAO.getEntityById(id);
+        Dialog dialog = dialogDAO.getEntityById(id);
         return  dialog.getMessages();
         } catch (PersistenceException e) {
             throw new DBException(e);
@@ -196,7 +196,7 @@ public class ViewService  {
     }
 
     /**
-     * Using to get full information which is displayed on main page of site
+     * Using to get full information which is displayed on newsFeed page of site
      * @return List of main page objects
      * @throws DBException Hiber exceptions replaced witho
      */
@@ -208,7 +208,17 @@ public class ViewService  {
         } catch (PersistenceException e) {
             throw new DBException(e);
         }
-
-
+    }
+    ////////////////////////////////////////////////////////////////////
+    /**
+     * set status is readed
+     */
+    public void readMessages(String dialogId, String login) throws DBException{
+        try{
+            MessageDAO messageDAO = DaoFactory.getMessageDao();
+            messageDAO.readMessage(dialogId, login);
+        }catch (Exception e){
+            throw new DBException(e);
+        }
     }
 }

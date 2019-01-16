@@ -1,5 +1,7 @@
 package dataAccesLayer.entity;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -32,6 +34,10 @@ public class Message {
     @Column(name = "time", nullable = true)
     private Timestamp time;
 
+    @JsonGetter("time")
+    public String getTime1() {
+        return time.toString();
+    }
 
     public Integer getId() {
         return id;
@@ -60,8 +66,6 @@ public class Message {
     }
 
 
-
-
     public Boolean getIsread() {
         return isread;
     }
@@ -69,7 +73,6 @@ public class Message {
     public void setIsread(Boolean isread) {
         this.isread = isread;
     }
-
 
     public Timestamp getTime() {
         return time;

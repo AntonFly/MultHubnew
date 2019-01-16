@@ -1,5 +1,7 @@
 package dataAccesLayer.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -19,6 +21,7 @@ public class Comments {
     @Column
     private Timestamp time;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(
             name = "login",
@@ -27,6 +30,7 @@ public class Comments {
     )
     private Users user;
 
+    @JsonIgnore
     @ManyToOne
     @JoinColumn(
             name = "projectid",

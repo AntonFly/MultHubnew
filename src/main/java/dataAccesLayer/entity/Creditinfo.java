@@ -1,5 +1,7 @@
 package dataAccesLayer.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -15,6 +17,8 @@ public class Creditinfo {
     private Integer qiwimobilephone;
     @Column
     private Long yamoney;
+
+    @JsonIgnore
     @OneToOne(optional = false,mappedBy = "credit")
     private Projects project;
 

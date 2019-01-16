@@ -1,5 +1,7 @@
 package dataAccesLayer.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.util.List;
 
@@ -21,21 +23,22 @@ public class Projects {
     @Column
     private Double goalbudget;
     /////////////////////////////////////////////////////////////////////////////////////////
+    @JsonIgnore
     @OneToOne()
     @JoinColumn(name ="projectid")
     private Creditinfo credit;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name="projectid")
     private List<Projectposts> posts;
 
+    @JsonIgnore
     @OneToMany( fetch = FetchType.LAZY)
     @JoinColumn(name="projectid")
     private List<Commits> commits;
 
-//    @OneToMany(fetch = FetchType.LAZY, mappedBy = "projectid", cascade=CascadeType.ALL)
-//    private List<Donaters> donaters;
-
+    @JsonIgnore
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "subs",
             joinColumns = @JoinColumn(name = "projectid"),
@@ -43,21 +46,25 @@ public class Projects {
     )
     private List<Users> subscribers;
 
+    @JsonIgnore
     @OneToMany(
             mappedBy = "id.projectid",
            fetch = FetchType.LAZY
     )
     private List<Donaters> donations;
 
+    @JsonIgnore
     @OneToMany(
             mappedBy = "id.projectid",
             fetch = FetchType.LAZY
     )
     private List<Requests> requests;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "id.projectid")
     private List<Developers> developers;
 
+    @JsonIgnore
     @OneToMany(fetch = FetchType.LAZY)
     @JoinColumn(name="projectid")
     private List<Comments> comments;

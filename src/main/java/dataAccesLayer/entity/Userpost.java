@@ -1,5 +1,8 @@
 package dataAccesLayer.entity;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import java.sql.Timestamp;
 
@@ -22,6 +25,7 @@ public class Userpost {
     @Column
     private Timestamp time;
 
+    @JsonIgnore
     @ManyToOne( fetch = FetchType.EAGER)
     @JoinColumn(
             name = "user_id",
@@ -30,6 +34,11 @@ public class Userpost {
             updatable = false
     )
     private Users owner;
+
+    @JsonGetter("time")
+    public String getTime1() {
+        return time.toString();
+    }
 
     public String getId() {
         return id;

@@ -13,16 +13,6 @@ public class DBService {
         private static EntityManagerFactory managerFactory;
 
         static {
-//            DataSource source = null;
-//            try {
-//
-//                source = (DataSource)new InitialContext().lookup("java:global/MULTHUB");
-//                System.out.println("aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"+source.toString());
-//
-//            } catch (NamingException e) {
-//                e.printStackTrace();
-//            }
-
             managerFactory = Persistence.createEntityManagerFactory("MULTHUB");
         }
 

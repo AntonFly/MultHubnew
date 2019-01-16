@@ -1,5 +1,7 @@
 package dataAccesLayer.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 
 @Entity
@@ -15,6 +17,7 @@ public class Developers {
         this.id=new DevelopersEntityPK();
     }
 
+    @JsonIgnore
     @EmbeddedId
     private DevelopersEntityPK id;
 
