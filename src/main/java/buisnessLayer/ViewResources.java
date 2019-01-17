@@ -2,9 +2,11 @@ package buisnessLayer;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dataAccesLayer.entity.*;
+import dataAccesLayer.entity.Commitsfile;
+import dataAccesLayer.entity.Dialog;
+import dataAccesLayer.entity.Message;
+import dataAccesLayer.entity.Users;
 import dataAccesLayer.exception.DBException;
-import dataAccesLayer.service.ProjectService;
 import dataAccesLayer.service.ViewService;
 
 import javax.ejb.Stateful;
@@ -16,9 +18,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.sse.OutboundSseEvent;
-import javax.ws.rs.sse.Sse;
-import javax.ws.rs.sse.SseEventSink;
+//import javax.ws.rs.sse.OutboundSseEvent;
+//import javax.ws.rs.sse.Sse;
+//import javax.ws.rs.sse.SseEventSink;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -35,25 +37,26 @@ public class ViewResources {
 
 //int i = 0;
 
-    @GET
-    @Path("/getEvent")
-    public void news(@Context SseEventSink eventSink, @Context Sse sse) {
-        try (SseEventSink sink = eventSink) {
-//            sink.send(sse.newEvent("data"));
+//    @GET
+//    @Path("/getEvent")
+//    public void news(@Context SseEventSink eventSink, @Context Sse sse) {
+//        try (SseEventSink sink = eventSink) {
+//            i++;
+//            sink.send(sse.newEvent("data"+i));
 //            sink.send(sse.newEvent("MyEventName", "more data"));
-
-            OutboundSseEvent event = sse.newEventBuilder().
+//
+//            OutboundSseEvent event = sse.newEventBuilder().
 //                    id("EventId").
 //                    name("EventName").
-                    data("lol").
-                    reconnectDelay(2000).
+//                    data(i).
+//                    reconnectDelay(10000).
 //                    comment("Anything i wanna comment here!").
-                    build();
-
-            sink.send(event);
-
-        }
-    }
+//                    build();
+//
+//            sink.send(event);
+//
+//        }
+//    }
 
 
     @Inject
@@ -62,10 +65,15 @@ public class ViewResources {
     @Inject
     ProjectService projectService;
 
+    @Inject
+    UserService userService;
+
     @GET
     public  String hello(){
         return "<H2 style=\"color : red\">View EJB</H2>";
     }
+
+
 
     @GET
     @Path("/dialogs{login}")
@@ -115,13 +123,45 @@ public class ViewResources {
 //                    messages.get(i).setIsread(true);
 //            }
 
-            this.viewService.readMessages(dialogId, login);  //посылает запрос
+            readMessages(login,dialogId);  //посылает запрос
             json = mapper.writeValueAsString(messages);
         }catch (com.fasterxml.jackson.core.JsonProcessingException | DBException ex){
 //            ex.printStackTrace();
             Response.ResponseBuilder response = Response.ok();
             response.status(401);
             return response.build();
+        }
+        return Response.ok(json).build();
+    }
+    @GET
+    @Path("/readMessage{dialogId}&{login}")
+    public Response readMessages(@PathParam("login") String login, @PathParam("dialogId") String dialogId){
+        try{
+        Dialog dialog= DaoFactory.getDialogDao().getEntityById(dialogId);
+        for (Message message:
+                dialog.getMessages()
+             ) {
+            if(!message.getSender().equals(login)){
+                message.setIsread(true);
+            }
+
+        }
+        }catch (Exception e){
+            e.printStackTrace();
+            return Response.ok().status(400).build();
+        }
+        return Response.ok("{\"msg\":\"read\"}").build();
+    }
+    @GET
+    @Path("/getFollowers{login}")
+    public  Response getFollowers(@PathParam(value = "login") String login){
+        String json;
+        try{
+            ObjectMapper mapper = new ObjectMapper();
+            json = mapper.writeValueAsString(userService.get(login).getFollowers());
+        }catch (DBException |JsonProcessingException e){
+          e.printStackTrace();
+          return Response.ok().status(400).build();
         }
         return Response.ok(json).build();
     }
@@ -223,7 +263,7 @@ public class ViewResources {
         try{
             ObjectMapper mapper = new ObjectMapper();
 
-//хер пойми че надо вместе с ними пикчи наверн
+
             json = mapper.writeValueAsString(this.viewService.mainPage(login));
         }catch (com.fasterxml.jackson.core.JsonProcessingException | DBException e){
             e.printStackTrace();

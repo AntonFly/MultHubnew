@@ -6,11 +6,9 @@ import com.google.common.base.Charsets;
 import com.google.common.hash.HashCode;
 import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;
-//import com.sun.jersey.multipart.FormDataParam;
-import dataAccesLayer.entity.*;
-import dataAccesLayer.entity.Message;
+import com.sun.jersey.multipart.FormDataParam;
+import dataAccesLayer.entity.Users;
 import dataAccesLayer.exception.DBException;
-import dataAccesLayer.service.ProjectService;
 import dataAccesLayer.service.UserService;
 
 import javax.annotation.PostConstruct;
@@ -18,27 +16,19 @@ import javax.annotation.Resource;
 import javax.ejb.Stateful;
 import javax.ejb.TransactionManagement;
 import javax.enterprise.inject.spi.Bean;
-import javax.imageio.ImageIO;
 import javax.inject.Inject;
-import javax.jms.*;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 import javax.ws.rs.*;
-import javax.ws.rs.core.*;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
+import javax.ws.rs.core.UriInfo;
 import java.io.*;
-import java.nio.file.Files;
-import java.nio.file.StandardCopyOption;
-import java.sql.Timestamp;
 import java.util.List;
-import java.util.Map;
 
 import dataAccesLayer.service.UserService;
-import org.apache.wink.common.internal.utils.MediaTypeUtils;
-import org.apache.wink.common.model.multipart.BufferedInMultiPart;
-import org.apache.wink.common.model.multipart.InMultiPart;
-import org.apache.wink.common.model.multipart.InPart;
-
 
 @Stateful
 @Path("/user")
@@ -68,8 +58,6 @@ public class UserResources {
 
     @Inject
     UserService userService;
-    @Inject
-    ProjectService projectService;
 
     @GET
     public  String hello(){
@@ -97,7 +85,6 @@ public class UserResources {
 //            userService.detach(user);
 //            user.setPassword(null);
             String jsonString = mapper.writeValueAsString(user);
-            avatarPath=user.getImgpath();
             return Response.ok(jsonString).build();
         }
         else
@@ -191,12 +178,10 @@ public class UserResources {
 
     }
 
-
     private void saveToFile(InputStream uploadedInputStream,
                             String uploadedFileLocation) {
 
         try {
-            System.out.println(uploadedInputStream.available()+"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
             OutputStream out = null;
             int read = 0;
             byte[] bytes = new byte[1024];
@@ -307,11 +292,10 @@ public class UserResources {
             }
         }
         message.setIsread(false);
-        message.setTime(new Timestamp(System.currentTimeMillis()) );
+        message.setTime(new Timestamp(System.currentTimeMillis()));
         message.setSender(login);
-        message.setText(body);
+        message.setText("horosho");
         userService.addMessgae(message);
-        sendToTopic(message.getText());
 
         }catch (DBException e){
             e.printStackTrace();
@@ -319,24 +303,6 @@ public class UserResources {
         }
         return  Response.ok("{\"msg\":\"sended\"}").build();
 
-    }
-    public void sendToTopic(String msg){
-        try {
-            Connection connection = connectionFactory.createConnection();
-            Session session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);
-            MessageProducer producer = session.createProducer(destination);
-            TextMessage message = session.createTextMessage();
-            //добавим в JMS сообщение собственное свойство в поле сообщения со свойствами
-            message.setStringProperty("clientType", "web clien");
-            //добавляем payload в сообщение
-            message.setText(msg);
-            //отправляем сообщение
-            producer.send(message);
-            System.out.println("message sent");
-            //закрываем соединения
-            session.close();
-            connection.close();
-        }catch (Exception e ){e.printStackTrace();}
     }
 
 

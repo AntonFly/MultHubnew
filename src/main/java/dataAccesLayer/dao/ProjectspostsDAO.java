@@ -13,9 +13,7 @@ public class ProjectspostsDAO extends AbstractDao<Projectposts,String> {
     @Override
     public List<Projectposts> getAll() {
         EntityManager em = DBService.getEntytiManager();
-        em.getTransaction().begin();
         List<Projectposts> list = em.createNamedQuery("Projectpost.getAll").getResultList();
-        em.getTransaction().commit();
         return list;
     }
 
@@ -24,8 +22,6 @@ public class ProjectspostsDAO extends AbstractDao<Projectposts,String> {
         entity.setId( UUID.nameUUIDFromBytes(entity.getText().getBytes()).toString());
 
         EntityManager em= DBService.getEntytiManager();
-//        em.getTransaction().begin();
         em.persist(entity);
-//        em.getTransaction().commit();
     }
 }

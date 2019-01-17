@@ -13,9 +13,7 @@ public class CommentsDAO extends AbstractDao<Comments,String> {
     @Override
     public List<Comments> getAll() {
         EntityManager em= DBService.getEntytiManager();
-        em.getTransaction().begin();
         List<Comments> list=em.createNamedQuery("Comments.getAll").getResultList();
-        em.getTransaction().commit();
         return list;
     }
 

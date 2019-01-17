@@ -6,17 +6,16 @@ import dataAccesLayer.entity.*;
 import dataAccesLayer.exception.DBException;
 import dataAccesLayer.service.ProjectService;
 import dataAccesLayer.service.UserService;
+import org.apache.wink.common.internal.utils.MediaTypeUtils;
+import org.apache.wink.common.model.multipart.BufferedInMultiPart;
+import org.apache.wink.common.model.multipart.InPart;
 
-import javax.annotation.PostConstruct;
 import javax.ejb.Stateful;
 import javax.inject.Inject;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Request;
 import javax.ws.rs.core.Response;
-import javax.xml.registry.infomodel.User;
-import java.io.IOException;
+import java.io.*;
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -389,6 +388,7 @@ public class ProjectResources {
             commit.setDeveloper(login);
             commit.setTime(new Timestamp(System.currentTimeMillis()));
 
+
             //Write Some FILEs
             List<Commitsfile> files = new LinkedList<>();
 
@@ -497,5 +497,58 @@ public class ProjectResources {
             return Response.ok().status(400).build();
         }
         return Response.ok().status(200).build();
+    }
+
+    @GET
+    @Path("/getCommitFile{filePath}")
+    public Response getFile(@PathParam("filePath") String filePath) {
+        Response.ResponseBuilder response = Response.ok();
+        try {
+            File file = new File(userService.get(filePath).getImgpath());
+
+            response = Response.ok((Object) file);
+            response.header("Content-Disposition",
+                    "attachment; filename=" + file);
+        }catch (DBException e){
+            e.printStackTrace();
+            Response.ok().status(400).build();
+        }
+        return response.build();
+
+    }
+    @Path("/uploadCommitFile{filePath}&{fileName}")
+    @POST
+    @Consumes( MediaTypeUtils.MULTIPART_FORM_DATA)
+    public javax.ws.rs.core.Response uploadNewAdvJson(/*InMultiPart inMultiPart*/BufferedInMultiPart inMP, @PathParam("filePath") String filePath, @PathParam("fileName") String fileName) throws DBException {
+
+        try {
+            List<InPart> parts = inMP.getParts();
+            for (InPart p : parts) {
+                saveToFile(p.getInputStream(),filePath+fileName);
+
+            }
+        }catch (Exception e){e.printStackTrace();}
+        return Response.status(200).entity("{\"msg\":\"uploaded\"}").build();
+
+    }
+    private void saveToFile(InputStream uploadedInputStream,
+                            String uploadedFileLocation) {
+
+        try {
+            OutputStream out = null;
+            int read = 0;
+            byte[] bytes = new byte[1024];
+
+            out = new FileOutputStream(new File(uploadedFileLocation));
+            while ((read = uploadedInputStream.read(bytes)) != -1) {
+                out.write(bytes, 0, read);
+            }
+            out.flush();
+            out.close();
+        } catch (IOException e) {
+
+            e.printStackTrace();
+        }
+
     }
 }
