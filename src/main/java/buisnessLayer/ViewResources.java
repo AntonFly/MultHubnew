@@ -2,11 +2,9 @@ package buisnessLayer;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dataAccesLayer.entity.Commitsfile;
-import dataAccesLayer.entity.Dialog;
-import dataAccesLayer.entity.Message;
-import dataAccesLayer.entity.Users;
+import dataAccesLayer.entity.*;
 import dataAccesLayer.exception.DBException;
+import dataAccesLayer.service.ProjectService;
 import dataAccesLayer.service.ViewService;
 
 import javax.ejb.Stateful;
@@ -18,9 +16,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-//import javax.ws.rs.sse.OutboundSseEvent;
-//import javax.ws.rs.sse.Sse;
-//import javax.ws.rs.sse.SseEventSink;
+import javax.ws.rs.sse.OutboundSseEvent;
+import javax.ws.rs.sse.Sse;
+import javax.ws.rs.sse.SseEventSink;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -37,26 +35,25 @@ public class ViewResources {
 
 //int i = 0;
 
-//    @GET
-//    @Path("/getEvent")
-//    public void news(@Context SseEventSink eventSink, @Context Sse sse) {
-//        try (SseEventSink sink = eventSink) {
-//            i++;
-//            sink.send(sse.newEvent("data"+i));
+    @GET
+    @Path("/getEvent")
+    public void news(@Context SseEventSink eventSink, @Context Sse sse) {
+        try (SseEventSink sink = eventSink) {
+//            sink.send(sse.newEvent("data"));
 //            sink.send(sse.newEvent("MyEventName", "more data"));
-//
-//            OutboundSseEvent event = sse.newEventBuilder().
+
+            OutboundSseEvent event = sse.newEventBuilder().
 //                    id("EventId").
 //                    name("EventName").
-//                    data(i).
-//                    reconnectDelay(10000).
+                    data("lol").
+                    reconnectDelay(2000).
 //                    comment("Anything i wanna comment here!").
-//                    build();
-//
-//            sink.send(event);
-//
-//        }
-//    }
+                    build();
+
+            sink.send(event);
+
+        }
+    }
 
 
     @Inject

@@ -20,7 +20,7 @@ public class Users {
 
     @Column
     private String surname;
-
+    @JsonIgnore
     @Column
     private String password;
 

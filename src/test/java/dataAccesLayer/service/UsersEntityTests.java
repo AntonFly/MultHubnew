@@ -309,7 +309,7 @@ class UsersEntityTests {
 
             ds.create(usersEntity);
             usersEntity=ds.get("4d");
-            ds.createProject(proj,usersEntity,"I am developer");
+//            ds.createProject(proj,usersEntity,"I am developer");
 
             ds.deleteProject(proj);
         ds.delete(usersEntity.getLogin());

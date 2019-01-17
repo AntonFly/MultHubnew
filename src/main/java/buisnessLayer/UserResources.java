@@ -6,9 +6,11 @@ import com.google.common.base.Charsets;
 import com.google.common.hash.HashCode;
 import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;
-import com.sun.jersey.multipart.FormDataParam;
-import dataAccesLayer.entity.Users;
+//import com.sun.jersey.multipart.FormDataParam;
+import dataAccesLayer.entity.*;
+import dataAccesLayer.entity.Message;
 import dataAccesLayer.exception.DBException;
+import dataAccesLayer.service.ProjectService;
 import dataAccesLayer.service.UserService;
 
 import javax.annotation.PostConstruct;
@@ -16,19 +18,27 @@ import javax.annotation.Resource;
 import javax.ejb.Stateful;
 import javax.ejb.TransactionManagement;
 import javax.enterprise.inject.spi.Bean;
+import javax.imageio.ImageIO;
 import javax.inject.Inject;
+import javax.jms.*;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.core.*;
 import java.io.*;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
+import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 import dataAccesLayer.service.UserService;
+import org.apache.wink.common.internal.utils.MediaTypeUtils;
+import org.apache.wink.common.model.multipart.BufferedInMultiPart;
+import org.apache.wink.common.model.multipart.InMultiPart;
+import org.apache.wink.common.model.multipart.InPart;
+
 
 @Stateful
 @Path("/user")
@@ -44,13 +54,22 @@ public class UserResources {
 
 
     private String avatarPath=null;
-    private  String generalAvatarPath="E:/Печатные работы/ПИП/Курсач/resources/avatars/";
+    private  String generalAvatarPath="D:/projects/kek/";
+
+    @Resource(name="jms/messagesPool")
+    private ConnectionFactory connectionFactory;
+
+    @Resource(name="jms/messageTopic")
+    private Destination destination;
+
 
     @Context
     UriInfo uriInfo;
 
     @Inject
     UserService userService;
+    @Inject
+    ProjectService projectService;
 
     @GET
     public  String hello(){
@@ -75,9 +94,10 @@ public class UserResources {
                 .hash();
         if( user.getPassword().equals(hc.toString())){
             ObjectMapper mapper = new ObjectMapper();
-            userService.detach(user);
-            user.setPassword(null);
+//            userService.detach(user);
+//            user.setPassword(null);
             String jsonString = mapper.writeValueAsString(user);
+            avatarPath=user.getImgpath();
             return Response.ok(jsonString).build();
         }
         else
@@ -148,36 +168,35 @@ public class UserResources {
 
 
 
-    @Path("/uploadAvatar")
+    @Path("/uploadAvatar{login}")
     @POST
-//    @Produces(MediaType.MULTIPART_FORM_DATA)
-    @Consumes(MediaType.MULTIPART_FORM_DATA)
-    public javax.ws.rs.core.Response uploadNewAdvJson(@FormDataParam("file") InputStream is) {
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        //Your local disk path where you want to store the file
-        String uploadedFileLocation = generalAvatarPath + "login.png";
-        avatarPath =uploadedFileLocation;
-        System.out.println(uploadedFileLocation);
-        // save it
-        File objFile=new File(uploadedFileLocation);
-        if(objFile.exists())
-        {
-            objFile.delete();
-
+    @Consumes( MediaTypeUtils.MULTIPART_FORM_DATA)
+    public javax.ws.rs.core.Response uploadNewAdvJson(/*InMultiPart inMultiPart*/BufferedInMultiPart inMP, @PathParam("login") String login) {
+        avatarPath = generalAvatarPath + login+".jpg";
+        String uploadedFileLocation = generalAvatarPath + login+".jpg";
+        System.out.println("LOL AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+        try {
+            List<InPart> parts = inMP.getParts();
+                for (InPart p : parts) {
+                    System.out.println(p.getHeadersName()+" AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+                    saveToFile(p.getInputStream(),uploadedFileLocation);
+                }
+            userService.get(login).setImgpath(avatarPath);
+        }catch (Exception e){
+            e.printStackTrace();
+            return Response.ok().status(400).build();
         }
-
-        saveToFile(is, uploadedFileLocation);
-
-        String output = "File uploaded via Jersey based RESTFul Webservice to: " + uploadedFileLocation;
 
         return Response.status(200).entity("{\"msg\":\"uploaded\"}").build();
 
     }
 
+
     private void saveToFile(InputStream uploadedInputStream,
                             String uploadedFileLocation) {
 
         try {
+            System.out.println(uploadedInputStream.available()+"AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
             OutputStream out = null;
             int read = 0;
             byte[] bytes = new byte[1024];
@@ -196,15 +215,20 @@ public class UserResources {
     }
 
     @GET
-    @Path("/getavatar{login}")
+    @Path("/getAvatar{login}")
     @Produces("image/png")
     public Response getFile(@PathParam("login") String login) {
-
-        File file = new File(generalAvatarPath+login+".png");
+        File file;
+        try {
+            file = new File(userService.get(login).getImgpath());
+        }catch (Exception e ){
+            e.printStackTrace();
+            return Response.ok().status(400).build();
+        }
 
         Response.ResponseBuilder response = Response.ok((Object) file);
         response.header("Content-Disposition",
-                "attachment; filename=image_from_server.png");
+                "attachment; filename="+login+".png");
         return response.build();
 
     }
@@ -283,10 +307,11 @@ public class UserResources {
             }
         }
         message.setIsread(false);
-        message.setTime(new Timestamp(System.currentTimeMillis()));
+        message.setTime(new Timestamp(System.currentTimeMillis()) );
         message.setSender(login);
-        message.setText("horosho");
+        message.setText(body);
         userService.addMessgae(message);
+        sendToTopic(message.getText());
 
         }catch (DBException e){
             e.printStackTrace();
@@ -294,6 +319,24 @@ public class UserResources {
         }
         return  Response.ok("{\"msg\":\"sended\"}").build();
 
+    }
+    public void sendToTopic(String msg){
+        try {
+            Connection connection = connectionFactory.createConnection();
+            Session session = connection.createSession(true, Session.AUTO_ACKNOWLEDGE);
+            MessageProducer producer = session.createProducer(destination);
+            TextMessage message = session.createTextMessage();
+            //добавим в JMS сообщение собственное свойство в поле сообщения со свойствами
+            message.setStringProperty("clientType", "web clien");
+            //добавляем payload в сообщение
+            message.setText(msg);
+            //отправляем сообщение
+            producer.send(message);
+            System.out.println("message sent");
+            //закрываем соединения
+            session.close();
+            connection.close();
+        }catch (Exception e ){e.printStackTrace();}
     }
 
 
