@@ -53,6 +53,12 @@ public class UserService extends AbstractService<Users,String> {
         return true;
     }
 
+    public List<Users> search(String namePart){
+        UsersDAO dao = DaoFactory.getUsersDAO();
+        List<Users> list =  dao.searchUsers(namePart);
+        return list;
+    };
+
     /**
      * Update short user information
      * @param item user who need to update
@@ -462,4 +468,5 @@ public class UserService extends AbstractService<Users,String> {
         return reqs;
 
     }
+
 }

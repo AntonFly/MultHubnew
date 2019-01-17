@@ -1,12 +1,9 @@
 package buisnessLayer;
 
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dataAccesLayer.entity.Commitsfile;
-import dataAccesLayer.entity.Dialog;
-import dataAccesLayer.entity.Message;
-import dataAccesLayer.entity.Users;
+import dataAccesLayer.entity.*;
 import dataAccesLayer.exception.DBException;
+import dataAccesLayer.service.ProjectService;
 import dataAccesLayer.service.ViewService;
 
 import javax.ejb.Stateful;

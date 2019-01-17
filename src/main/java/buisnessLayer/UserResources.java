@@ -10,6 +10,9 @@ import dataAccesLayer.entity.*;
 import dataAccesLayer.exception.DBException;
 import dataAccesLayer.service.ProjectService;
 import dataAccesLayer.service.UserService;
+import org.apache.wink.common.internal.utils.MediaTypeUtils;
+import org.apache.wink.common.model.multipart.BufferedInMultiPart;
+import org.apache.wink.common.model.multipart.InPart;
 
 import javax.ejb.Stateful;
 import javax.inject.Inject;
@@ -66,6 +69,7 @@ public class UserResources {
             userService.detach(user);
             user.setPassword(null);
             String jsonString = mapper.writeValueAsString(user);
+            avatarPath=user.getImgpath();
             return Response.ok(jsonString).build();
         }
         else
@@ -136,34 +140,24 @@ public class UserResources {
 
 
 
-//    @POST
-//    @Path("/uploadAvatar")  //Your Path or URL to call this service
-//    @Consumes("multipart/form-data")
-//    public Response uploadFile(
-////            @DefaultValue("true") @FormDataParam("enabled") boolean enabled,
-//            @FormDataParam("file") InputStream uploadedInputStream,
-////            @FormDataParam("file") FormDataContentDisposition fileDetail,
-////            @FormDataParam("filename") String filename,
-//            @FormParam("login") String login) {
-//        //Your local disk path where you want to store the file
-//        String uploadedFileLocation = generalAvatarPath +".png";
-//        avatarPath =uploadedFileLocation;
-//        System.out.println(uploadedFileLocation);
-////        // save it
-////        File objFile=new File(uploadedFileLocation);
-////        if(objFile.exists())
-//////        {
-////            objFile.delete();
-//////
-//        saveToFile(uploadedInputStream,uploadedFileLocation);
-////        }
-//
-//
-//        String output = "File uploaded via Jersey based RESTFul Webservice to: " + uploadedFileLocation;
-//
-//        return Response.status(200).entity("{\"msg\":\"uploaded\"}").build();
-//
-//    }
+    @Path("/uploadAvatar{login}&{extention}")
+    @POST
+    @Consumes( MediaTypeUtils.MULTIPART_FORM_DATA)
+    public javax.ws.rs.core.Response uploadNewAdvJson(/*InMultiPart inMultiPart*/BufferedInMultiPart inMP, @PathParam("login") String login, @PathParam("extention") String extention) throws DBException {
+        avatarPath =generalAvatarPath + login+".jpg";
+        String uploadedFileLocation = generalAvatarPath + login+".jpg";
+
+        try {
+            List<InPart> parts = inMP.getParts();
+            for (InPart p : parts) {
+                saveToFile(p.getInputStream(),uploadedFileLocation);
+
+            }
+        }catch (Exception e){e.printStackTrace();}
+        userService.get(login).setImgpath(avatarPath);
+        return Response.status(200).entity("{\"msg\":\"uploaded\"}").build();
+
+    }
     private void saveToFile(InputStream uploadedInputStream,
                             String uploadedFileLocation) {
 
@@ -186,15 +180,20 @@ public class UserResources {
     }
 
     @GET
-    @Path("/getavatar{login}")
+    @Path("/getAvatar{login}")
     @Produces("image/png")
     public Response getFile(@PathParam("login") String login) {
+        Response.ResponseBuilder response = Response.ok();
+        try {
+            File file = new File(userService.get(login).getImgpath());
 
-        File file = new File(generalAvatarPath+login+".png");
-
-        Response.ResponseBuilder response = Response.ok((Object) file);
-        response.header("Content-Disposition",
-                "attachment; filename=image_from_server.png");
+            response = Response.ok((Object) file);
+            response.header("Content-Disposition",
+                    "attachment; filename=" + login + ".png");
+        }catch (DBException e){
+            e.printStackTrace();
+            Response.ok().status(400).build();
+        }
         return response.build();
 
     }
@@ -275,7 +274,7 @@ public class UserResources {
         message.setIsread(false);
         message.setTime(new Timestamp(System.currentTimeMillis()));
         message.setSender(login);
-        message.setText("horosho");
+        message.setText(body);
         userService.addMessgae(message);
 
         }catch (DBException e){
