@@ -15,9 +15,7 @@ public class SubsDAO extends AbstractDao<Subs,String> {
     @Override
     public List<Subs> getAll() {
         EntityManager em= DBService.getEntytiManager();
-        em.getTransaction().begin();
         List<Subs> list=em.createNamedQuery("Subs.getAll").getResultList();
-        em.getTransaction().commit();
         return list;
     }
 
@@ -25,18 +23,14 @@ public class SubsDAO extends AbstractDao<Subs,String> {
 
     public Subs getEntityById(Users user, Projects project) {
         EntityManager em= DBService.getEntytiManager();
-        em.getTransaction().begin();
         Subs entity = em.find(param,new SubsEntityPK(user,project));
-        em.getTransaction().commit();
         return entity;
     }
 
     public void delete(Users user,Projects project) {
         EntityManager em= DBService.getEntytiManager();
-        em.getTransaction().begin();
         Subs entity = em.find(param,new SubsEntityPK(user,project));
         em.remove(entity);
-        em.getTransaction().commit();
     }
 }
 

@@ -1,9 +1,12 @@
 package buisnessLayer;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import dataAccesLayer.dao.DaoFactory;
 import dataAccesLayer.entity.*;
 import dataAccesLayer.exception.DBException;
 import dataAccesLayer.service.ProjectService;
+import dataAccesLayer.service.UserService;
 import dataAccesLayer.service.ViewService;
 
 import javax.ejb.Stateful;
@@ -11,17 +14,15 @@ import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-//import javax.ws.rs.sse.OutboundSseEvent;
-//import javax.ws.rs.sse.Sse;
-//import javax.ws.rs.sse.SseEventSink;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+//import javax.ws.rs.sse.OutboundSseEvent;
+//import javax.ws.rs.sse.Sse;
+//import javax.ws.rs.sse.SseEventSink;
 
 @Stateful
 @Path("/view")
@@ -62,10 +63,15 @@ public class ViewResources {
     @Inject
     ProjectService projectService;
 
+    @Inject
+    UserService userService;
+
     @GET
     public  String hello(){
         return "<H2 style=\"color : red\">View EJB</H2>";
     }
+
+
 
     @GET
     @Path("/dialogs{login}")
@@ -115,7 +121,7 @@ public class ViewResources {
 //                    messages.get(i).setIsread(true);
 //            }
 
-            this.viewService.readMessages(dialogId, login);  //посылает запрос
+            readMessages(login,dialogId);  //посылает запрос
             json = mapper.writeValueAsString(messages);
         }catch (com.fasterxml.jackson.core.JsonProcessingException | DBException ex){
 //            ex.printStackTrace();
@@ -125,10 +131,42 @@ public class ViewResources {
         }
         return Response.ok(json).build();
     }
+    @GET
+    @Path("/readMessage{dialogId}&{login}")
+    public Response readMessages(@PathParam("login") String login, @PathParam("dialogId") String dialogId){
+        try{
+        Dialog dialog= DaoFactory.getDialogDao().getEntityById(dialogId);
+        for (Message message:
+                dialog.getMessages()
+             ) {
+            if(!message.getSender().equals(login)){
+                message.setIsread(true);
+            }
+
+        }
+        }catch (Exception e){
+            e.printStackTrace();
+            return Response.ok().status(400).build();
+        }
+        return Response.ok("{\"msg\":\"read\"}").build();
+    }
+    @GET
+    @Path("/getFollowers{login}")
+    public  Response getFollowers(@PathParam(value = "login") String login){
+        String json;
+        try{
+            ObjectMapper mapper = new ObjectMapper();
+            json = mapper.writeValueAsString(userService.get(login).getFollowers());
+        }catch (DBException |JsonProcessingException e){
+          e.printStackTrace();
+          return Response.ok().status(400).build();
+        }
+        return Response.ok(json).build();
+    }
 
     @GET
     @Path("/userPageInfo{login}")
-    public Response UserPageInformation(@PathParam(value = "login") String login){ //список подписок подписчиков и тп
+    public Response UserPageInformation(@PathParam(value = "login") String login){
         String json;
         try{
             ObjectMapper mapper = new ObjectMapper();
@@ -223,7 +261,7 @@ public class ViewResources {
         try{
             ObjectMapper mapper = new ObjectMapper();
 
-//хер пойми че надо вместе с ними пикчи наверн
+
             json = mapper.writeValueAsString(this.viewService.mainPage(login));
         }catch (com.fasterxml.jackson.core.JsonProcessingException | DBException e){
             e.printStackTrace();

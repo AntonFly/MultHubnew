@@ -24,25 +24,19 @@ abstract class AbstractDao<E, K> {
 
         public  void update(E entity){
                 EntityManager em= DBService.getEntytiManager();
-                        em.getTransaction().begin();
                         em.merge(entity);
-                        em.getTransaction().commit();
 
         }
 
         public  void delete(K id){
                 EntityManager em= DBService.getEntytiManager();
-                em.getTransaction().begin();
                 E entity = em.find(param,id);
                 em.remove(entity);
-                em.getTransaction().commit();
         };
 
         public  void create(E entity){
                 EntityManager em= DBService.getEntytiManager();
-                em.getTransaction().begin();
                 em.persist(entity);
-                em.getTransaction().commit();
         }
 
 

@@ -140,10 +140,10 @@ public class UserResources {
 
 
 
-    @Path("/uploadAvatar{login}&{extention}")
+    @Path("/uploadAvatar{login}")
     @POST
     @Consumes( MediaTypeUtils.MULTIPART_FORM_DATA)
-    public javax.ws.rs.core.Response uploadNewAdvJson(/*InMultiPart inMultiPart*/BufferedInMultiPart inMP, @PathParam("login") String login, @PathParam("extention") String extention) throws DBException {
+    public javax.ws.rs.core.Response uploadNewAdvJson(/*InMultiPart inMultiPart*/BufferedInMultiPart inMP, @PathParam("login") String login) throws DBException {
         avatarPath =generalAvatarPath + login+".jpg";
         String uploadedFileLocation = generalAvatarPath + login+".jpg";
 
