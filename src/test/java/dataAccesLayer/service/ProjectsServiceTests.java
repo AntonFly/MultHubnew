@@ -231,7 +231,7 @@ class ProjectsServiceTests {
 
     void deleteDeveloper(Developers Developers){
         try {
-            ps.deleteDeveloper(Developers);
+            ps.deleteDeveloper(Developers.getLogin(),Developers.getProjectid());
         }
         catch (Exception e){
             e.printStackTrace();
@@ -290,7 +290,7 @@ class ProjectsServiceTests {
             Developers Developers = new Developers();
             Developers.setLogin(Users);
             Developers.setProjectid(pe);
-            ps.deleteDeveloper(Developers);
+            ps.deleteDeveloper(Developers.getLogin(),Developers.getProjectid());
             service.delete(Users.getLogin());
         }
         catch (DBException e){

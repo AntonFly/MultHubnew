@@ -274,7 +274,7 @@ public class UserResources {
         message.setIsread(false);
         message.setTime(new Timestamp(System.currentTimeMillis()));
         message.setSender(login);
-        message.setText(body);
+        message.setText("horosho");
         userService.addMessgae(message);
 
         }catch (DBException e){

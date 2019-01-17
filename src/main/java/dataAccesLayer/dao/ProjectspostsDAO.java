@@ -24,8 +24,8 @@ public class ProjectspostsDAO extends AbstractDao<Projectposts,String> {
         entity.setId( UUID.nameUUIDFromBytes(entity.getText().getBytes()).toString());
 
         EntityManager em= DBService.getEntytiManager();
-        em.getTransaction().begin();
+//        em.getTransaction().begin();
         em.persist(entity);
-        em.getTransaction().commit();
+//        em.getTransaction().commit();
     }
 }
