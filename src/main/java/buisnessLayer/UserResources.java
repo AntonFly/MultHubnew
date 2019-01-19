@@ -6,9 +6,9 @@ import com.google.common.base.Charsets;
 import com.google.common.hash.HashCode;
 import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;
-import com.sun.jersey.multipart.FormDataParam;
-import dataAccesLayer.entity.Users;
+import dataAccesLayer.entity.*;
 import dataAccesLayer.exception.DBException;
+import dataAccesLayer.service.ProjectService;
 import dataAccesLayer.service.UserService;
 
 import javax.annotation.PostConstruct;
@@ -17,6 +17,9 @@ import javax.ejb.Stateful;
 import javax.ejb.TransactionManagement;
 import javax.enterprise.inject.spi.Bean;
 import javax.inject.Inject;
+import javax.jms.ConnectionFactory;
+import javax.jms.Destination;
+import javax.jms.Message;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.transaction.UserTransaction;
@@ -26,22 +29,17 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.io.*;
+import java.sql.Timestamp;
 import java.util.List;
 
 import dataAccesLayer.service.UserService;
+import org.apache.wink.common.internal.utils.MediaTypeUtils;
+import org.apache.wink.common.model.multipart.BufferedInMultiPart;
+import org.apache.wink.common.model.multipart.InPart;
 
 @Stateful
 @Path("/user")
 public class UserResources {
-
-//    @PostConstruct
-//    void initQuery(){
-//        try {
-//            List<Users> users  = this.userService.getAll();
-//            System.out.println(users.size()+"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa");
-//        }catch(Exception ex){}
-//    }
-
 
     private String avatarPath=null;
     private  String generalAvatarPath="D:/projects/kek/";
@@ -57,7 +55,13 @@ public class UserResources {
     UriInfo uriInfo;
 
     @Inject
+    MailSender mail;
+
+    @Inject
     UserService userService;
+
+    @Inject
+    ProjectService projectService;
 
     @GET
     public  String hello(){
@@ -273,7 +277,7 @@ public class UserResources {
                                  @FormParam("message") String body,
                                  @FormParam("dialog") String dialogId){
         try{
-        Message message =new Message();
+        dataAccesLayer.entity.Message message = new dataAccesLayer.entity.Message();
         if(dialogId!=null)
         message.setDialogId(dialogId);
         else {

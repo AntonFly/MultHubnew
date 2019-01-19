@@ -1,12 +1,13 @@
 package buisnessLayer;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import dataAccesLayer.entity.Commitsfile;
-import dataAccesLayer.entity.Dialog;
-import dataAccesLayer.entity.Message;
-import dataAccesLayer.entity.Users;
+import dataAccesLayer.dao.DaoFactory;
+import dataAccesLayer.entity.*;
 import dataAccesLayer.exception.DBException;
+import dataAccesLayer.service.ProjectService;
+import dataAccesLayer.service.UserService;
 import dataAccesLayer.service.ViewService;
 
 import javax.ejb.Stateful;
@@ -29,11 +30,6 @@ import java.util.Map;
 @Stateful
 @Path("/view")
 public class ViewResources {
-//просмотр коммитов для простых юзеров
-    //популярые проекты
-    //еще тоха шото говорил
-    //уведомления
-    //конкретный дифф
 
 //int i = 0;
 
@@ -171,6 +167,7 @@ public class ViewResources {
     public Response UserPageInformation(@PathParam(value = "login") String login){ //список подписок подписчиков и тп
         String json;
         try{
+//            new MailSender().sendMail("TEST","Here's some text");
             ObjectMapper mapper = new ObjectMapper();
             Map<String,Object> result = this.viewService.UserPageInformation(login);
 //            result.put("Image",new) как то отправить пикчу

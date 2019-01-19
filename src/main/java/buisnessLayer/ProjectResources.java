@@ -12,6 +12,7 @@ import org.apache.wink.common.model.multipart.InPart;
 
 import javax.ejb.Stateful;
 import javax.inject.Inject;
+import javax.jws.soap.SOAPBinding;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.io.*;
@@ -22,6 +23,9 @@ import java.util.List;
 @Stateful
 @Path("/project")
 public class ProjectResources {
+
+    @Inject
+    MailSender mail;
 
     @Inject
     ProjectService projectService;
@@ -168,10 +172,18 @@ public class ProjectResources {
                                     @FormParam("projPos") Projpos projPos){
         try {
             Requests request = new Requests();
-            request.setLogin(this.userService.get(login));
-            request.setProjectid(this.projectService.get(projectId));
+            Users user = this.userService.get(login);
+            Projects projects = this.projectService.get(projectId);
+            request.setLogin(user);
+            request.setProjectid(projects);
             request.setProjpos(projPos);
-        this.projectService.sendInviteToProject(request);
+            this.projectService.sendInviteToProject(request);
+            // mail
+            if(user.getCondata().geteMail() != null) {
+                String[] users = { user.getCondata().geteMail() };
+                this.mail.sendMail("New INVITE to project", "You have been invited to " + projects.getName() + "as a " +
+                        projPos.toString() + ". Check this out on multhub", users);
+            }
         }catch (DBException e){
         e.printStackTrace();
         Response.ResponseBuilder response = Response.ok();
