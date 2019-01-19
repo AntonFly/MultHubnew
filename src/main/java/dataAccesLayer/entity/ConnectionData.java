@@ -50,4 +50,6 @@ public class ConnectionData {
     public void setOwner(Users owner) {
         this.owner = owner;
     }
+
+    public boolean checkMail(){return this.eMail != null;}
 }

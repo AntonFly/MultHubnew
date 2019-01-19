@@ -47,6 +47,7 @@ private static String RECIPIENT = "anton99910@outlook.com";
 
             // To get the array of addresses
             for( int i = 0; i < to.length; i++ ) {
+                if(to[i] != null)
                 toAddress[i] = new InternetAddress(to[i]);
             }
 

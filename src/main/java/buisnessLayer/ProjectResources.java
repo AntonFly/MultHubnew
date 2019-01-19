@@ -202,10 +202,22 @@ public class ProjectResources {
                                   ){
         try {
             Projectposts projectposts = new Projectposts();
-            projectposts.setProject(this.projectService.get(projectId));
+            Projects projects = this.projectService.get(projectId);
+            projectposts.setProject(projects);
             projectposts.setText(text);
             projectposts.setFilepath("/deafult");     // !!!!!!!!!!!!!!!!!!!!!Что делать
             this.projectService.addPostToBlog(projectposts);
+
+            if(projects.getSubscribers().size() > 0) {
+                String[] users = new String[projects.getSubscribers().size()];
+                for(int i = 0;i < projects.getSubscribers().size(); i++)
+                {
+                    if(projects.getSubscribers().get(i).getCondata().checkMail())
+                    users[i] = projects.getSubscribers().get(i).getCondata().geteMail();
+                }
+                this.mail.sendMail("New post in ur feed",  projects.getName() + "add a new post " +
+                         ". Check this out on multhub", users);
+            }
 
         }catch (DBException e){
         e.printStackTrace();
