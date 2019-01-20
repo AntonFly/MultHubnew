@@ -10,6 +10,7 @@ import java.util.List;
 @NamedQuery(name = "Users.getAll", query = "SELECT u from Users u")
 public class Users {
     public Users() {
+
     }
 
     @Id
@@ -29,6 +30,12 @@ public class Users {
 
     @Column
     private String status;
+
+    @Column
+    private boolean sendOnInvites;
+
+    @Column
+    private boolean sendOnPost;
 
     @JsonIgnore
     @OneToOne()
@@ -240,4 +247,27 @@ public class Users {
         this.subscriprions = subscriprions;
     }
 
+    public boolean isSendOnInvites() {
+        return sendOnInvites;
+    }
+
+    public void setSendOnInvites(boolean sendOnInvites) {
+        this.sendOnInvites = sendOnInvites;
+    }
+
+    public boolean isSendOnPost() {
+        return sendOnPost;
+    }
+
+    public void setSendOnPost(boolean sendOnPost) {
+        this.sendOnPost = sendOnPost;
+    }
+
+    public List<Comments> getComments() {
+        return comments;
+    }
+
+    public void setComments(List<Comments> comments) {
+        this.comments = comments;
+    }
 }

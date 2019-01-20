@@ -164,6 +164,7 @@ public  class Bot extends TelegramLongPollingBot {
                                         "Position: "+ req.getProjpos()+"\n" +
                                         "Project description:" +req.getProjectid().getDescription());
                             }
+                            if(tUser.invites.size()!=0)
                             tUser.isinvites= true;
                         } catch (DBException e) {
                             e.printStackTrace();

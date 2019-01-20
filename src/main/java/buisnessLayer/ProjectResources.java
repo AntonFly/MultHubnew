@@ -12,12 +12,10 @@ import org.apache.wink.common.model.multipart.InPart;
 
 import javax.ejb.Stateful;
 import javax.inject.Inject;
-import javax.jws.soap.SOAPBinding;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.io.*;
 import java.sql.Timestamp;
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -180,10 +178,9 @@ public class ProjectResources {
             request.setProjpos(projPos);
             this.projectService.sendInviteToProject(request);
             // mail
-            if(user.getCondata().geteMail() != null) {
+            if(user.getCondata().geteMail() != null && user.isSendOnInvites()) {
                 List<String> users = new LinkedList<>();
                 users.add(user.getCondata().geteMail());
-
                 this.mail.sendMail("New INVITE to project", "You have been invited to " + projects.getName() + "as a " +
                         projPos.toString() + ". Check this out on multhub", users);
             }
@@ -216,7 +213,7 @@ public class ProjectResources {
                 List<String> users = new LinkedList<>();
                 for(int i = 0;i < projects.getSubscribers().size(); i++)
                 {
-                    if(projects.getSubscribers().get(i).getCondata().checkMail())
+                    if(projects.getSubscribers().get(i).getCondata().checkMail() && projects.getSubscribers().get(i).isSendOnPost())
                     users.add(projects.getSubscribers().get(i).getCondata().geteMail());
                 }
                 this.mail.sendMail("New post in ur feed",  projects.getName() + " add a new post " +

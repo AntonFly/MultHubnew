@@ -1,9 +1,7 @@
 package buisnessLayer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectReader;
 import dataAccesLayer.dao.DaoFactory;
 import dataAccesLayer.entity.*;
 import dataAccesLayer.exception.DBException;
@@ -16,18 +14,16 @@ import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
-import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-//import javax.ws.rs.sse.OutboundSseEvent;
-//import javax.ws.rs.sse.Sse;
-//import javax.ws.rs.sse.SseEventSink;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
+
+//import javax.ws.rs.sse.OutboundSseEvent;
+//import javax.ws.rs.sse.Sse;
+//import javax.ws.rs.sse.SseEventSink;
 
 @Stateful
 @Path("/view")
