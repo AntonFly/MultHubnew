@@ -10,32 +10,52 @@ import dataAccesLayer.entity.*;
 import dataAccesLayer.exception.DBException;
 import dataAccesLayer.service.ProjectService;
 import dataAccesLayer.service.UserService;
-import org.apache.wink.common.internal.utils.MediaTypeUtils;
-import org.apache.wink.common.model.multipart.BufferedInMultiPart;
-import org.apache.wink.common.model.multipart.InPart;
 
+import javax.annotation.PostConstruct;
+import javax.annotation.Resource;
 import javax.ejb.Stateful;
+import javax.ejb.TransactionManagement;
+import javax.enterprise.inject.spi.Bean;
 import javax.inject.Inject;
+import javax.jms.ConnectionFactory;
+import javax.jms.Destination;
+import javax.jms.Message;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+import javax.transaction.UserTransaction;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.io.*;
 import java.sql.Timestamp;
 import java.util.List;
 
-//import com.sun.jersey.multipart.FormDataParam;
-
+import dataAccesLayer.service.UserService;
+import org.apache.wink.common.internal.utils.MediaTypeUtils;
+import org.apache.wink.common.model.multipart.BufferedInMultiPart;
+import org.apache.wink.common.model.multipart.InPart;
 
 @Stateful
 @Path("/user")
 public class UserResources {
 
     private String avatarPath=null;
-    private  String generalAvatarPath="E:/Печатные работы/ПИП/Курсач/resources/avatars/";
+    private  String generalAvatarPath="D:/projects/kek/";
+
+    @Resource(name="jms/messagesPool")
+    private ConnectionFactory connectionFactory;
+
+    @Resource(name="jms/messageTopic")
+    private Destination destination;
+
 
     @Context
     UriInfo uriInfo;
+
+    @Inject
+    MailSender mail;
 
     @Inject
     UserService userService;
@@ -74,10 +94,9 @@ public class UserResources {
                 .hash();
         if( user.getPassword().equals(hc.toString())){
             ObjectMapper mapper = new ObjectMapper();
-            userService.detach(user);
-            user.setPassword(null);
+//            userService.detach(user);
+//            user.setPassword(null);
             String jsonString = mapper.writeValueAsString(user);
-            avatarPath=user.getImgpath();
             return Response.ok(jsonString).build();
         }
         else
@@ -151,21 +170,26 @@ public class UserResources {
     @Path("/uploadAvatar{login}")
     @POST
     @Consumes( MediaTypeUtils.MULTIPART_FORM_DATA)
-    public javax.ws.rs.core.Response uploadNewAdvJson(/*InMultiPart inMultiPart*/BufferedInMultiPart inMP, @PathParam("login") String login) throws DBException {
-        avatarPath =generalAvatarPath + login+".jpg";
+    public javax.ws.rs.core.Response uploadNewAdvJson(/*InMultiPart inMultiPart*/BufferedInMultiPart inMP, @PathParam("login") String login) {
+        avatarPath = generalAvatarPath + login+".jpg";
         String uploadedFileLocation = generalAvatarPath + login+".jpg";
-
+        System.out.println("LOL AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         try {
             List<InPart> parts = inMP.getParts();
-            for (InPart p : parts) {
-                saveToFile(p.getInputStream(),uploadedFileLocation);
+                for (InPart p : parts) {
+                    System.out.println(p.getHeadersName()+" AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+                    saveToFile(p.getInputStream(),uploadedFileLocation);
+                }
+            userService.get(login).setImgpath(avatarPath);
+        }catch (Exception e){
+            e.printStackTrace();
+            return Response.ok().status(400).build();
+        }
 
-            }
-        }catch (Exception e){e.printStackTrace();}
-        userService.get(login).setImgpath(avatarPath);
         return Response.status(200).entity("{\"msg\":\"uploaded\"}").build();
 
     }
+
     private void saveToFile(InputStream uploadedInputStream,
                             String uploadedFileLocation) {
 
@@ -191,17 +215,17 @@ public class UserResources {
     @Path("/getAvatar{login}")
     @Produces("image/png")
     public Response getFile(@PathParam("login") String login) {
-        Response.ResponseBuilder response = Response.ok();
+        File file;
         try {
-            File file = new File(userService.get(login).getImgpath());
-
-            response = Response.ok((Object) file);
-            response.header("Content-Disposition",
-                    "attachment; filename=" + login + ".png");
-        }catch (DBException e){
+            file = new File(userService.get(login).getImgpath());
+        }catch (Exception e ){
             e.printStackTrace();
-            Response.ok().status(400).build();
+            return Response.ok().status(400).build();
         }
+
+        Response.ResponseBuilder response = Response.ok((Object) file);
+        response.header("Content-Disposition",
+                "attachment; filename="+login+".png");
         return response.build();
 
     }
@@ -261,7 +285,7 @@ public class UserResources {
                                  @FormParam("message") String body,
                                  @FormParam("dialog") String dialogId){
         try{
-        Message message =new Message();
+        dataAccesLayer.entity.Message message = new dataAccesLayer.entity.Message();
         if(dialogId!=null)
         message.setDialogId(dialogId);
         else {
@@ -430,7 +454,7 @@ public class UserResources {
     }
 
     @GET
-    @Path("ivites{login}")
+    @Path("invites{login}")
     public Response getInvites(@PathParam("login") String login){
         String jsonString;
         try {
@@ -442,8 +466,25 @@ public class UserResources {
             return Response.ok().status(400).build();
         }
         return Response.ok(jsonString).build();
-
     }
+
+    //чтобы получить про Логине все проекты с его участием и дать права
+    @GET
+    @Path("allManaged{login}")
+    public Response getAllManaged(@PathParam(value = "login") String login){
+        String jsonString;
+        try {
+            Users user = userService.get(login);
+            ObjectMapper mapper = new ObjectMapper();
+            List<Developers> devs = user.getDevelopers();
+            jsonString = mapper.writeValueAsString(devs); //вылетает ексепшон
+        }catch (JsonProcessingException |DBException e) {
+            e.printStackTrace();
+            return Response.ok().status(400).build();
+        }
+        return Response.ok(jsonString).build();
+    }
+
 }
 
 

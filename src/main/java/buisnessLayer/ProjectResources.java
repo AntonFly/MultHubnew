@@ -12,16 +12,21 @@ import org.apache.wink.common.model.multipart.InPart;
 
 import javax.ejb.Stateful;
 import javax.inject.Inject;
+import javax.jws.soap.SOAPBinding;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Response;
 import java.io.*;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
 @Stateful
 @Path("/project")
 public class ProjectResources {
+
+    @Inject
+    MailSender mail;
 
     @Inject
     ProjectService projectService;
@@ -168,10 +173,20 @@ public class ProjectResources {
                                     @FormParam("projPos") Projpos projPos){
         try {
             Requests request = new Requests();
-            request.setLogin(this.userService.get(login));
-            request.setProjectid(this.projectService.get(projectId));
+            Users user = this.userService.get(login);
+            Projects projects = this.projectService.get(projectId);
+            request.setLogin(user);
+            request.setProjectid(projects);
             request.setProjpos(projPos);
-        this.projectService.sendInviteToProject(request);
+            this.projectService.sendInviteToProject(request);
+            // mail
+            if(user.getCondata().geteMail() != null) {
+                List<String> users = new LinkedList<>();
+                users.add(user.getCondata().geteMail());
+
+                this.mail.sendMail("New INVITE to project", "You have been invited to " + projects.getName() + "as a " +
+                        projPos.toString() + ". Check this out on multhub", users);
+            }
         }catch (DBException e){
         e.printStackTrace();
         Response.ResponseBuilder response = Response.ok();
@@ -185,15 +200,28 @@ public class ProjectResources {
     @POST
     @Path("/toPost")
     public Response addPostToBlog(@FormParam("projectId") String projectId,
-                                  @FormParam("text") String text,
-                                  @FormParam("proctId") String proetId              //FILE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                                  @FormParam("text") String text
+                                  //FILE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                                   ){
         try {
             Projectposts projectposts = new Projectposts();
-            projectposts.setProject(this.projectService.get(projectId));
+            Projects projects = this.projectService.get(projectId);
+            projectposts.setProjectid(projectId);
             projectposts.setText(text);
             projectposts.setFilepath("/deafult");     // !!!!!!!!!!!!!!!!!!!!!Что делать
+            projectposts.setTime(new Timestamp(System.currentTimeMillis()));
             this.projectService.addPostToBlog(projectposts);
+//mail
+            if(projects.getSubscribers().size() > 0) {
+                List<String> users = new LinkedList<>();
+                for(int i = 0;i < projects.getSubscribers().size(); i++)
+                {
+                    if(projects.getSubscribers().get(i).getCondata().checkMail())
+                    users.add(projects.getSubscribers().get(i).getCondata().geteMail());
+                }
+                this.mail.sendMail("New post in ur feed",  projects.getName() + " add a new post " +
+                         ". Check this out on multhub", users);
+            }
 
         }catch (DBException e){
         e.printStackTrace();

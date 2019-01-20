@@ -59,7 +59,6 @@ public class UserService extends AbstractService<Users,String> {
         List<Users> list =  dao.searchUsers(namePart);
         return list;
     };
-
     /**
      * Update short user information
      * @param item user who need to update

@@ -1,6 +1,7 @@
 package buisnessLayer;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dataAccesLayer.dao.DaoFactory;
 import dataAccesLayer.entity.*;
@@ -14,24 +15,22 @@ import javax.inject.Inject;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import java.io.IOException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 //import javax.ws.rs.sse.OutboundSseEvent;
 //import javax.ws.rs.sse.Sse;
 //import javax.ws.rs.sse.SseEventSink;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 @Stateful
 @Path("/view")
 public class ViewResources {
-//просмотр коммитов для простых юзеров
-    //популярые проекты
-    //еще тоха шото говорил
-    //уведомления
-    //конкретный дифф
 
 //int i = 0;
 
@@ -166,9 +165,10 @@ public class ViewResources {
 
     @GET
     @Path("/userPageInfo{login}")
-    public Response UserPageInformation(@PathParam(value = "login") String login){
+    public Response UserPageInformation(@PathParam(value = "login") String login){ //список подписок подписчиков и тп
         String json;
         try{
+//            new MailSender().sendMail("TEST","Here's some text");
             ObjectMapper mapper = new ObjectMapper();
             Map<String,Object> result = this.viewService.UserPageInformation(login);
 //            result.put("Image",new) как то отправить пикчу
@@ -290,5 +290,38 @@ public class ViewResources {
         }
         return Response.ok(json).build();
     }
+
+    @GET
+    @Path("/popular{n}")
+    public Response getPopular(@PathParam(value = "n") int n){ //
+        String json;
+        try{
+            int max = 0;
+            List<Projects> popular = new LinkedList<>();
+            List<Projects> projects = this.projectService.getAll();
+            for(Projects project: projects) {
+                if(project.getSubscribers().size() > max)
+                {
+                    popular.add(project);
+                    max = project.getSubscribers().size();
+                }
+                if(popular.size() > n){
+
+                }
+
+
+            }
+            ObjectMapper mapper = new ObjectMapper();
+            json = mapper.writeValueAsString(projects);
+
+        }catch (JsonProcessingException | DBException e){
+            e.printStackTrace();
+            Response.ResponseBuilder response = Response.ok();
+            response.status(401);
+            return response.build();
+        }
+        return Response.ok(json).build();
+    }
+
 
 }
