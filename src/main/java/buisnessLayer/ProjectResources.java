@@ -211,7 +211,7 @@ public class ProjectResources {
             projectposts.setFilepath("/deafult");     // !!!!!!!!!!!!!!!!!!!!!Что делать
             projectposts.setTime(new Timestamp(System.currentTimeMillis()));
             this.projectService.addPostToBlog(projectposts);
-
+//mail
             if(projects.getSubscribers().size() > 0) {
                 List<String> users = new LinkedList<>();
                 for(int i = 0;i < projects.getSubscribers().size(); i++)
@@ -219,7 +219,7 @@ public class ProjectResources {
                     if(projects.getSubscribers().get(i).getCondata().checkMail())
                     users.add(projects.getSubscribers().get(i).getCondata().geteMail());
                 }
-                this.mail.sendMail("New post in ur feed",  projects.getName() + "add a new post " +
+                this.mail.sendMail("New post in ur feed",  projects.getName() + " add a new post " +
                          ". Check this out on multhub", users);
             }
 
