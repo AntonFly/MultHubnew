@@ -200,15 +200,16 @@ public class ProjectResources {
     @POST
     @Path("/toPost")
     public Response addPostToBlog(@FormParam("projectId") String projectId,
-                                  @FormParam("text") String text,
-                                  @FormParam("proctId") String proetId              //FILE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+                                  @FormParam("text") String text
+                                  //FILE!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
                                   ){
         try {
             Projectposts projectposts = new Projectposts();
             Projects projects = this.projectService.get(projectId);
-            projectposts.setProject(projects);
+            projectposts.setProjectid(projectId);
             projectposts.setText(text);
             projectposts.setFilepath("/deafult");     // !!!!!!!!!!!!!!!!!!!!!Что делать
+            projectposts.setTime(new Timestamp(System.currentTimeMillis()));
             this.projectService.addPostToBlog(projectposts);
 
             if(projects.getSubscribers().size() > 0) {

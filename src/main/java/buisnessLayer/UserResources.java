@@ -468,7 +468,8 @@ public class UserResources {
         try {
             Users user = userService.get(login);
             ObjectMapper mapper = new ObjectMapper();
-            jsonString = mapper.writeValueAsString(user.getDevelopers()); //вылетает ексепшон 
+            List<Developers> devs = user.getDevelopers();
+            jsonString = mapper.writeValueAsString(devs); //вылетает ексепшон
         }catch (JsonProcessingException |DBException e) {
             e.printStackTrace();
             return Response.ok().status(400).build();
