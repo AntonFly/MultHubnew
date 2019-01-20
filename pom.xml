@@ -114,6 +114,12 @@
             <version>1.4</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.telegram</groupId>
+            <artifactId>telegrambots</artifactId>
+            <version>LATEST</version>
+        </dependency>
+
 
     </dependencies>
 

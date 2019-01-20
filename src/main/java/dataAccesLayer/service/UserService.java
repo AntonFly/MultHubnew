@@ -3,6 +3,7 @@ package dataAccesLayer.service;
 import dataAccesLayer.dao.*;
 import dataAccesLayer.entity.*;
 import dataAccesLayer.exception.DBException;
+import dataAccesLayer.util.DBService;
 
 import javax.ejb.Singleton;
 import javax.persistence.PersistenceException;
@@ -406,13 +407,15 @@ public class UserService extends AbstractService<Users,String> {
 
     public boolean approveInvite(Requests entity) throws DBException{
         try{
+            ProjectService ps=ServiceFactory.getProjectService();
             Developers dev= new Developers();
             dev.setDescription("null");
-            dev.setProjpos(Projpos.DEVELOPER);
-            dev.setLogin(entity.getLogin());
-            dev.setProjectid(entity.getProjectid());
-            ProjectService ps=ServiceFactory.getProjectService();
-            ps.addDeveloper(dev);
+            dev.setProjpos(entity.getProjpos());
+            dev.setLogin(get(entity.getLogin().getLogin()));
+            dev.setProjectid(ps.get(entity.getProjectid().getProjectid()));
+//            entity.getProjectid().getDevelopers().add(dev);
+//            entity.getLogin().getRequests().remove(entity);
+            DBService.getEntytiManager().persist(dev);
             RequestsDAO dao= DaoFactory.getRequestsDAO();
             RequestsEntityPK pk=new RequestsEntityPK();
             pk.setLogin(entity.getLogin());
@@ -420,7 +423,9 @@ public class UserService extends AbstractService<Users,String> {
             dao.delete(pk);
 
         }catch (PersistenceException e){
+            e.printStackTrace();
             throw new DBException(e);
+
         }
         return true;
     }

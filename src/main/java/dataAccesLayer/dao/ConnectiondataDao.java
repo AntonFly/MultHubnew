@@ -11,7 +11,9 @@ public class ConnectiondataDao extends AbstractDao<ConnectionData,String> {
     @Override
     public List<ConnectionData> getAll() {
         EntityManager em= DBService.getEntytiManager();
+        em.getTransaction().begin();
         List<ConnectionData> list=em.createNamedQuery("ConnectionData.getAll").getResultList();
+        em.getTransaction().commit();
         return list;
     }
 

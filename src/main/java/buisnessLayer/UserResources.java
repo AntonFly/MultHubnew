@@ -44,8 +44,16 @@ public class UserResources {
     ProjectService projectService;
 
     @GET
-    public  String hello(){
+    public  String hello() throws DBException {
+//        userService.approveInvite(userService.get("fly").getRequests().get(0));
+//        Projects proj=new Projects();
+//        proj.setName("iaia");
+//        proj.setCurbudget(2.);
+//        proj.setGoalbudget(3.);
+//        proj.setDescription("xyita");
+//        ServiceFactory.getProjectService().create(proj);
         return "<H2 style=\"color : red\">Hello EJB</H2>";
+
 
     }
 
