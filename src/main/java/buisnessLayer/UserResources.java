@@ -10,32 +10,22 @@ import dataAccesLayer.entity.*;
 import dataAccesLayer.exception.DBException;
 import dataAccesLayer.service.ProjectService;
 import dataAccesLayer.service.UserService;
+import org.apache.wink.common.internal.utils.MediaTypeUtils;
+import org.apache.wink.common.model.multipart.BufferedInMultiPart;
+import org.apache.wink.common.model.multipart.InPart;
 
-import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 import javax.ejb.Stateful;
-import javax.ejb.TransactionManagement;
-import javax.enterprise.inject.spi.Bean;
 import javax.inject.Inject;
 import javax.jms.ConnectionFactory;
 import javax.jms.Destination;
-import javax.jms.Message;
-import javax.persistence.EntityManager;
-import javax.persistence.PersistenceContext;
-import javax.transaction.UserTransaction;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.io.*;
 import java.sql.Timestamp;
 import java.util.List;
-
-import dataAccesLayer.service.UserService;
-import org.apache.wink.common.internal.utils.MediaTypeUtils;
-import org.apache.wink.common.model.multipart.BufferedInMultiPart;
-import org.apache.wink.common.model.multipart.InPart;
 
 @Stateful
 @Path("/user")
@@ -170,9 +160,10 @@ public class UserResources {
     @Path("/uploadAvatar{login}")
     @POST
     @Consumes( MediaTypeUtils.MULTIPART_FORM_DATA)
-    public javax.ws.rs.core.Response uploadNewAdvJson(/*InMultiPart inMultiPart*/BufferedInMultiPart inMP, @PathParam("login") String login) {
+    public javax.ws.rs.core.Response uploadNewAdvJson(/*InMultiPart inMultiPart*/BufferedInMultiPart inMP, @PathParam("login") String login) throws DBException {
         avatarPath = generalAvatarPath + login+".jpg";
         String uploadedFileLocation = generalAvatarPath + login+".jpg";
+        userService.get(login).setImgpath(avatarPath);
         System.out.println("LOL AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
         try {
             List<InPart> parts = inMP.getParts();
@@ -180,7 +171,6 @@ public class UserResources {
                     System.out.println(p.getHeadersName()+" AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
                     saveToFile(p.getInputStream(),uploadedFileLocation);
                 }
-            userService.get(login).setImgpath(avatarPath);
         }catch (Exception e){
             e.printStackTrace();
             return Response.ok().status(400).build();
@@ -484,6 +474,8 @@ public class UserResources {
         }
         return Response.ok(jsonString).build();
     }
+
+
 
 }
 

@@ -61,7 +61,6 @@
           <element id="library" level="project" name="Maven: javax.activation:activation:1.1" />
           <element id="library" level="project" name="Maven: javax.annotation:javax.annotation-api:1.2" />
           <element id="library" level="project" name="Maven: javax.validation:validation-api:1.1.0.Final" />
-          <element id="library" level="project" name="Maven: javax.ws.rs:javax.ws.rs-api:2.0.1" />
           <element id="library" level="project" name="Maven: javax.xml.bind:jaxb-api:2.2" />
           <element id="library" level="project" name="Maven: javax.xml.stream:stax-api:1.0-2" />
           <element id="library" level="project" name="Maven: org.apache.httpcomponents:httpclient:4.5.3" />
@@ -77,7 +76,17 @@
           <element id="library" level="project" name="Maven: org.glassfish.hk2:hk2-utils:2.5.0-b32" />
           <element id="library" level="project" name="Maven: org.glassfish.hk2:osgi-resource-locator:1.0.1" />
           <element id="library" level="project" name="Maven: org.json:json:20160810" />
-          <element id="library" level="project" name="Maven: org.jvnet:mimepull:1.4" />
+          <element id="library" level="project" name="Maven: com.sun.mail:smtp:1.4.4" />
+          <element id="library" level="project" name="Maven: javax.mail:mail:1.4.5" />
+          <element id="library" level="project" name="Maven: org.glassfish.jersey.bundles.repackaged:jersey-guava:2.25.1" />
+          <element id="library" level="project" name="Maven: org.glassfish.jersey.containers:jersey-container-grizzly2-http:2.25.1" />
+          <element id="library" level="project" name="Maven: org.glassfish.jersey.core:jersey-client:2.25.1" />
+          <element id="library" level="project" name="Maven: org.glassfish.jersey.core:jersey-common:2.25.1" />
+          <element id="library" level="project" name="Maven: org.glassfish.jersey.core:jersey-server:2.25.1" />
+          <element id="library" level="project" name="Maven: org.glassfish.jersey.ext:jersey-entity-filtering:2.25.1" />
+          <element id="library" level="project" name="Maven: org.glassfish.jersey.media:jersey-media-jaxb:2.25.1" />
+          <element id="library" level="project" name="Maven: org.glassfish.jersey.media:jersey-media-json-jackson:2.25.1" />
+          <element id="library" level="project" name="Maven: javax.ws.rs:javax.ws.rs-api:2.1.1" />
         </element>
         <element id="jpa-descriptors" facet="MultHubnew/jpa/JPA" />
       </element>
