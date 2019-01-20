@@ -14,24 +14,24 @@ public class UsersDAO extends AbstractDao<Users,String> {
     @Override
     public List<Users> getAll() {
             EntityManager em= DBService.getEntytiManager();
-        em.getTransaction().begin();
+//        em.getTransaction().begin();
             List<Users> list=em.createNamedQuery("Users.getAll").getResultList();
-        em.getTransaction().commit();
+//        em.getTransaction().commit();
             return list;
     }
 
     public  void  detach(Users user){
         EntityManager em= DBService.getEntytiManager();
-        em.getTransaction().begin();
+//        em.getTransaction().begin();
         em.detach(user);
-        em.getTransaction().commit();
+//        em.getTransaction().commit();
     }
 
     public List<Users> searchUsers(String namePart){
         EntityManager em = DBService.getEntytiManager();
-        em.getTransaction().begin();
+//        em.getTransaction().begin();
         List<Users> projects=em.createQuery("from Users where login like '%"+namePart+"%'").getResultList();
-        em.getTransaction().commit();
+//        em.getTransaction().commit();
         return  projects;
     }
 }

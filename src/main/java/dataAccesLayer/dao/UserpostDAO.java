@@ -12,9 +12,9 @@ public class UserpostDAO extends AbstractDao<Userpost,String> {
     @Override
     public List<Userpost> getAll() {
         EntityManager em= DBService.getEntytiManager();
-        em.getTransaction().begin();
+//        em.getTransaction().begin();
         List<Userpost> list=em.createNamedQuery("Userpost.getAll").getResultList();
-        em.getTransaction().commit();
+//        em.getTransaction().commit();
         return list;
     }
 }

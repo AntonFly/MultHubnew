@@ -13,9 +13,9 @@ public class CreditInfoDAO extends AbstractDao<Creditinfo,String> {
     @Override
     public List<Creditinfo> getAll() {
         EntityManager em= DBService.getEntytiManager();
-        em.getTransaction().begin();
+//        em.getTransaction().begin();
         List<Creditinfo> list=em.createNamedQuery("Creditinfo.getAll").getResultList();
-        em.getTransaction().commit();
+//        em.getTransaction().commit();
         return list;
     }
 
