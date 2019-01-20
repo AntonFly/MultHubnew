@@ -13,7 +13,9 @@ public class DialogDAO extends AbstractDao<Dialog,String> {
     @Override
     public List<Dialog> getAll() {
         EntityManager em= DBService.getEntytiManager();
+        em.getTransaction().begin();
         List<Dialog> list=em.createNamedQuery("Dialog.getAll").getResultList();
+        em.getTransaction().commit();
         return list;
     }
 

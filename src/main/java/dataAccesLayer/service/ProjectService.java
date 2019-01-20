@@ -58,6 +58,7 @@ public class ProjectService extends AbstractService<Projects,String> {
 
             ProjectsDAO dao = DaoFactory.getProjectsDAO();
             dao.create(project);
+
         } catch (PersistenceException e) {
             throw new DBException(e);
         }
@@ -119,6 +120,7 @@ public class ProjectService extends AbstractService<Projects,String> {
             DevelopersDAO developersDAO = DaoFactory.getDevelopersDAO();
             developersDAO.create(developersEntity);
         } catch (PersistenceException e) {
+            e.printStackTrace();
             throw new DBException(e);
         }
         return true;

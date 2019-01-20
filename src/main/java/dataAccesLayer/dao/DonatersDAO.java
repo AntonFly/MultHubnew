@@ -13,7 +13,9 @@ public class DonatersDAO extends AbstractDao<Donaters,String> {
     @Override
     public List<Donaters> getAll() {
         EntityManager em= DBService.getEntytiManager();
+        em.getTransaction().begin();
         List<Donaters> list=em.createNamedQuery("Donaters.getAll").getResultList();
+        em.getTransaction().commit();
         return list;
     }
 

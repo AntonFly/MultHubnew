@@ -1,6 +1,5 @@
 package dataAccesLayer.entity;
 
-import com.fasterxml.jackson.annotation.JsonGetter;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -34,9 +33,8 @@ public class Projectposts {
     )
     private Projects project;
 
-    @JsonGetter("time")
-    public String getTime1() {
-        return time.toString();
+    public boolean checkFilePath(){
+        return this.filepath!=null;
     }
 
     public String getId() {
@@ -61,6 +59,11 @@ public class Projectposts {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    @JsonGetter("time")
+    public String getTimel() {
+        return time.toString();
     }
 
     public Timestamp getTime() {
