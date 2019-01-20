@@ -3,6 +3,7 @@ package buisnessLayer;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.ObjectReader;
 import dataAccesLayer.dao.DaoFactory;
 import dataAccesLayer.entity.*;
 import dataAccesLayer.exception.DBException;
@@ -260,9 +261,18 @@ public class ViewResources {
         String json;
         try{
             ObjectMapper mapper = new ObjectMapper();
-
-
-            json = mapper.writeValueAsString(this.viewService.mainPage(login));
+            List<Projects> subs = this.viewService.mainPage(login);
+            List<Object> result = new LinkedList<>();
+            for(int i = 0; i< subs.size(); i++){
+                List<Object> posts = new LinkedList<>();
+                posts.add(subs.get(i));
+                for(int j =0; j< subs.get(i).getPosts().size(); j++)
+                {
+                    posts.add(subs.get(i).getPosts().get(j));
+                }
+                result.add(posts);
+            }
+            json = mapper.writeValueAsString(result);
         }catch (com.fasterxml.jackson.core.JsonProcessingException | DBException e){
             e.printStackTrace();
             Response.ResponseBuilder response = Response.ok();
