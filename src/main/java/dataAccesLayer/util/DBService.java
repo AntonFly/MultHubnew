@@ -17,8 +17,8 @@ public class DBService {
 
         static {
 
-                ApiContextInitializer.init();
-                DefaultBotOptions botOptions = ApiContext.getInstance(DefaultBotOptions.class);
+//                ApiContextInitializer.init();
+//                DefaultBotOptions botOptions = ApiContext.getInstance(DefaultBotOptions.class);
 
 //        HttpHost httpHost = new HttpHost("46.105.221.247", 1080);
 
@@ -26,13 +26,13 @@ public class DBService {
 //        botOptions.setRequestConfig(requestConfig);
 //        botOptions.setProxyHost("46.105.221.247");
 //        botOptions.setProxyPort(1080);
-                Bot bot= new Bot(botOptions);
-                TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
-                try {
-                    telegramBotsApi.registerBot(bot);
-                } catch (TelegramApiRequestException e) {
-                    e.printStackTrace();
-                }
+//                Bot bot= new Bot(botOptions);
+//                TelegramBotsApi telegramBotsApi = new TelegramBotsApi();
+//                try {
+//                    telegramBotsApi.registerBot(bot);
+//                } catch (TelegramApiRequestException e) {
+//                    e.printStackTrace();
+//                }
             managerFactory = Persistence.createEntityManagerFactory("MULTHUB");
         }
 

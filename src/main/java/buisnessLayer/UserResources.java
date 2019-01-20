@@ -42,7 +42,7 @@ import org.apache.wink.common.model.multipart.InPart;
 public class UserResources {
 
     private String avatarPath=null;
-    private  String generalAvatarPath="D:/projects/kek/";
+    private  String generalAvatarPath="D:/projects/resources/avatars/";
 
     @Resource(name="jms/messagesPool")
     private ConnectionFactory connectionFactory;
