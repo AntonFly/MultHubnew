@@ -8,10 +8,10 @@
         <!--<class>buisnessLayer.Bot</class>-->
         <exclude-unlisted-classes>false</exclude-unlisted-classes>
         <properties>
-            <property name = "hibernate.show_sql" value = "true" />
+            <!--<property name = "hibernate.show_sql" value = "true" />-->
             <property name="hibernate.archive.autodetection" value="class, hbm"/>
             <property name="hibernate.transaction.jta.platform" value="org.hibernate.service.jta.platform.internal.SunOneJtaPlatform" />
-            <!--<property name="hibernate.connection.autocommit" value="true" />-->
+            <property name="hibernate.connection.autocommit" value="true" />
             <property name="hibernate.hbm2ddl.auto" value="update"/>
         </properties>
         <!--<properties>-->

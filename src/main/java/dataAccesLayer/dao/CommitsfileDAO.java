@@ -13,17 +13,17 @@ public class CommitsfileDAO extends AbstractDao<Commitsfile,String> {
     @Override
     public List<Commitsfile> getAll() {
         EntityManager em= DBService.getEntytiManager();
-        em.getTransaction().begin();
+//        em.getTransaction().begin();
         List<Commitsfile> list=em.createNamedQuery("Commitsfile.getAll").getResultList();
-        em.getTransaction().commit();
+//        em.getTransaction().commit();
         return list;
     }
     public void delete(CommitsfileEntityPK commitsfileEntityPK) {
         EntityManager em= DBService.getEntytiManager();
-        em.getTransaction().begin();
+//        em.getTransaction().begin();
         Commitsfile entity = em.find(param,commitsfileEntityPK);
         em.remove(entity);
-        em.getTransaction().commit();
+//        em.getTransaction().commit();
 
     }
 }
