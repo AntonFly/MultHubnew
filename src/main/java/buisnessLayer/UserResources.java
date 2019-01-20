@@ -446,7 +446,7 @@ public class UserResources {
     }
 
     @GET
-    @Path("ivites{login}")
+    @Path("invites{login}")
     public Response getInvites(@PathParam("login") String login){
         String jsonString;
         try {
@@ -458,8 +458,24 @@ public class UserResources {
             return Response.ok().status(400).build();
         }
         return Response.ok(jsonString).build();
-
     }
+
+    //чтобы получить про Логине все проекты с его участием и дать права
+    @GET
+    @Path("allManaged{login}")
+    public Response getAllManaged(@PathParam(value = "login") String login){
+        String jsonString;
+        try {
+            Users user = userService.get(login);
+            ObjectMapper mapper = new ObjectMapper();
+            jsonString = mapper.writeValueAsString(user.getDevelopers()); //вылетает ексепшон 
+        }catch (JsonProcessingException |DBException e) {
+            e.printStackTrace();
+            return Response.ok().status(400).build();
+        }
+        return Response.ok(jsonString).build();
+    }
+
 }
 
 

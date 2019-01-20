@@ -1,5 +1,6 @@
 package buisnessLayer;
 
+import java.util.List;
 import java.util.Properties;
 
 import javax.activation.DataHandler;
@@ -17,7 +18,7 @@ public class MailSender {
 //    private static String RECIPIENT = "divand1999@yandex.ru";
 private static String RECIPIENT = "anton99910@outlook.com";
 
-    public void sendMail(String subject, String body, String[] to){
+    public void sendMail(String subject, String body, List<String> to){
         String from = USER_NAME;
         String pass = PASSWORD;
 //        String[] to = { RECIPIENT }; // list of recipient email addresses
@@ -28,7 +29,7 @@ private static String RECIPIENT = "anton99910@outlook.com";
     }
 
 
-    private static void sendFromGMail(String from, String pass, String[] to, String subject, String body) {
+    private static void sendFromGMail(String from, String pass, List<String> to, String subject, String body) {
         Properties props = System.getProperties();
         String host = "smtp.gmail.com";
         props.put("mail.smtp.starttls.enable", "true");
@@ -43,12 +44,12 @@ private static String RECIPIENT = "anton99910@outlook.com";
 
         try {
             message.setFrom(new InternetAddress(from));
-            InternetAddress[] toAddress = new InternetAddress[to.length];
+            InternetAddress[] toAddress = new InternetAddress[to.size()];
 
             // To get the array of addresses
-            for( int i = 0; i < to.length; i++ ) {
-                if(to[i] != null)
-                toAddress[i] = new InternetAddress(to[i]);
+            for( int i = 0; i < to.size(); i++ ) {
+//                if(to.get(i) != null
+                toAddress[i] = new InternetAddress(to.get(i));
             }
 
             for( int i = 0; i < toAddress.length; i++) {

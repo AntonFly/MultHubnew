@@ -24,6 +24,7 @@ import javax.ws.rs.core.Response;
 //import javax.ws.rs.sse.SseEventSink;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 
@@ -289,5 +290,38 @@ public class ViewResources {
         }
         return Response.ok(json).build();
     }
+
+    @GET
+    @Path("/popular{n}")
+    public Response getPopular(@PathParam(value = "n") int n){ //
+        String json;
+        try{
+            int max = 0;
+            List<Projects> popular = new LinkedList<>();
+            List<Projects> projects = this.projectService.getAll();
+            for(Projects project: projects) {
+                if(project.getSubscribers().size() > max)
+                {
+                    popular.add(project);
+                    max = project.getSubscribers().size();
+                }
+                if(popular.size() > n){
+
+                }
+
+
+            }
+            ObjectMapper mapper = new ObjectMapper();
+            json = mapper.writeValueAsString(projects);
+
+        }catch (JsonProcessingException | DBException e){
+            e.printStackTrace();
+            Response.ResponseBuilder response = Response.ok();
+            response.status(401);
+            return response.build();
+        }
+        return Response.ok(json).build();
+    }
+
 
 }
