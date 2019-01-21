@@ -7,6 +7,7 @@ import com.google.common.hash.HashCode;
 import com.google.common.hash.HashFunction;
 import com.google.common.hash.Hashing;
 import dataAccesLayer.entity.*;
+import dataAccesLayer.entity.Message;
 import dataAccesLayer.exception.DBException;
 import dataAccesLayer.service.ProjectService;
 import dataAccesLayer.service.UserService;
@@ -17,13 +18,13 @@ import org.apache.wink.common.model.multipart.InPart;
 import javax.annotation.Resource;
 import javax.ejb.Stateful;
 import javax.inject.Inject;
-import javax.jms.ConnectionFactory;
-import javax.jms.Destination;
+import javax.jms.*;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
 import javax.ws.rs.core.UriInfo;
 import java.io.*;
+import java.sql.Connection;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -99,42 +100,49 @@ public class UserResources {
     @POST
     @Path("/signUp")
     public Response signUp(@FormParam("login") final String login,
-                           @FormParam("password") String password,
-                           @FormParam("name") String name,
-                           @FormParam("surname") String surname,
-                           @FormParam("email") String email,
-                           @FormParam("mobile") String mobile
-    ){
-        try {
-            System.out.println("sfdsfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAdsfsdfsdfsdffdsfsdv!!!!!!!"+login+" "+password+" "+name+" ");
-            Users user =new Users();
-            user.setLogin(login);
-            HashFunction hf = Hashing.md5();
-            HashCode hc = hf.newHasher()
-                    .putString(password, Charsets.UTF_8)
-                    .hash();
-            user.setPassword(hc.toString());
-            user.setName(name);
-            user.setSurname(surname);
-            if(avatarPath==null)
-                avatarPath=generalAvatarPath+"default.png";
-            user.setImgpath(avatarPath);
-            userService.create(user);
-            if(email !=null){
-                user = userService.get(login);
-                user.getCondata().seteMail(email);
-            }
-            if(mobile !=null){
-                user.getCondata().setMobilenumb(Long.valueOf(mobile));
-            }
-            return   Response.ok().status(200).build();
-        }catch (Exception e){
-            e.printStackTrace();
-            Response.ResponseBuilder response = Response.ok();
-            response.status(401);
-            return response.build();
+                            @FormParam("password") String password,
+                            @FormParam("name") String name,
+                            @FormParam("surname") String surname,
+                            @FormParam("email") String email,
+                            @FormParam("mobile") String mobile
+                            ){
+    try {
+        System.out.println("sfdsfAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAdsfsdfsdfsdffdsfsdv!!!!!!!"+login+" "+password+" "+name+" ");
+        Users user =new Users();
+        user.setLogin(login);
+        HashFunction hf = Hashing.md5();
+        HashCode hc = hf.newHasher()
+                .putString(password, Charsets.UTF_8)
+                .hash();
+        user.setPassword(hc.toString());
+        user.setName(name);
+        user.setSurname(surname);
+        if(avatarPath==null)
+            avatarPath=generalAvatarPath+"default.png";
+        user.setImgpath(avatarPath);
+        if(!email.equals("")){
+            ConnectionData connectionData= new ConnectionData();
+            connectionData.seteMail(email);
+            connectionData.setLogin(login);
+            user.setCondata(connectionData);
         }
+        if(!mobile.equals("")){
+            ConnectionData connectionData=user.getCondata();
+            if(connectionData==null)
+                connectionData= new ConnectionData();
+            connectionData.setMobilenumb(Long.valueOf(mobile));
+            user.setCondata(connectionData);
+        }
+        userService.create(user);
+        return   Response.ok().status(200).build();
+    }catch (Exception e){
+        e.printStackTrace();
+        Response.ResponseBuilder response = Response.ok();
+        response.status(401);
+        return response.build();
     }
+}
+
 
     @GET
     @Path("/try{login}")
@@ -222,11 +230,14 @@ public class UserResources {
     @POST
     @Path("/changeProfile")
     public Response changeProfile(@FormParam("login") final String login,
-                              @FormParam("password") String password,
-                              @FormParam("firstname") String name,
-                              @FormParam("lastname") String surname,
-                              @FormParam("email") String email,
-                              @FormParam("modile") String mobile){
+                                  @FormParam("password") String password,
+                                  @FormParam("firstname") String name,
+                                  @FormParam("lastname") String surname,
+                                  @FormParam("email") String email,
+                                  @FormParam("modile") String mobile,
+                                  @FormParam("onInvite") Boolean invite,
+                                  @FormParam("onPost") Boolean post
+    ){
         try{
             Users user = userService.get(login);
             if(password!=null)
@@ -237,6 +248,10 @@ public class UserResources {
                 user.getCondata().setMobilenumb(Long.valueOf(mobile));
             if(avatarPath!=null && !user.getImgpath().equals(generalAvatarPath+login) && !user.getImgpath().equals(avatarPath))
                 user.setImgpath(avatarPath);
+            if(invite!=null)
+                user.setSendOnInvites(invite);
+            if(post!=null)
+                user.setSendOnPost(post);
             return Response.ok("{\"msg\":\"updated\"}").build();
 
         }catch (Exception e){
@@ -296,10 +311,23 @@ public class UserResources {
         message.setIsread(false);
         message.setTime(new Timestamp(System.currentTimeMillis()));
         message.setSender(login);
-        message.setText("horosho");
+        message.setText(body);
         userService.addMessgae(message);
 
-        }catch (DBException e){
+//  !!!!!!!!!!!!!!!!!!!!!!!!
+        javax.jms.Connection connection = connectionFactory.createConnection();
+        Session session = connection.createSession(true,Session.AUTO_ACKNOWLEDGE);
+            MessageProducer producer = session.createProducer(destination);
+            TextMessage messageJMS = session.createTextMessage();
+            messageJMS.setStringProperty("clientType", "web client");
+            messageJMS.setStringProperty("toLogin",toLogin);
+            messageJMS.setStringProperty("from",login);
+            messageJMS.setText(body);
+            producer.send(messageJMS);
+            session.close();
+            connection.close();
+//  !!!!!!!!!!!!!!!!!!!!!!!!
+        }catch (DBException | JMSException e){
             e.printStackTrace();
             return  Response.ok().status(500).build();
         }
@@ -467,6 +495,7 @@ public class UserResources {
             Users user = userService.get(login);
             ObjectMapper mapper = new ObjectMapper();
             List<Developers> devs = user.getDevelopers();
+
             jsonString = mapper.writeValueAsString(devs); //вылетает ексепшон
         }catch (JsonProcessingException |DBException e) {
             e.printStackTrace();
