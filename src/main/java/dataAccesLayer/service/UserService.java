@@ -5,15 +5,25 @@ import dataAccesLayer.entity.*;
 import dataAccesLayer.exception.DBException;
 import dataAccesLayer.util.DBService;
 
+import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
+import javax.ejb.Startup;
 import javax.persistence.PersistenceException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
 @Singleton
+@Startup
 public class UserService extends AbstractService<Users,String> {
-
+    @PostConstruct
+    public void init(){
+        try {
+            getAll();
+        } catch (DBException e) {
+            e.printStackTrace();
+        }
+    }
     public UserService() {
     }
 

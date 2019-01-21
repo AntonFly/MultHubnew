@@ -32,13 +32,13 @@ public class Users {
     private String status;
 
     @Column
-    private boolean sendOnInvites;
+    private boolean sendOnInvites= true;
 
     @Column
-    private boolean sendOnPost;
+    private boolean sendOnPost =true;
 
     @JsonIgnore
-    @OneToOne()
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name ="login",nullable = true)
     private ConnectionData condata;
 

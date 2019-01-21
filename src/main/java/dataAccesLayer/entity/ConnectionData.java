@@ -16,7 +16,7 @@ public class ConnectionData {
     private Long mobilenumb;
 
     @JsonIgnore
-    @OneToOne(optional = false,mappedBy = "condata")
+    @OneToOne(optional = false,mappedBy = "condata", cascade = CascadeType.ALL,fetch = FetchType.EAGER)
     private Users owner;
 
     public String getLogin() {

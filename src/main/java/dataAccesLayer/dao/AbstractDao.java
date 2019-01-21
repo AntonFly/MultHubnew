@@ -44,6 +44,7 @@ abstract class AbstractDao<E, K> {
                 EntityManager em= DBService.getEntytiManager();
 //                em.getTransaction().begin();
                 em.persist(entity);
+                em.flush();
 //                em.getTransaction().commit();
         }
 

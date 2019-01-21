@@ -14,11 +14,8 @@ import org.apache.wink.common.internal.utils.MediaTypeUtils;
 import org.apache.wink.common.model.multipart.BufferedInMultiPart;
 import org.apache.wink.common.model.multipart.InPart;
 
-import javax.annotation.Resource;
 import javax.ejb.Stateful;
 import javax.inject.Inject;
-import javax.jms.ConnectionFactory;
-import javax.jms.Destination;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
@@ -30,22 +27,21 @@ import java.util.List;
 @Stateful
 @Path("/user")
 public class UserResources {
-
     private String avatarPath=null;
     private  String generalAvatarPath="D:/projects/resources/avatars/";
 
-    @Resource(name="jms/messagesPool")
-    private ConnectionFactory connectionFactory;
-
-    @Resource(name="jms/messageTopic")
-    private Destination destination;
+//    @Resource(name="jms/messagesPool")
+//    private ConnectionFactory connectionFactory;
+//
+//    @Resource(name="jms/messageTopic")
+//    private Destination destination;
 
 
     @Context
     UriInfo uriInfo;
 
-    @Inject
-    MailSender mail;
+//    @Inject
+//    MailSender mail;
 
     @Inject
     UserService userService;
@@ -55,13 +51,6 @@ public class UserResources {
 
     @GET
     public  String hello() throws DBException {
-//        userService.approveInvite(userService.get("fly").getRequests().get(0));
-//        Projects proj=new Projects();
-//        proj.setName("iaia");
-//        proj.setCurbudget(2.);
-//        proj.setGoalbudget(3.);
-//        proj.setDescription("xyita");
-//        ServiceFactory.getProjectService().create(proj);
         return "<H2 style=\"color : red\">Hello EJB</H2>";
 
 
@@ -119,14 +108,20 @@ public class UserResources {
             if(avatarPath==null)
                 avatarPath=generalAvatarPath+"default.png";
             user.setImgpath(avatarPath);
-            userService.create(user);
-            if(email !=null){
-                user = userService.get(login);
-                user.getCondata().seteMail(email);
+            if(!email.equals("")){
+                ConnectionData connectionData= new ConnectionData();
+                connectionData.seteMail(email);
+                connectionData.setLogin(login);
+                user.setCondata(connectionData);
             }
-            if(mobile !=null){
-                user.getCondata().setMobilenumb(Long.valueOf(mobile));
+            if(!mobile.equals("")){
+                ConnectionData connectionData=user.getCondata();
+                if(connectionData==null)
+                    connectionData= new ConnectionData();
+                connectionData.setMobilenumb(Long.valueOf(mobile));
+                user.setCondata(connectionData);
             }
+                userService.create(user);
             return   Response.ok().status(200).build();
         }catch (Exception e){
             e.printStackTrace();
@@ -222,11 +217,14 @@ public class UserResources {
     @POST
     @Path("/changeProfile")
     public Response changeProfile(@FormParam("login") final String login,
-                              @FormParam("password") String password,
-                              @FormParam("firstname") String name,
-                              @FormParam("lastname") String surname,
-                              @FormParam("email") String email,
-                              @FormParam("modile") String mobile){
+                                @FormParam("password") String password,
+                                @FormParam("firstname") String name,
+                                @FormParam("lastname") String surname,
+                                @FormParam("email") String email,
+                                @FormParam("modile") String mobile,
+                                @FormParam("onInvite") Boolean invite,
+                                  @FormParam("onPost") Boolean post
+                                  ){
         try{
             Users user = userService.get(login);
             if(password!=null)
@@ -237,6 +235,10 @@ public class UserResources {
                 user.getCondata().setMobilenumb(Long.valueOf(mobile));
             if(avatarPath!=null && !user.getImgpath().equals(generalAvatarPath+login) && !user.getImgpath().equals(avatarPath))
                 user.setImgpath(avatarPath);
+            if(invite!=null)
+                user.setSendOnInvites(invite);
+            if(post!=null)
+                user.setSendOnPost(post);
             return Response.ok("{\"msg\":\"updated\"}").build();
 
         }catch (Exception e){
@@ -250,7 +252,7 @@ public class UserResources {
 
     @GET
     @Path("/search{userName}")
-    public  Response searchProject(@PathParam("userName") String userName){
+    public  Response searchUsers(@PathParam("userName") String userName){
         String json;
         try{
             List<Users> users =  userService.search(userName);
