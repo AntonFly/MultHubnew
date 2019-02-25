@@ -126,7 +126,8 @@ public class ViewService  {
             ProjectsDAO projectspostsDAO = DaoFactory.getProjectsDAO();
             Projects project = projectspostsDAO.getEntityById( projectId);
             mapa.put("Project",project);
-            mapa.put("Devs",project.getDevelopers());
+            List<Developers> devs =project.getDevelopers();
+            mapa.put("Devs", devs);
 
         } catch (PersistenceException e) {
             throw new DBException(e);

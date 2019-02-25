@@ -14,8 +14,11 @@ import org.apache.wink.common.internal.utils.MediaTypeUtils;
 import org.apache.wink.common.model.multipart.BufferedInMultiPart;
 import org.apache.wink.common.model.multipart.InPart;
 
+import javax.annotation.Resource;
 import javax.ejb.Stateful;
 import javax.inject.Inject;
+import javax.jms.ConnectionFactory;
+import javax.jms.Destination;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Response;
@@ -27,21 +30,22 @@ import java.util.List;
 @Stateful
 @Path("/user")
 public class UserResources {
+
     private String avatarPath=null;
     private  String generalAvatarPath="D:/projects/resources/avatars/";
 
-//    @Resource(name="jms/messagesPool")
-//    private ConnectionFactory connectionFactory;
-//
-//    @Resource(name="jms/messageTopic")
-//    private Destination destination;
+    @Resource(name="jms/messagesPool")
+    private ConnectionFactory connectionFactory;
+
+    @Resource(name="jms/messageTopic")
+    private Destination destination;
 
 
     @Context
     UriInfo uriInfo;
 
-//    @Inject
-//    MailSender mail;
+    @Inject
+    MailSender mail;
 
     @Inject
     UserService userService;
@@ -51,6 +55,7 @@ public class UserResources {
 
     @GET
     public  String hello() throws DBException {
+
         return "<H2 style=\"color : red\">Hello EJB</H2>";
 
 
@@ -252,7 +257,7 @@ public class UserResources {
 
     @GET
     @Path("/search{userName}")
-    public  Response searchUsers(@PathParam("userName") String userName){
+    public  Response searchProject(@PathParam("userName") String userName){
         String json;
         try{
             List<Users> users =  userService.search(userName);
@@ -298,10 +303,23 @@ public class UserResources {
         message.setIsread(false);
         message.setTime(new Timestamp(System.currentTimeMillis()));
         message.setSender(login);
-        message.setText("horosho");
+        message.setText(body);
         userService.addMessgae(message);
 
-        }catch (DBException e){
+//  !!!!!!!!!!!!!!!!!!!!!!!!
+        javax.jms.Connection connection = connectionFactory.createConnection();
+        Session session = connection.createSession(true,Session.AUTO_ACKNOWLEDGE);
+            MessageProducer producer = session.createProducer(destination);
+            TextMessage messageJMS = session.createTextMessage();
+            messageJMS.setStringProperty("clientType", "web client");
+            messageJMS.setStringProperty("toLogin",toLogin);
+            messageJMS.setStringProperty("from",login);
+            messageJMS.setText(body);
+            producer.send(messageJMS);
+            session.close();
+            connection.close();
+//  !!!!!!!!!!!!!!!!!!!!!!!!
+        }catch (DBException | JMSException e){
             e.printStackTrace();
             return  Response.ok().status(500).build();
         }

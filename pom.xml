@@ -102,7 +102,11 @@
             <version>1.1.1</version>
         </dependency>
 
-
+        <!--<dependency>-->
+            <!--<groupId>com.sun.jersey.contribs</groupId>-->
+            <!--<artifactId>jersey-multipart</artifactId>-->
+            <!--<version>1.8</version>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>org.apache.wink</groupId>
@@ -115,26 +119,6 @@
             <artifactId>telegrambots</artifactId>
             <version>LATEST</version>
         </dependency>
-
-        <!-- mail -->
-        <dependency>
-            <groupId>javax.mail</groupId>
-            <artifactId>mail</artifactId>
-            <version>1.4.5</version>
-        </dependency>
-
-        <dependency>
-            <groupId>com.sun.mail</groupId>
-            <artifactId>smtp</artifactId>
-            <version>1.4.4</version>
-        </dependency>
-
-        <dependency>
-            <groupId>javax.activation</groupId>
-            <artifactId>activation</artifactId>
-            <version>1.1</version>
-        </dependency>
-        <!-- mail -->
 
 
         <!-- mail -->

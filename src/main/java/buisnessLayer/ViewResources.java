@@ -16,7 +16,10 @@ import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.core.Response;
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Map;
 
 //import javax.ws.rs.sse.OutboundSseEvent;
 //import javax.ws.rs.sse.Sse;
@@ -25,7 +28,6 @@ import java.util.*;
 @Stateful
 @Path("/view")
 public class ViewResources {
-
 
 //int i = 0;
 
@@ -75,20 +77,27 @@ public class ViewResources {
         try {
             List<Dialog> dialogs = this.viewService.getDialogs(login);
 
-            HashMap<String,HashMap<String,Object>> maps = new HashMap<>();
+            List<List<Object>> maps = new LinkedList<>();
             System.out.println(dialogs.size()+" AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
             for(int i = 0; i< dialogs.size(); i++) {
-                HashMap<String, Object> toJson = new HashMap<>();
+                List<Object> toJson = new LinkedList<>();
 
-                toJson.put("dialogs", dialogs.get(i));
+                toJson.add(dialogs.get(i));
                 Users user;
-                if (dialogs.get(0).getInterlocutors().get(0).getLogin().equals(login))
+                if (dialogs.get(i).getInterlocutors().get(0).getLogin().equals(login))
                     user =dialogs.get(i).getInterlocutors().get(1);
                 else user =dialogs.get(i).getInterlocutors().get(0);
-                toJson.put("humans", user);
-
-                toJson.put("messages", dialogs.get(i).getMessages().get(0)); // надо возвращать только последнее сообщение!!!!!!!!!!
-                maps.put(user.getLogin(), toJson);
+                toJson.add( user);
+                List<Message> messages = dialogs.get(i).getMessages();
+                messages.sort((o1, o2) -> {
+                    if (o1.getTime().after(o2.getTime()))
+                        return -1;
+                    if (o1.getTime().before(o2.getTime()))
+                        return 1;
+                    return 0;
+                });
+                toJson.add( messages.get(0)); // надо возвращать только последнее сообщение!!!!!!!!!!
+                maps.add(toJson);
             }
 
             jsonString = mapper.writeValueAsString(maps);
@@ -258,7 +267,7 @@ public class ViewResources {
             List<List<Object>> resultNews=new ArrayList();
             for (Projects proj:
                     userService.get(login).getSubscriprions()) {
-                    news.addAll(proj.getPosts());
+                news.addAll(proj.getPosts());
 
             }
             news.sort((o1, o2) -> {
@@ -269,7 +278,7 @@ public class ViewResources {
                 return 0;
             });
             for (Projectposts post:
-                 news) {
+                    news) {
                 List<Object> map=new ArrayList();
                 map.add(post);
                 map.add(post.getProject());

@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="MultHubnew:war">
+    <output-path>$PROJECT_DIR$/out/artifacts/MultHubnew_war</output-path>
+    <root id="archive" name="MultHubnew_war.war">
+      <element id="artifact" artifact-name="MultHubnew:war exploded" />
+    </root>
+  </artifact>
+</component>
